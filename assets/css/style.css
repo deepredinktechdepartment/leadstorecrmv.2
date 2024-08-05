@@ -1,0 +1,1996 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ght@100;200;300;400;500;600;700;800;900&display=swap");
+
+/* INDEX */
+
+
+/* ======== SIDEBAS NAVIGATION ========= */
+
+
+/*.nav-sub-strip-container{
+    margin-top: 20px !important;
+}*/
+
+.list-group {
+    border-radius: 0px !important;
+}
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 0.3rem 1rem;
+    color: #676767 !important;
+    text-decoration: none;
+    background-color: #fff;
+    border: 0px !important;
+}
+
+.list-group-item.active {
+    z-index: 2;
+    color: #8f2292 !important;
+    background-color: #f5f4fa;
+    border-color: #8f2292;
+    font-weight: 600;
+    /*    border-left: 3px solid #0d6efd !important;*/
+}
+
+.accordion-item {
+    background-color: #fff;
+    border: 0px !important;
+}
+
+.accordion-item:active {
+    background-color: #f5f4fa !important;
+}
+
+.accordion-button {
+    font-size: 13px !important;
+    padding: 0.5rem 0.5rem !important;
+    padding-left: 15px !important;
+    color: #676767 !important;
+}
+
+.accordion-button:after {
+    position: absolute;
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-width: 1px 0 0 1px;
+    border-style: solid;
+    border-color: #54667a;
+    margin-left: 10px;
+    -webkit-transform: rotate(135deg) translate(0, -50%);
+    -ms-transform: rotate(135deg) translate(0, -50%);
+    -o-transform: rotate(135deg) translate(0, -50%);
+    transform: rotate(135deg) translate(0, -50%);
+    -webkit-transform-origin: top;
+    -ms-transform-origin: top;
+    -o-transform-origin: top;
+    transform-origin: top;
+    top: 17px;
+    right: 25px;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.nav-list-avatar-group {
+    padding: 0px 10px 0px 30px !important;
+}
+
+.nav-list-avatar-group .nav-avatar-item {
+    text-decoration: none;
+    list-style-type: none;
+    font-size: 14px;
+}
+
+.nav-list-avatar-group .nav-avatar-item a {
+    text-decoration: none;
+    color: #54667a;
+    line-height: 28px;
+}
+
+.nav-list-avatar-group .nav-avatar-item.active a {
+    text-decoration: none;
+    color: #8f2292 !important;
+}
+
+.accordion-body .nav-list-avatar-group .nav-avatar-item:active {
+    color: #0d6efd !important;
+}
+
+
+/* .nav-avatar-item.active {
+    color: #8f2292 !important;
+} */
+
+
+/* .nav-list-avatar-group.active { */
+
+
+/*    background: #ddd;*/
+
+
+/*    padding: 2px 1px 2px 5px;*/
+
+
+/*    border-radius: 5px;*/
+
+
+/* color: #8f2292 !important; */
+
+
+/* } */
+
+
+/* .nav-list-avatar-group.active a {
+    color: #0d6efd;
+} */
+
+.accordion-body {
+    padding: 0rem 1.25rem !important;
+}
+
+.nav-sub-strip .accordion-button:not(.collapsed),
+.nav-sub-strip .accordion-button:focus {
+    color: #8f2292 !important;
+    font-weight: 600;
+    box-shadow: none !important;
+    border: 0 !important;
+    background-color: #f5f4fa !important;
+    /*    border-left: 3px solid #0d6efd !important;*/
+}
+
+.nav-sub-strip {
+    padding-bottom: 6rem;
+}
+
+.accordion-button:not(.collapsed)::after {
+    /* background-image: url(
+        data:image/svg + xml,
+        %3csvgxmlns="http://www.w3.org/2000/svg"viewBox="0 0 16 16"fill="%230c63e4"%3e%3cpathfill-rule="evenodd"d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/%3e%3c/svg%3e
+    ); */
+    transform: rotate(-136deg) !important;
+}
+
+
+/* ======== COMMON CSS ========= */
+
+
+/* ======== COMPANY PROFILE TAB ========= */
+
+
+/* ======== SINGLE PAGE BLOG ========= */
+
+
+/* ======== SINGLE PAGE BLOG ========= */
+
+
+/* ======== BLOG PAGE ========= */
+
+
+/* ======== EMPLOYEE PROFILE ========= */
+
+
+/* ======== DASHBOARD ========= */
+
+
+/* ======== SOCIAL MEDIA MANAGEMENT MODAL ========= */
+
+
+/*#region top ================================ SUBNAV CSS START ============================*/
+
+.sub_header {
+    background-color: var(--green-dark);
+    color: var(--white-light);
+}
+
+.sub_header ul li a {
+    color: var(--white-light);
+}
+
+.sub_header .dropdown .dropdown-menu a {
+    color: var(--black-medium);
+}
+
+
+/*#endregion* ================================ SUBNAV CSS END ============================*/
+
+
+/*#region top ================================ COMMON CSS START ============================*/
+
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #000000 !important;
+    /*    color: var(--black);*/
+    /*    margin: 15px 0 15px 0!important;*/
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+    color: #8F2292 !important;
+    /*    padding-bottom: 10px;*/
+    /*    margin: 15px 0 15px 0!important;*/
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 400;
+    color: #8F2292;
+    padding-bottom: 10px;
+    /*    margin: 15px 0 15px 0!important;*/
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #808080;
+    margin: 15px 0 15px 0 !important;
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #808080;
+    /*    padding-bottom: 10px;*/
+    /*    margin: 15px 0 15px 0!important;*/
+}
+
+
+/*
+h5 {
+  font-size: 20px;
+  line-height: 25px;
+  color: var(--gray-medium);
+  font-weight: 700;
+  font-style: normal;
+  padding: 0;
+  margin: 0;
+} */
+
+h6 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #808080;
+}
+
+p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #808080;
+    padding: 0;
+    margin: 0;
+    /*    padding-bottom: 10px;*/
+}
+
+a {
+    /* text-decoration: none; */
+    color: var(--gray-medium);
+    padding: 0;
+    margin: 0;
+}
+
+a:hover {
+    color: var(--gray-medium);
+}
+
+.red_box {
+    width: 15px;
+    height: 15px;
+    background-color: var(--red);
+}
+
+.green_box {
+    width: 15px;
+    height: 15px;
+    background-color: var(--green-dark);
+}
+
+.blog_dashboard .card {
+    position: relative;
+    border: 1px solid var(--gray-medium);
+}
+
+.blog_dashboard .card h6 {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-dark);
+}
+
+.blog_dashboard .card p {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--gray-medium);
+}
+
+.blog_dashboard .card .red-card-footer {
+    position: absolute;
+    background-color: var(--red);
+    height: 15px;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding: 1.5rem;
+}
+
+.blog_dashboard .card .green-card-footer {
+    position: absolute;
+    background-color: var(--green-dark);
+    height: 15px;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.blog_dashboard .card .red-card-footer .card_footer_content {
+    margin-top: -12px;
+}
+
+.blog_dashboard .card .red-card-footer .card_footer_content p {
+    color: var(--white);
+}
+
+.filter p {
+    font-size: 16px;
+    font-weight: 500;
+    color: #6e6d71;
+}
+
+.form-label {
+    margin-top: 15px;
+    line-height: 15px !important;
+}
+
+input[type="text"] {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+input[type="email"] {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+input[type="search"] {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+input[type="tel"] {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    /* padding: 5px 10px !important; */
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+.iti {
+    position: relative !important;
+    display: block !important;
+}
+
+input[type="number"] {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+input[type="url"] {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+input[type="file"] {
+    /* border-radius: 8px; */
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 5px !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+    width: 100%;
+}
+
+input[type="date"] {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+input[type="time"] {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+select {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+textarea {
+    border-radius: 8px;
+    border: 1px solid var(--gray-medium) !important;
+    padding: 5px 10px !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+}
+
+.btn {
+    border-radius: 8px;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 12px;
+    transition: 0.4s;
+}
+
+.btn:hover {
+    color: #fff;
+}
+
+.common_tabs .nav-tabs .nav-link {
+    font-size: 16px;
+    font-weight: 500;
+    background-color: transparent;
+    color: var(--gray-dark);
+    border: 0px;
+    margin-right: 30px;
+    padding: 0.5rem 0.2rem !important;
+}
+
+.common_tabs .nav-tabs .nav-link.active {
+    border-bottom: 3px solid #989898 !important;
+}
+
+.common_tabs .nav {
+    margin-bottom: 2rem;
+}
+
+.img_types a {
+    border-bottom: 1px solid var(--gray-medium);
+}
+
+.fa-check {
+    background-color: var(--green-dark);
+    padding: 5px;
+    font-size: 10px !important;
+    color: var(--white);
+    border-radius: 50%;
+}
+
+.fa-facebook {
+    color: #4267b2;
+}
+
+.fa-facebook-f {
+    color: #4267b2;
+}
+
+.fa-linkedin {
+    color: #0072b1;
+}
+
+.fa-linkedin-in {
+    color: #0072b1;
+}
+
+.fa-instagram {
+    color: rgb(228, 64, 95);
+}
+
+.fa-twitter {
+    color: #00acee;
+}
+
+.fa-youtube {
+    color: #ff0000;
+}
+
+.social_media ul li a i {
+    transition: 0.3s;
+}
+
+.social_media ul li a i:hover {
+    opacity: 0.7;
+}
+
+.btn-red {
+    background-color: var(--red);
+    border-radius: 8px;
+    color: #fff !important;
+    /* padding: 5px 30px; */
+    font-size: 13px;
+    transition: 0.4s;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.btn-red:hover,
+.btn-red:focus {
+    background-color: #bb281d;
+    color: #fff;
+    box-shadow: none;
+}
+
+.btn-grey {
+    background-color: var(--gray-medium);
+    border-radius: 8px;
+    color: #fff;
+    padding: 5px 30px;
+    font-size: 13px;
+    transition: 0.4s;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.btn-grey:focus,
+.btn-grey:hover {
+    background-color: #5c5b5b;
+    color: #fff;
+    box-shadow: none;
+}
+
+.btn-green {
+    background-color: var(--green-dark);
+    border-radius: 8px;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 13px;
+    transition: 0.4s;
+}
+
+.btn-green:focus,
+.btn-green:hover {
+    background-color: #346453;
+    color: #fff;
+    box-shadow: none;
+}
+
+.btn-blue {
+    background-color: var(--blue);
+    border-radius: 8px;
+    color: #fff;
+    padding: 5px 30px;
+    font-size: 13px;
+    transition: 0.4s;
+}
+
+.btn-blue:focus,
+.btn-blue:hover {
+    background-color: #2561aa;
+    color: #fff;
+}
+
+.bg-body {
+    background: var(--wrapper-body-bg);
+}
+
+.bg-orange {
+    background-color: #ff9933;
+}
+
+.card {
+    border-radius: 8px;
+    position: reletive;
+    /*    box-shadow: -2px 3px 13px 0px #ddd6;*/
+    /*    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);*/
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: 0.3s;
+    padding: 1.5rem;
+}
+
+.card img {
+    border-radius: 8px;
+    /*    width: 100%;*/
+}
+
+
+/*.card:hover {
+    transform: scale(1.02);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}*/
+
+
+/* .card:hover {
+    transform: scale(1.02);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+} */
+
+.card img {
+    border-radius: 8px;
+}
+
+.basic_card .card {
+    border-radius: 8px;
+    position: reletive;
+    box-shadow: -2px 3px 13px 0px #ddd6;
+    transition: 0.3s;
+    padding: 1rem;
+}
+
+.basic_card .card h6 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gray-medium);
+}
+
+.basic_card .card p {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--gray-medium);
+}
+
+.basic_card .card .customer_logo {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: contain !important;
+}
+
+
+/* .action_icons a {
+    transition: 0.3s;
+}
+
+.action_icons a:hover {
+    color: var(--blue);
+} */
+
+.form-group {
+    margin-bottom: 0.5rem;
+}
+
+.fa-pen-to-square {
+    color: var(--gray-medium);
+    transition: 0.3s;
+}
+
+.fa-pen-to-square:hover {
+    color: var(--blue);
+}
+
+.fa-trash {
+    color: var(--gray-medium);
+    transition: 0.3s;
+}
+
+.fa-trash:hover {
+    color: var(--blue);
+}
+
+.fa-edit {
+    color: var(--gray-medium);
+    transition: 0.3s;
+}
+
+.fa-edit:hover {
+    color: var(--blue);
+}
+
+.fa-plus {
+    color: var(--gray-medium);
+    transition: 0.3s;
+}
+
+.fa-plus:hover {
+    color: var(--blue);
+}
+
+.social_media_management .action_icons a {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.filter_icons ul li a i {
+    font-size: 18px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray-medium);
+}
+
+.light_title_h1 h1 {
+    font-size: 60px;
+    font-weight: 800;
+    color: #e6e4e5;
+}
+
+.imp_str {
+    color: var(--red) !important;
+}
+
+.text-red {
+    color: red !important;
+}
+
+.text-green {
+    color: green !important;
+}
+
+.page-item.active .page-link {
+    color: #fff !important;
+}
+
+#default-datatable_wrapper .form-select {
+    width: 50% !important;
+}
+
+.imp_star {
+    color: var(--red) !important;
+}
+
+
+/*#endregion* ================================ COMMON CSS END ============================*/
+
+
+/*#region top ================================ COMPANY PROFILE TAB CSS START ============================*/
+
+.company_profile .social_media ul {
+    display: flex;
+    align-items: "center";
+}
+
+.company_profile .social_media ul li a {
+    margin-right: 15px;
+    font-size: 16px;
+    color: var(--gray-medium);
+    transition: 0.4s;
+}
+
+.company_profile .social_media ul li a:hover {
+    color: var(--gray-dark);
+}
+
+.company_profile .project_scope ul li a {
+    border-bottom: 1px solid var(--gray-medium);
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--gray-medium);
+    line-height: 20px;
+}
+
+.profile_action_icons {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+
+/*#endregion* ================================ COMPANY PROFILE TAB CSS END ============================*/
+
+
+/*#region top ================================ SINGLE PAGE BLOG CSS START ============================*/
+
+.single_blog_bottom .card {
+    background-color: #b5f2ea;
+}
+
+.single_blog .card a .fa-pen-to-square {
+    font-size: 25px;
+}
+
+
+/*.single_blog .card h2 {
+    color: #4b79c2;
+    font-weight: 500;
+    line-height: 34px;
+    font-size: 25px;
+}*/
+
+.single_blog_submit_form form label {
+    font-size: 14px;
+    line-height: 24px;
+    color: #6e6d71;
+    font-weight: 500;
+}
+
+
+/* timeline css start*/
+
+.tl-item .avatar {
+    z-index: 2;
+}
+
+.gd-warning {
+    color: #fff;
+    border: none;
+    background: #f4c414 linear-gradient(45deg, #f4c414, #f45414);
+}
+
+.timeline {
+    position: relative;
+    border-color: rgba(160, 175, 185, 0.15);
+    padding: 0;
+    margin: 0;
+}
+
+.tl-item {
+    border-radius: 3px;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.tl-item>* {
+    padding: 0px 10px;
+}
+
+.tl-item .avatar {
+    z-index: 2;
+}
+
+.tl-item:last-child .tl-dot:after {
+    display: none;
+}
+
+.tl-item.active .tl-dot:before {
+    border-color: var(--gray-medium);
+    box-shadow: 0 0 0 4px rgba(68, 139, 255, 0.2);
+}
+
+.tl-item:last-child .tl-dot:after {
+    display: none;
+}
+
+.tl-item.active .tl-dot:before {
+    border-color: var(--gray-medium);
+    box-shadow: 0 0 0 4px rgba(68, 139, 255, 0.2);
+}
+
+.tl-dot {
+    position: relative;
+    border-color: rgba(160, 175, 185, 0.15);
+}
+
+.tl-dot:after,
+.tl-dot:before {
+    content: "";
+    position: absolute;
+    border-color: inherit;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tl-dot:after {
+    width: 0;
+    height: auto;
+    top: 15px;
+    bottom: -15px;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-radius: 0;
+}
+
+.tl-item.active .tl-dot:before {
+    border-color: var(--gray-medium);
+    box-shadow: 0 0 0 4px rgba(68, 139, 255, 0.2);
+}
+
+.tl-dot {
+    position: relative;
+    border-color: rgba(160, 175, 185, 0.15);
+}
+
+.tl-dot:after,
+.tl-dot:before {
+    content: "";
+    position: absolute;
+    border-color: inherit;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tl-dot:after {
+    width: 0;
+    height: auto;
+    top: 15px;
+    bottom: -15px;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-radius: 0;
+}
+
+.tl-content p:last-child {
+    margin-bottom: 0;
+}
+
+.tl-date {
+    font-size: 0.85em;
+    margin-top: -4px;
+    min-width: 200px;
+    max-width: 200px;
+}
+
+.avatar {
+    position: relative;
+    line-height: 1;
+    border-radius: 500px;
+    white-space: nowrap;
+    font-weight: 700;
+    border-radius: 100%;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    border-radius: 500px;
+    box-shadow: 0 5px 10px 0 rgba(50, 50, 50, 0.15);
+}
+
+.b-warning {
+    border-color: #f4c414 !important;
+}
+
+.b-gray {
+    border-color: var(--gray-medium) !important;
+}
+
+.b-danger {
+    border-color: var(--red) !important;
+}
+
+
+/* .boot_table .table tbody tr td {
+  margin: 0.3rem 0.4rem !important;
+  padding: 0.3rem 0.4rem !important;
+} */
+
+.boot_table .table tbody input[type="text"] {
+    width: 100px !important;
+    height: 35px !important;
+}
+
+.boot_table .table tbody input[type="number"] {
+    width: 100px !important;
+    height: 35px !important;
+}
+
+
+/* timeline css end*/
+
+
+/*#endregion* ================================ SINGLE PAGE BLOG CSS END ============================*/
+
+
+/*#region top ================================== BLOG PAGE CSS START ==================================*/
+
+.card .date_ribbon {
+    position: absolute;
+    left: 0;
+    top: 15%;
+    z-index: 99;
+}
+
+.card .date_ribbon p {
+    background-color: #fa0807;
+    color: #fff;
+    padding: 5px 20px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.blog_card .blog_content h5 {
+    font-size: 15px;
+    line-height: 26px;
+    font-weight: 500;
+    color: #4b79c2;
+}
+
+.blog_card .blog_content p {
+    font-size: 13px;
+    line-height: 24px;
+    color: #6e6d71;
+}
+
+
+/*#endregion*================================== BLOG PAGE CSS END ==================================*/
+
+
+/*#region top* ================================ EMPLOYEE PROFILE CSS START ============================*/
+
+.employee_profile .card h2 {
+    color: var(--gray-medium);
+    font-style: italic;
+}
+
+.employee_profile .card .profile_img img {
+    margin-top: -4.5rem;
+    object-fit: contain !important;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #ddd;
+    background: #ddd;
+}
+
+.employee_profile .card .profile_img .demo_img {
+    margin-top: -4.5rem;
+    display: flex;
+    justify-content: center;
+    color: #888888;
+    background-color: #fff;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    font-size: 100px;
+}
+
+.employee_profile .card .profile_img {
+    position: relative;
+}
+
+.employee_profile .card .profile_img .edit_icon {
+    position: absolute;
+    top: -4.5rem;
+    right: 32%;
+    /* border: 1px solid; */
+    border-radius: 50%;
+    /* padding: 11px; */
+    height: 35px;
+    width: 35px;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: var(--gray-medium);
+    /* box-shadow: 0 0 8px 3px #b8b8b8; */
+}
+
+.employee_profile .card h2 {
+    font-weight: 600;
+    font-style: normal;
+}
+
+.employee_profile .card h4 {
+    font-weight: 400;
+    font-style: italic;
+}
+
+.employee_profile .card h5 {
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+/*#endregion* ================================  EMPLOYEE PROFILE CSS END ============================*/
+
+
+/*#region top* ================================ DASHBOARD CSS START ============================*/
+
+.content-wrapper {
+    margin-left: 240px;
+    transition: 0.4s;
+    margin-top: 4rem;
+    border-top-left-radius: 50px;
+    background-color: #f5f4fa !important;
+    min-height: 100vh;
+}
+
+.content-wrapper.hide {
+    margin-left: 0px;
+}
+
+.container-fluid,
+.page-wrapper>.container-lg,
+.page-wrapper>.container-md,
+.page-wrapper>.container-sm,
+.page-wrapper>.container-xl {
+    padding: 40px 25px 25px 25px;
+}
+
+
+/*.main_wrapper {
+    padding: 0rem 1rem;
+}*/
+
+.last-month {
+    line-height: 20px;
+    text-align: center;
+}
+
+.last-month h5 {
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--gray-medium);
+}
+
+.last-month p {
+    font-size: 12px;
+}
+
+.earn {
+    margin: 12px 0;
+}
+
+.earn h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--gray-dark);
+}
+
+.sale h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--gray-dark);
+}
+
+.chart-nav.active {
+    background-color: #fff !important;
+    color: var(--blue) !important;
+    border-bottom: 2px solid var(--blue);
+    border-radius: 0px;
+}
+
+.chart-nav {
+    color: var(--gray-medium);
+    padding: 0px 15px;
+}
+
+.chart-nav.hover {
+    color: var(--blue);
+}
+
+
+/* == top-section chart bottom row style start ==*/
+
+.bdr-cls {
+    border-right: 1px solid #ddd;
+}
+
+.wre-sec {
+    overflow: hidden;
+    border-top: 1px solid #ddd;
+}
+
+.name-text {
+    font-size: 12px;
+}
+
+.earn-view {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.earn-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    padding: 3px;
+    background: #eeeeee;
+    line-height: 20px;
+    font-size: 15px;
+    color: var(--white);
+}
+
+.wallet {
+    background: var(--purple);
+}
+
+.referral {
+    background: var(--red);
+}
+
+.sales {
+    background: var(--blue);
+}
+
+.earnigns {
+    background: var(--green-dark);
+}
+
+
+/* == top-section chart bottom row style End ==*/
+
+
+/*#endregion* ================================ DASHBOARD CSS END ============================*/
+
+
+/*#region top* ======= SOCIAL MEDIA MANAGEMENT MODAL CSS START ================================== */
+
+.social_media_management_modal input[type="text"] {
+    border-radius: 0px !important;
+    font-size: 12px;
+    padding: 5px 5px;
+    border: 1px solid var(--gray-medium);
+}
+
+.social_media_management_modal .hrs {
+    border-bottom: 1px solid var(--gray-medium);
+    line-height: 14px;
+}
+
+.social_media_management_modal .btn-delete {
+    background-color: var(--red);
+}
+
+.social_media_management_modal .btn-close {
+    font-size: 12px;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+.light_green_card .card {
+    background-color: #b5f2ea;
+}
+
+.campain_card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: -2px 3px 13px 0px #ddd6;
+}
+
+
+/*Invoices Dashboard*/
+
+.over_view_blue_card .card {
+    border-left: 5px solid #4e73df;
+    padding: 20px;
+}
+
+.over_view_blue_card .card p {
+    color: #4e73df;
+}
+
+.over_view_green_card .card {
+    border-left: 5px solid #1cc88a;
+    padding: 20px;
+}
+
+.over_view_green_card .card p {
+    color: #1cc88a;
+}
+
+.over_view_cyan_card .card {
+    border-left: 5px solid #36b9cc;
+    padding: 20px;
+}
+
+.over_view_cyan_card .card p {
+    color: #36b9cc;
+}
+
+.over_view_yellow_card .card {
+    border-left: 5px solid #f6c23e;
+    padding: 20px;
+}
+
+.over_view_yellow_card .card p {
+    color: #f6c23e;
+}
+
+.card_info h2 {
+    color: #313131;
+    font-weight: 600;
+}
+
+.card_info i {
+    color: #dddfeb;
+}
+
+
+/*#endregion* ======= Social Media Management Modal CSS End======= */
+
+tbody tr td .form-control {
+    border-radius: 0 !important;
+    border-color: #ddd !important;
+    /*    height: 80px;*/
+}
+
+img {
+    object-fit: contain !important;
+}
+
+.dropdown-item {
+    font-size: 12px !important;
+}
+
+
+/*Proposals*/
+
+.proposal_box {
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    background-color: #fdf6f6;
+}
+
+.proposal_box .fa-circle-check {
+    color: var(--green-dark);
+    font-size: 20px;
+}
+
+.proposal_box p {
+    font-weight: 600;
+}
+
+.proposal_box a {
+    font-size: 13px;
+}
+
+.deliverable-card {
+    background-color: #fdf6f6;
+    padding: 20px;
+}
+
+
+/*.bootstrap-select .btn {
+    background: #fff !important;
+}*/
+
+.bootstrap-select>.dropdown-toggle.bs-placeholder,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:active,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+    color: #fff !important;
+}
+
+.table>thead {
+    background-color: #f1f4f9 !important;
+    padding: 8px !important;
+    border-bottom: 1px solid #ccc !important;
+    color: #333 !important;
+    /*text-align: center !important;*/
+}
+
+
+/* Custom CSS for underlined tabs */
+
+.nav-tabs.underline-tabs .nav-item {
+    position: relative;
+}
+
+.nav-tabs.underline-tabs .nav-link::before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #007bff;
+    /* Customize the underline color */
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.2s;
+}
+
+.nav-tabs.underline-tabs .nav-link.active::before {
+    transform: scaleX(1);
+}
+
+div.dataTables_wrapper div.dataTables_length select {
+    width: 50% !important;
+    display: inline-block !important;
+}
+
+[contenteditable] {
+    height: 10rem;
+    border: 1px solid;
+    resize: both;
+}
+
+.mile_title {
+    background-color: #d8d8d8 !important;
+}
+
+.compain_card {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: -2px 3px 13px 0px #ddd6;
+}
+
+.centered-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.icon img {
+    width: 64px;
+    /* Adjust the size of the icon as needed */
+    height: 64px;
+}
+
+.label {
+    margin-top: 10px;
+    /* Add spacing between the icon and label */
+}
+
+
+/* Add this CSS to your stylesheet */
+
+.expand-icon {
+    color: #008000 !important;
+    /* Change color to green */
+    text-decoration: underline;
+    /* Add an underline */
+    cursor: pointer;
+    /* Add a pointer cursor to indicate interactivity */
+}
+
+
+/* Define your custom background color */
+
+.custom-child-row {
+    background-color: #e6f7e9 !important;
+    /* Change this to your desired color */
+}
+
+.card-bg {
+    position: relative;
+    float: left;
+    overflow: hidden;
+    /*    width: 100%;*/
+    color: #ffffff;
+    text-align: center;
+    border: none;
+    text-shadow: 0px 0px 5px #000;
+    border-radius: 10px !important;
+}
+
+.card-bg .card-content {
+    width: 100%;
+    padding: 15px 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: block;
+    -moz-transform: translate3d(-50%, -50%, 0px);
+    -ms-transform: translate3d(-50%, -50%, 0px);
+    -webkit-transform: translate3d(-50%, -50%, 0px);
+    transform: translate3d(-50%, -50%, 0px);
+}
+
+.text-green-light {
+    color: #50e3c2 !important;
+}
+
+.quick-card {
+    position: relative;
+    overflow: hidden;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 8px;
+}
+
+.quick-card img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border: 5px solid #e5e5e5;
+}
+
+.quick-card-plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    border-radius: 8px;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.quick-card-plus .fa-plus {
+    font-size: 14px;
+    background-color: #c1c3cb;
+    padding: 10px 11px;
+    color: #000;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.quick-card-plus:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.quick-card-plus .card-text {
+    word-break: break-all;
+    font-size: 11px;
+    line-height: 1.3em;
+}
+
+.quick-card .card-text {
+    word-break: break-all;
+    font-size: 11px;
+    line-height: 1.3em;
+}
+
+.quick-card-hover a {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    background-color: #fff;
+    display: none;
+    font-size: 12px !important;
+    color: tomato !important;
+}
+
+.quick-card:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.quick-card:hover .quick-card-hover a {
+    display: block;
+    color: tomato !important;
+}
+
+.text-danger {
+    color: #f33155 !important;
+}
+
+.leads_card_panel .item.item1 {
+    background-color: #0093d9;
+}
+
+.leads_card_panel .item.item2 {
+    background-color: #047a6a;
+}
+
+.leads_card_panel .item.item3 {
+    background-color: #f35957;
+}
+
+.leads_card_panel .item a {
+    color: #ffffff !important;
+}
+
+.leads_card_panel .item h5 {
+    font-size: 16px;
+    padding: 0px 0px;
+    margin: 0px;
+    font-weight: normal !important;
+}
+
+.leads_card_panel .item h1.number {
+    font-size: 70px;
+    padding: 10px 0px 0px 0px;
+}
+
+.leads_card_panel .item h2 {
+    font-size: 28px;
+    padding: 2px 0px;
+    margin: 0px 0px 15px 0px;
+}
+
+.leads_card_panel .item .data_seperator1 {
+    float: left;
+    width: 63%;
+    height: auto;
+    padding-left: 1px;
+}
+
+.leads_card_panel .item .data_seperator2 {
+    float: left;
+    width: 37%;
+    height: auto;
+}
+
+.leads_card_panel .item {
+    width: 32%;
+    height: 140px;
+    float: left;
+    margin-right: 10px;
+    color: #ffffff;
+    position: relative;
+    padding: 12px;
+}
+
+.scheduler-border {
+    min-width: 0;
+    padding: 0;
+    margin: 10px 0px 00px 0px !important;
+    border: 0;
+}
+
+.nowrap-link {
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide overflow text */
+    text-overflow: ellipsis;
+    /* Show ellipsis (...) for overflow text */
+    display: inline-block;
+    /* Make the links inline-block to apply ellipsis */
+    max-width: 100%;
+    /* Optional: Set a maximum width if needed */
+}
+
+.ml-5 {
+    margin-left: 5px !important;
+}
+
+.documents_date_fields {
+    display: flex;
+    align-items: center;
+}
+
+.hover-underline:hover {
+    text-decoration: underline;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+#toggle-search {
+    cursor: pointer;
+}
+
+.search-box {
+    display: none;
+    margin: 15px 0 15px 0;
+}
+
+#search-input {
+    width: 200px;
+    padding: 5px;
+}
+
+.options {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.options label {
+    display: block;
+    padding: 5px;
+}
+
+.lineindentation15px {
+    margin-left: 15px !important;
+}
+
+
+/* Style the checkboxes as needed */
+
+.table-task-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.table-task-card .col-sm-1 {
+    width: 2.33%;
+}
+
+.p-4 {
+    padding: 3px;
+}
+
+
+/* Style for right-sided offcanvas */
+
+
+/* Styles for the soft offcanvas */
+
+.offcanvas-end {
+    border-radius: 0px;
+    /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    /* Soft shadow effect */
+    transition: transform 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    /* Smooth transition */
+}
+
+.offcanvas-end.show {
+    transform: translateX(0);
+    /* Smooth open animation */
+    visibility: visible;
+    /* Ensure visibility */
+}
+
+.offcanvas-end:not(.show) {
+    transform: translateX(100%);
+    /* Smooth close animation */
+    visibility: hidden;
+    /* Hide when closed */
+}
+
+.offcanvas-header {
+    border-bottom: none;
+    /* Remove the bottom border of the offcanvas header */
+}
+
+.offcanvas-title {
+    font-size: 24px;
+    color: #007bff;
+    /* Set your desired color */
+    margin-bottom: 0px;
+    font-weight: bold;
+    text-transform: uppercase;
+    /* Add any additional styles you want */
+}
+
+
+/* CSS for the loading animation */
+
+.loader {
+    border: 4px solid #f3f3f3;
+    /* Light grey */
+    border-top: 4px solid #3498db;
+    /* Blue */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    /* Apply the spin animation */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Hide the loader by default */
+
+#loadingSpinner {
+    display: none;
+}
+
+.form-control {
+    background-color: #f5f4fa !important;
+    border-radius: 4px !important;
+}
+
+.fc-content .fc-title {
+    color: #fff !important;
+    text-wrap: wrap;
+}
+
+.selectpicker {
+    color: #212529 !important;
+}
+
+.bootstrap-select .btn {
+    background-color: #f5f4fa;
+    border: 1px solid #808080;
+    color: #212529 !important;
+    font-weight: 400;
+    font-size: 14px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+.filter-option-inner-inner {
+    color: #212529 !important;
+}
+
+.dropdown-toggle::after {
+    border-top: 0.3em solid #808080 !important;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff !important;
+}
+
+.wrap {
+    /* Your styles for wrapping text */
+    white-space: normal !important;
+    max-width: 250px;
+    /* Example width */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Optional: Show ellipsis (...) for overflowed text */
+}
+
+
+/* Print styles */
+
+@media print {
+    .wrap {
+        /* Your print styles for wrapping text */
+        white-space: normal !important;
+        max-width: 200px;
+        /* Example width */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* Optional: Show ellipsis (...) for overflowed text */
+    }
+}
+
+.editorShort {
+    height: 150px!important;
+}
+
+.ck-content .image {
+    height: auto !important;
+}
+
+.ck-content .image {
+    clear: both;
+    display: table;
+    margin: .9em !important;
+    min-width: 50px;
+    text-align: center;
+}
+
+.single_blog a {
+    text-decoration: underline!important;
+}
+
+.table>:not(:last-child)>:last-child>* {
+    border-bottom-color: lightgrey !important;
+}
+
+.editor_P p {
+    padding-bottom: 20px;
+}
+
+.ck-content p {
+    padding-bottom: 20px !important;
+}
+
+.invoice_table_body tr td .form-control {
+    border-radius: 0 !important;
+    border-color: #ddd !important;
+    height: 80px !important;
+}
+
+.dataTables_wrapper .col-sm-3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.dataTables_wrapper .col-sm-3 label {
+    order: -1;
+    /* Moves the label to the top */
+}
+
+.dataTables_wrapper .col-sm-6.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dataTables_wrapper .col-sm-3.text-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.dataTables_wrapper .dataTables_length {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card .image img {
+    width: 100% !important;
+}
+
+.card p img {
+    width: 100% !important;
+    height: auto !important;
+}
+
+@media print {
+    /* Hide the header and menu navbar */
+    .navbar,
+    .navbar-expand-lg {
+        display: none !important;
+    }
+    /* Optional: Hide other elements you don't want to print */
+    .sidebar {
+        display: none !important;
+    }
+    .left-menu {
+        display: none !important;
+    }
+    .header-container.fixed-top {
+        display: none !important;
+    }
+    /* Hide the filter form */
+    .light_green_card {
+        display: none !important;
+    }
+    /* Optional: Adjust table styles for printing */
+    .table-responsive {
+        overflow: visible !important;
+    }
+    /* Add margin space after each employee's tasks */
+    .employee-section {
+        margin-bottom: 20px;
+        /* Set margin bottom to 20px */
+        background-color: #fff;
+        /* White background */
+        padding: 20px;
+        /* Optional: Add padding if needed */
+    }
+    /* Add a dotted border line after each employee's tasks */
+    .employee-divider {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        border-top: 1px dotted #000;
+        /* Adjust as needed */
+    }
+    h1,
+    h2 {
+        page-break-after: avoid;
+    }
+}
