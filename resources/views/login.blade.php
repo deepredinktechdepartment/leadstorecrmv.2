@@ -34,7 +34,7 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
               <h3 class="text-center">Login</h3>
 
               <form
-                class="form-horizontal mt-2 pt-2 needs-validation" novalidate action="#" method="post">
+                class="form-horizontal mt-2 pt-2 needs-validation" novalidate action="{{route('auth.verify')}}" method="post">
 
                 @csrf
                 <div class="mb-3">
@@ -44,7 +44,7 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
                     class="form-control"
                     id="tb-email"
                     placeholder=""
-                    required name="i_username"
+                    required name="username"
                   />
 
                   <div class="invalid-feedback">Username is required</div>
@@ -73,7 +73,7 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
 
               </form>
 
-              <p class="text-small mt-2"><a href="#" class="resetpwd_form_title" ><u>Forgot Password?</u></a></p>
+              <p class="text-small mt-2"><a href="{{route('forget.password')}}" class="resetpwd_form_title" ><u>Forgot Password?</u></a></p>
 
             </div>
           </div>
