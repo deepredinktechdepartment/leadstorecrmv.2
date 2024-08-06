@@ -12,7 +12,8 @@ class SourceController extends Controller
     {
         try {
             $sources = Source::with('sourceGroup')->get();
-            return view('sources.index', compact('sources'));
+            $addlink=route('sources.create');
+            return view('sources.index', compact('sources','addlink'));
         } catch (\Exception $e) {
             Log::error('Error fetching sources: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to fetch sources.');

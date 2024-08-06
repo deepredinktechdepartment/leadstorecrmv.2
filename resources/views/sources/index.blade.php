@@ -5,13 +5,7 @@
 @section('content')
 <div class="container">
     <h1>Sources</h1>
-    <a href="{{ route('sources.create') }}" class="btn btn-primary mb-3">Add New Source</a>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @elseif(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
 
     <table class="table">
         <thead>

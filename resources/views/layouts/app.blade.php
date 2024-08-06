@@ -51,13 +51,13 @@
         <!-- Navbar End -->
 
         <!-- Sidebar Start -->
-        @auth
+        {{-- @auth
             <div class="left-menu">
                 <div class="menubar-content">
                     @include('partials.sidebar')
                 </div>
             </div>
-        @endauth
+        @endauth --}}
         <!-- Sidebar End -->
 
         <section>
