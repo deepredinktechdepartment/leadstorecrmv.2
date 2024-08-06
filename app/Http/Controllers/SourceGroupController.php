@@ -71,34 +71,44 @@ class SourceGroupController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        $id = Crypt::decrypt($id);
+        $sourceGroup = SourceGroup::findOrFail($id);
 
-public function update(Request $request, $id)
-{
-    $id = Crypt::decrypt($id);
-    $sourceGroup = SourceGroup::findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'source_icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'source_icon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+        try {
+            $sourceGroup->name = $request->name;
 
-    $sourceGroup->name = $request->name;
+            if ($request->hasFile('source_icon')) {
+                // Remove the old file if it exists
+                if ($sourceGroup->source_icon && Storage::exists('public/images/' . $sourceGroup->source_icon)) {
+                    Storage::delete('public/images/' . $sourceGroup->source_icon);
+                }
 
-    if ($request->hasFile('source_icon')) {
-        if ($sourceGroup->source_icon && file_exists(public_path('images/' . $sourceGroup->source_icon))) {
-            unlink(public_path('images/' . $sourceGroup->source_icon));
+                // Store the new file
+                $file = $request->file('source_icon');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $filePath = $file->storeAs('images', $filename, 'public');
+
+                // Save the file name to the database
+                $sourceGroup->source_icon = $filename;
+            }
+
+            $sourceGroup->save();
+
+            return redirect()->route('source_groups.index')->with('success', 'Source Group updated successfully.');
+        } catch (\Exception $e) {
+            // Log the error and return with an error message
+            Log::error('Error updating source group: ' . $e->getMessage());
+
+            return redirect()->back()->with('error', 'Failed to update Source Group. Please try again.');
         }
-
-        $file = $request->file('source_icon');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $filename);
-        $sourceGroup->source_icon = $filename;
     }
-
-    $sourceGroup->save();
-
-    return redirect()->route('source_groups.index')->with('success', 'Source Group updated successfully.');
-}
 
 public function destroy($id)
 {

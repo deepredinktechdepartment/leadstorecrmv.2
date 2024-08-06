@@ -44,7 +44,7 @@ class SourceController extends Controller
             return redirect()->route('sources.index')->with('success', 'Source created successfully.');
         } catch (\Exception $e) {
             Log::error('Error creating source: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Failed to create source.');
+            return redirect()->back()->with('error', 'Failed to create source.'.$e->getMessage());
         }
     }
 

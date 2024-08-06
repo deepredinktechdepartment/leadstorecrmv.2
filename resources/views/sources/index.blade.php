@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('title', 'Sources')
-
 @section('content')
 <div class="container">
 
@@ -26,7 +24,7 @@
                         <a href="{{ route('sources.edit', $source->id) }}" class="btn btn-warning btn-sm">
                             <i class="{{ config('constants.icons.edit') }}"></i>
                         </a>
-                        <form action="{{ route('sources.destroy', $source->id) }}" method="POST" style="display:inline;">
+                        <form  action="{{ route('sources.destroy', $source->id) }}" method="POST"  class="delete-form" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm">

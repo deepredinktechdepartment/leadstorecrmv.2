@@ -2,6 +2,11 @@
 
 @section('title', 'Source Groups')
 
+@php
+
+
+    use Illuminate\Support\Facades\Storage;
+@endphp
 @section('content')
 <div class="container">
     <table id="jquery-data-table" class="table table-striped table-hover">
@@ -16,8 +21,29 @@
         <tbody>
             @foreach($sourceGroups as $sourceGroup)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td><img src="{{ asset('images/' . $sourceGroup->source_icon) }}" alt="{{ $sourceGroup->name }}" width="50"></td>
+                    <td>{{ $loop->iteration }} </td>
+                    <td>
+                        @php
+                        // Define the path to the file
+                        $filePath = 'public/images/' . $sourceGroup->source_icon;
+                        // Check if the file exists
+                        $fileExists = Storage::exists($filePath);
+                    @endphp
+
+                    <!-- Display the image if it exists -->
+                    @if ($fileExists)
+                        <div class="mt-2">
+                            {{-- <img src="{{ URL::to(asset('storage/app/' . $filePath)) }}" alt="{{ $sourceGroup->name }}" width="50"> --}}
+                            <img src="{{ URL::to(asset('storage/app/' . $filePath)) }}"  width="50">
+                        </div>
+                    @else
+                        <!-- Optionally handle the case where the file does not exist -->
+                        <div class="mt-2">
+                            <p>No image available.</p>
+                        </div>
+                    @endif
+
+                    </td>
                     <td>{{ $sourceGroup->name }}</td>
                     <td>
                         <a href="{{ route('source_groups.edit', Crypt::encrypt($sourceGroup->id)) }}" class="btn btn-warning btn-sm">

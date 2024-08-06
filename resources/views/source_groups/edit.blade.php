@@ -19,15 +19,39 @@
 
         <div class="mb-3">
             <label for="source_icon" class="form-label">Source Icon</label>
+
             <input type="file" name="source_icon" id="source_icon" class="form-control">
-            @if ($sourceGroup->source_icon)
-                <div class="mt-2">
-                    <img src="{{ asset('images/' . $sourceGroup->source_icon) }}" alt="{{ $sourceGroup->name }}" width="100">
-                </div>
-            @endif
-            @error('source_icon')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+            @php
+            use Illuminate\Support\Facades\Storage;
+
+            // Define the path to the file
+            $filePath = 'public/images/' . $sourceGroup->source_icon;
+
+
+
+            // Check if the file exists
+            $fileExists = Storage::exists($filePath);
+
+        @endphp
+
+        <!-- Display the image if it exists -->
+        @if ($fileExists)
+            <div class="mt-2">
+                <img src="{{ URL::to(asset('storage/app/' . $filePath)) }}" alt="{{ $sourceGroup->name }}" width="100">
+            </div>
+        @else
+            <!-- Optionally handle the case where the file does not exist -->
+            <div class="mt-2">
+                <p>No image available.</p>
+            </div>
+        @endif
+
+        <!-- Display validation errors -->
+        @error('source_icon')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+
+
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
