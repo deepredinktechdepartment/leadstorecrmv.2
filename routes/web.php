@@ -2,6 +2,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SourceController;
+use App\Http\Controllers\SourceGroupController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,4 +56,8 @@ Route::middleware('auth')->group(function () {
     Route::post('user/update', [UserController::class, 'updateUser']);
     Route::get('user/delete/{id}', [UserController::class, 'deleteUser']);
     Route::get('user/delete/{id}', [UserController::class, 'deleteUser']);
+
+// sources & their Group
+    Route::resource('sources', SourceController::class);
+Route::resource('source_groups', SourceGroupController::class);
 });

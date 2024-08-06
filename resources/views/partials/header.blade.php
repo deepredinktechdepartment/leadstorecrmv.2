@@ -30,8 +30,8 @@
                       UTM
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <li><a class="dropdown-item" href="#">Source</a></li>
-                      <li><a class="dropdown-item" href="#">Medium</a></li>
+                      <li><a class="dropdown-item" href="{{ route('sources.index') }}">Source</a></li>
+                      <li><a class="dropdown-item" href="{{ route('source_groups.index') }}">Medium</a></li>
                     </ul>
                   </li>
                   <li class="nav-item dropdown">
