@@ -40,7 +40,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="#">Your Profile</a></li>
-                      <li><a class="dropdown-item" href="#">Change Password</a></li>
+                      <li><a class="dropdown-item" href="{{ route('reset.password') }}">Change Password</a></li>
                       <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                     </ul>
                   </li>

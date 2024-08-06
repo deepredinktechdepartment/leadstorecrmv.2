@@ -700,4 +700,41 @@ catch (\Exception $exception) {
 			return redirect()->back()->with('error', "Something went wrong.". $exception->getMessage()??'');
 			}
       }
+
+      public function changePasswordForm()
+      {
+
+           $pageTitle="Reset Password";
+          return view('changePassword.change_password', compact('pageTitle'));
+      }
+
+      public function saveChangePassword(Request $request)
+      {
+          // Validate the request
+          $validatedData = $request->validate([
+              'password' => 'required|min:8|max:16|confirmed',
+          ]);
+
+          try {
+              // Get the currently authenticated user
+              $user = User::find(auth()->user()->id);
+
+              // Update the user's password
+              $user->password = Hash::make($request->password);
+              $user->password_updated_at =Carbon\Carbon::now();
+              $user->save();
+
+              // Redirect with success message
+              return redirect()->back()->with('toast_success', 'Password changed successfully.');
+          } catch (\Exception $e) {
+              // Log the error message for debugging
+              \Log::error('Password change failed: ' . $e->getMessage());
+
+              // Redirect with error message
+              return redirect()->back()->with('toast_error', 'Failed to change password. Please try again.');
+          }
+      }
+
+
+
 }

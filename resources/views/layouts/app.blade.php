@@ -125,5 +125,9 @@
     </script>
 
     <script src="{{ URL::to('assets/js/toastrNotifications.js') }}"></script>
+
+    @stack('scripts')
+
+
 </body>
 </html>
