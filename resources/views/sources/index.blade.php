@@ -16,7 +16,7 @@
         <tbody>
             @foreach($sources as $source)
                 <tr>
-                    <td>{{ $source->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $source->sourceGroup->name ?? 'N/A' }}</td>
                     <td>{{ $source->name }}</td>
                     <td>{{ $source->shortcode }}</td>
