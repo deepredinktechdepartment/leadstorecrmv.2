@@ -11,9 +11,10 @@ class SourceController extends Controller
     public function index()
     {
         try {
+            $pageTitle="Sources";
             $sources = Source::with('sourceGroup')->get();
             $addlink=route('sources.create');
-            return view('sources.index', compact('sources','addlink'));
+            return view('sources.index', compact('sources','addlink','pageTitle'));
         } catch (\Exception $e) {
             Log::error('Error fetching sources: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to fetch sources.');
@@ -24,7 +25,8 @@ class SourceController extends Controller
     {
         try {
             $sourceGroups = SourceGroup::all();
-            return view('sources.create', compact('sourceGroups'));
+            $pageTitle="Add a Source";
+            return view('sources.create', compact('sourceGroups','pageTitle'));
         } catch (\Exception $e) {
             Log::error('Error fetching source groups: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to fetch source groups.');

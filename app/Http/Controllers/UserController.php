@@ -27,7 +27,6 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-
             if(isset($request->company_name) && !empty($request->company_name)) {
             $organizationID=$request->company_name;
             }
@@ -35,20 +34,16 @@ class UserController extends Controller
             $organizationID='-1';
             }
 
-            $users_data=User::select('users.*','user_types.name as ut_name','organizations.short_name as org_short_name')
+            $users=User::select('users.*','user_types.name as ut_name')
             ->leftjoin('user_types','user_types.id','=','users.role')
-            ->leftjoin('organizations','organizations.id','=','users.organization_id')
-            ->where(function($users_data) use ($organizationID){
-            if($organizationID){
-                $users_data->where('users.organization_id',"=",$organizationID);
-            }
-            })
             ->get();
 
-            $pageTitle="Registered users";
-            return view('admin.users.users_list', compact('pageTitle','users_data','organizationID'));
-
+            $pageTitle="Users List";
+            $addlink=route('users.create');
+            return view('users.index', compact('pageTitle','users','organizationID','addlink'));
     }
+
+
     public function create_user()
     {
 
@@ -739,7 +734,7 @@ catch (\Exception $exception) {
       public function showProfileForm(){
 
         $users_data=User::get()->where("id",auth()->user()->id)->first();
-        $pageTitle="Edit Profile";
+        $pageTitle="Update Profile";
         return view('users.edit_profile',compact('users_data','pageTitle'));
 
 }

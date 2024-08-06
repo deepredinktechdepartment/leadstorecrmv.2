@@ -47,13 +47,17 @@ Route::middleware('auth')->group(function () {
     Route::post('change-password', [UserController::class, 'changePassword'])->name('profile.changePassword');
 
     // Admin users routes
-    Route::get('users', [UserController::class, 'listUsers'])->name('reg.user');
-    Route::get('user/create', [UserController::class, 'showCreateUserForm']);
-    Route::post('user/store', [UserController::class, 'storeNewUser']);
-    Route::get('user/edit/{id}', [UserController::class, 'showEditUserForm']);
-    Route::post('user/update', [UserController::class, 'updateUser']);
-    Route::get('user/delete/{id}', [UserController::class, 'deleteUser']);
-    Route::get('user/delete/{id}', [UserController::class, 'deleteUser']);
+    // Route::get('users', [UserController::class, 'listUsers'])->name('reg.user');
+    // Route::get('user/create', [UserController::class, 'showCreateUserForm']);
+    // Route::post('user/store', [UserController::class, 'storeNewUser']);
+    // Route::get('user/edit/{id}', [UserController::class, 'showEditUserForm']);
+    // Route::post('user/update', [UserController::class, 'updateUser']);
+    // Route::get('user/delete/{id}', [UserController::class, 'deleteUser']);
+
+
+
+    Route::resource('users', UserController::class);
+
 
 // sources & their Group
     Route::resource('sources', SourceController::class);

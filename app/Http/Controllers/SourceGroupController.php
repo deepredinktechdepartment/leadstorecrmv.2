@@ -16,7 +16,8 @@ class SourceGroupController extends Controller
         try {
             $sourceGroups = SourceGroup::all();
             $addlink=route('source_groups.create');
-            return view('source_groups.index', compact('sourceGroups','addlink'));
+            $pageTitle="Source Group";
+            return view('source_groups.index', compact('sourceGroups','addlink','pageTitle'));
         } catch (\Exception $e) {
             Log::error('Error fetching source groups: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to fetch source groups.');

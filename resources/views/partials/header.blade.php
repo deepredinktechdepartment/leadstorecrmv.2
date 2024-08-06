@@ -23,7 +23,7 @@
                               <a class="nav-link {{ Request::routeIs('reports') ? 'active' : '' }}" href="./news-and-events.html">Reports</a>
                           </li>
                           <li class="nav-item">
-                              <a class="nav-link {{ Request::routeIs('users') ? 'active' : '' }}" href="./news-and-events.html">Users</a>
+                              <a class="nav-link {{ Request::routeIs('users') ? 'active' : '' }}" href="{{ route('users.index') }}">Users</a>
                           </li>
                           <li class="nav-item dropdown {{ Request::routeIs('sources.index', 'source_groups.index') ? 'active' : '' }}">
                               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
