@@ -14,9 +14,9 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
                 <img src="https://imgur.com/4KNcw2l.png" alt="Login Bg" class="img-fluid login-img">
             </div>
         </div>
-        <div class="col-sm-5 h-100">
+        <div class="col-sm-5 h-100 login-form-bg">
             <div class="login-form-wrapper">
-                <h4 class="mb-4 text-sm-start text-center">Login</h4>
+                <h2 class="mb-4 text-sm-start text-center">Login</h2>
 
                 <form id="loginForm" class="form-horizontal mt-2 pt-2 needs-validation" novalidate action="{{ route('auth.verify') }}" method="post">
                     @csrf

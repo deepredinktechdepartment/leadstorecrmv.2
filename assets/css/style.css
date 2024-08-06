@@ -104,7 +104,9 @@
     flex-direction: column;
     justify-content: center;
   }
-  
+  .login-form-bg{
+    background: #E5E9EC;
+  }
   .login-img-bg{
     background: radial-gradient(rgb(210,241,223),rgb(211,215,250),rgb(186,216,244)) 0% 0%/400% 400%;
   }
@@ -114,7 +116,7 @@
   }
   
   .login-form-wrapper .form-control{
-    background: #fff;
+    background-color: #fff !important;
     height: 40px;
     border-radius: 10px;
     border: 1px solid #ddd;
