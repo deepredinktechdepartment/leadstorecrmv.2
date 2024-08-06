@@ -13,7 +13,7 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
         <div class="row m-0 align-items-center h-100">
             <div class="col-sm-7 login-img-bg h-100">
                 <div class="text-center h-100 d-flex justify-content-center">
-                    <img src="./img/login-bg.svg" alt="Login Bg" class="img-fluid login-img">
+                    <img src="https://imgur.com/4KNcw2l.png" alt="Login Bg" class="img-fluid login-img">
                 </div>
             </div>
             <div class="col-sm-5 h-100">
@@ -53,7 +53,7 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
                 <div
                   class="d-flex align-items-stretch button-group mt-4 pt-2"
                 >
-                 <button type="submit" class="btn btn-primary btn-block w-100">
+                 <button type="submit" class="btn btn-primary btn-block w-100 mb-4">
                     Sign in
                   </button>
                 </div>
