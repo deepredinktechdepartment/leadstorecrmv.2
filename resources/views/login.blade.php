@@ -9,31 +9,18 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
 
 
 
-<div class="row auth-wrapper gx-0 d-flex justify-content-center">
-
-    <div
-      class="col-lg-6 d-flex align-items-center justify-content-center"
-    >
-      <div class="row justify-content-center w-100 mt-4 mt-lg-0">
-        <div class="col-lg-7 col-xl-7 col-md-7">
-          @if(isset($theme_options_data->header_logo) && !empty($theme_options_data->header_logo) )
-<div class="text-center">
-<img src="{{URL::to($theme_options_data->header_logo??'')}}" alt="Intranet" class="img-fluid mb-2"  style="filter: brightness(0) invert(1);" />
-</div>
-
-@else
-
-@endif
-          <div class="card" id="loginform">
-            <div class="card-body">
-                <div class="mb-2">
-
-
-
-              </div>
-              <h3 class="text-center">Login</h3>
-
-              <form
+<div class="p-0 login-sec">
+        <div class="row m-0 align-items-center h-100">
+            <div class="col-sm-7 login-img-bg h-100">
+                <div class="text-center h-100 d-flex justify-content-center">
+                    <img src="./img/login-bg.svg" alt="Login Bg" class="img-fluid login-img">
+                </div>
+            </div>
+            <div class="col-sm-5 h-100">
+                <div class="login-form-wrapper">
+                    <h4 class="mb-4 text-sm-start text-center">Welcome To Dashboard</h4>
+                   
+                    <form
                 class="form-horizontal mt-2 pt-2 needs-validation" novalidate action="{{route('auth.verify')}}" method="post">
 
                 @csrf
@@ -66,22 +53,29 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
                 <div
                   class="d-flex align-items-stretch button-group mt-4 pt-2"
                 >
-                 <button type="submit" class="btn btn-primary btn-block">
+                 <button type="submit" class="btn btn-primary btn-block w-100">
                     Sign in
                   </button>
                 </div>
 
               </form>
 
-              <p class="text-small mt-2"><a href="{{route('forget.password')}}" class="resetpwd_form_title" ><u>Forgot Password?</u></a></p>
 
+                    <div class="row">
+                 
+                        <div class="col-sm-6">
+                            <div class="login-info-text">
+                                <a href="{{route('forget.password')}}">Forgot Password?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+    </div>
+
+
+
 
 @endsection
