@@ -3,7 +3,7 @@
       <div class="row align-items-sm-center">
         <div class="col-sm-4 col-6">
           <a href="./">
-            <img src="./img/logo.png" class="img-fluid header-logo" alt="Leadstore">
+            <img src="https://imgur.com/EiMbaC5.png" class="img-fluid header-logo" alt="Leadstore">
           </a>
         </div>
         <div class="col-sm-8 col-6">
@@ -12,7 +12,7 @@
                 <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-sm-start text-end">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-sm-start text-end align-items-center">
                   <li class="nav-item active">
                     <a class="nav-link" aria-current="page" href="{{ route('dashboard') }}">Dashboard</a>
                   </li>
@@ -35,8 +35,8 @@
                     </ul>
                   </li>
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Deepredink
+                    <a class="nav-link dropdown-toggle profile-dropdown" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://leadstore.in/salesteampics/deep-red-ink-consultancy-squarelogo.png" class="profile-image img-circle" height="40"> Deepredink 
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <li><a class="dropdown-item" href="{{ route('profile.show') }}">Your Profile</a></li>
