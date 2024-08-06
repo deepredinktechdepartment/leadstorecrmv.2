@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Crypt;
 use Config;
 use Mail;
 use App\Mail\ResetPassword;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -734,6 +735,61 @@ catch (\Exception $exception) {
               return redirect()->back()->with('toast_error', 'Failed to change password. Please try again.');
           }
       }
+
+      public function showProfileForm(){
+
+        $users_data=User::get()->where("id",auth()->user()->id)->first();
+        $pageTitle="Edit Profile";
+        return view('users.edit_profile',compact('users_data','pageTitle'));
+
+}
+
+public function updateProfile(Request $request)
+{
+    // Validate request data
+    $request->validate([
+        'firstname' => 'required|min:1|max:100',
+        'email' => 'required|email',
+        'phone' => 'required|regex:/^[6-9]{1}[0-9]{9}$/',
+        'profile' => 'nullable|mimes:jpg,jpeg,png|max:2048', // Optional file, max size 2MB
+    ]);
+
+    try {
+
+        // Get the authenticated user
+        $user = User::findOrFail(auth()->user()->id);
+        // Handle profile picture upload
+           if ($request->hasFile('profile')) {
+            $profileFile = $request->file('profile');
+            $profileFilename = uniqid() . '_' . time() . '.' . $profileFile->extension();
+
+            // Store the file in storage/app/uploads/
+            $profileFilePath = $profileFile->storeAs('uploads', $profileFilename, 'public');
+
+            // Store the full path in the database, including 'storage/app/' prefix
+            $user->profile_photo = 'storage/app/public/' . $profileFilePath;
+        }
+
+        // Update user details
+        $user->fullname = $request->firstname;
+        $user->username = $request->email;
+        $user->phone = $request->phone;
+
+        // Save user details
+        $user->save();
+
+        return redirect()->route('profile.show')->with('success', 'Profile updated successfully.');
+    } catch (\Exception $e) {
+        // Log error message
+        \Log::error('Profile update failed: ' . $e->getMessage());
+
+        // Redirect back with error message
+        return redirect()->back()->with('error', 'Failed to update profile. Please try again.'. $e->getMessage());
+    }
+
+}
+
+
 
 
 
