@@ -1,5 +1,6 @@
 .header-container {
     background: #fff;
+    border-bottom: 1px solid #ddd;
     /* box-shadow: -1px 4px 20px 1px #f1f1f185; */
 }
 
@@ -458,66 +459,3 @@ i.user-note {
     cursor: pointer;
   } */
 
-  .login-sec{
-    height: 100vh;
-  }
-  .login-img{
-    width: 80%;
-  }
-  .login-form-wrapper{
-    padding: 20px 50px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .login-img-bg{
-    background: radial-gradient(rgb(210,241,223),rgb(211,215,250),rgb(186,216,244)) 0% 0%/400% 400%;
-  }
-  
-  .form-group{
-    margin-bottom: 20px;
-  }
-  
-  .form-control{
-    height: 50px;
-    border-radius: 10px;
-  }
-  label{
-    margin-bottom: 5px;
-    color: #000;
-  }
-  .btn.btn-submit{
-    background: #005b9c;
-    color: #fff;
-    padding: 6px 25px;
-    text-align: center;
-    font-size: 16px;
-    border: 1px solid #005b9c;
-    border-radius: 10px;
-  }
-  .btn.btn-submit:hover{
-    background: #fff;
-    color: #005b9c;
-  }
-  .login-info-text{
-    color: #005b9c;
-  }
-  @media(max-width: 1024px){
-    .login-form-wrapper {
-      padding: 20px 12px;
-    }
-  }
-  @media(max-width: 480px){
-    .login-sec{
-      height: auto;
-    }
-    .login-img-bg{
-      height: auto !important;
-    }
-    .login-form-wrapper{
-      padding: 30px 10px;
-      height: auto !important;
-    }
-  }
