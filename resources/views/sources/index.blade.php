@@ -4,12 +4,11 @@
 
 @section('content')
 <div class="container">
-    <h1>Sources</h1>
 
-    <table id="jquery-data-table" class="table">
+    <table id="jquery-data-table" class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>ID</th>
+                <th>S.No.</th>
                 <th>Source Group</th>
                 <th>Name</th>
                 <th>Shortcode</th>

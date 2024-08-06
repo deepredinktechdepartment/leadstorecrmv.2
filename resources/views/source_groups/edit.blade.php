@@ -5,16 +5,10 @@
 @section('content')
 <div class="container">
     <h1>Edit Source Group</h1>
-    <form action="{{ route('source_groups.update', $sourceGroup->id) }}" method="POST">
+    <form action="{{ route('source_groups.update', Crypt::encrypt($sourceGroup->id)) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <div class="mb-3">
-            <label for="source_icon" class="form-label">Source Icon</label>
-            <input type="text" name="source_icon" id="source_icon" class="form-control" value="{{ $sourceGroup->source_icon }}">
-            @error('source_icon')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ $sourceGroup->name }}">
@@ -22,6 +16,20 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
+
+        <div class="mb-3">
+            <label for="source_icon" class="form-label">Source Icon</label>
+            <input type="file" name="source_icon" id="source_icon" class="form-control">
+            @if ($sourceGroup->source_icon)
+                <div class="mt-2">
+                    <img src="{{ asset('images/' . $sourceGroup->source_icon) }}" alt="{{ $sourceGroup->name }}" width="100">
+                </div>
+            @endif
+            @error('source_icon')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>

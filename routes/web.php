@@ -57,5 +57,5 @@ Route::middleware('auth')->group(function () {
 
 // sources & their Group
     Route::resource('sources', SourceController::class);
-Route::resource('source_groups', SourceGroupController::class);
+    Route::resource('source_groups', SourceGroupController::class);
 });

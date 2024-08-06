@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/min/dropzone.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.css">
 
     {{-- Custom styles --}}
     <link rel="stylesheet" href="{{ URL::to('assets/css/layouts.css') }}" />
@@ -106,6 +108,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+<!-- SweetAlert JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
+
+
     <!-- Custom scripts -->
     <script src="{{ URL::to('assets/js/apexCharts/areaChart.js') }}"></script>
     <script src="{{ URL::to('assets/js/chartjs/doughnut-chart.js') }}"></script>
@@ -126,6 +133,7 @@
 
     <script src="{{ URL::to('assets/js/toastrNotifications.js') }}"></script>
     <script src="{{ URL::to('assets/js/datatables.js') }}"></script>
+    <script src="{{ URL::to('assets/js/sweetalert.js') }}"></script>
 
     @stack('scripts')
 
