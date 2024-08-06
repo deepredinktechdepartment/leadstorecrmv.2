@@ -125,6 +125,7 @@
     </script>
 
     <script src="{{ URL::to('assets/js/toastrNotifications.js') }}"></script>
+    <script src="{{ URL::to('assets/js/datatables.js') }}"></script>
 
     @stack('scripts')
 

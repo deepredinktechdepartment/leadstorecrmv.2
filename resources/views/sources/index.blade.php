@@ -6,8 +6,7 @@
 <div class="container">
     <h1>Sources</h1>
 
-
-    <table class="table">
+    <table id="jquery-data-table" class="table">
         <thead>
             <tr>
                 <th>ID</th>
@@ -25,11 +24,15 @@
                     <td>{{ $source->name }}</td>
                     <td>{{ $source->shortcode }}</td>
                     <td>
-                        <a href="{{ route('sources.edit', $source->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{ route('sources.edit', $source->id) }}" class="btn btn-warning btn-sm">
+                            <i class="{{ config('constants.icons.edit') }}"></i>
+                        </a>
                         <form action="{{ route('sources.destroy', $source->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="{{ config('constants.icons.delete') }}"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>

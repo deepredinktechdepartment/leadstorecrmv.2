@@ -84,4 +84,10 @@ return [
 	'dpd'=>'DPD',
 	'priority'=>'Priority',
 	'defaultmytaskstatus'=>'not_started,started,in_review,rework,approved,scheduled',
+
+	'icons' => [
+        'edit' => 'fas fa-edit',
+        'delete' => 'fas fa-trash',
+    ],
+
 ];
