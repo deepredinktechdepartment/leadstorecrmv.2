@@ -4,7 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\SourceGroupController;
-
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -33,9 +33,7 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 // Authenticated routes
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    });
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Reset password
     Route::get('reset-password', [UserController::class, 'changePasswordForm'])->name('reset.password');
