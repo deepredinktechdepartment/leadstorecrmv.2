@@ -1,13 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
 @section('content')
 <div class="row">
     <!-- Start col -->
-    <div class="col-lg-12">
+    <div class="col-lg-6">
         <div class="card m-b-30">
-            <div class="card-header">
-                <h5 class="card-title">{{ $pageTitle ?? '' }}</h5>
-            </div>
+
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
@@ -17,21 +14,21 @@
                                 <div class="col-md-6">
                                     <!-- Full Name -->
                                     <div class="mb-3">
-                                        <label for="firstname" class="form-label"><b>Full Name</b><span class="text-danger">*</span></label>
+                                        <label for="firstname" class="form-label">Full Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="firstname" id="firstname" value="{{ old('firstname', Auth::user()->fullname ?? '') }}" required />
 
                                     </div>
 
                                     <!-- Email -->
                                     <div class="mb-3">
-                                        <label for="email" class="form-label"><b>Email</b><span class="text-danger">*</span></label>
+                                        <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                                         <input type="email" name="email" class="form-control" id="email" value="{{ old('email', Auth::user()->username ?? '') }}" required />
 
                                     </div>
 
                                     <!-- Mobile -->
                                     <div class="mb-3">
-                                        <label for="phone" class="form-label"><b>Mobile</b><span class="text-danger">*</span></label>
+                                        <label for="phone" class="form-label">Mobile<span class="text-danger">*</span></label>
                                         <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', Auth::user()->phone ?? '') }}" required maxlength="10" minlength="10" />
 
                                     </div>

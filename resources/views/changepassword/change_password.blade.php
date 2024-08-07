@@ -1,31 +1,27 @@
 @extends('layouts.app')
-@section('title', 'Change Password')
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-lg-8">
+<div class="row">
+    <div class="col-6">
         <div class="card mb-3">
-            <div class="card-header">
-                <h5 class="card-title">@yield('title')</h5>
-            </div>
             <div class="card-body">
                 <form id="changePasswordForm" action="{{ route('verifying.password') }}" method="post">
                     @csrf
                     <div class="mb-3 row">
-                        <label for="password" class="col-sm-4 col-form-label">New Password <span class="text-danger">*</span></label>
-                        <div class="col-sm-8">
+                        <label for="password" class="col-sm-5 col-form-label">New Password <span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
                             <input type="password" class="form-control" name="password" id="password" required>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <label for="password_confirmation" class="col-sm-4 col-form-label">Confirm New Password <span class="text-danger">*</span></label>
-                        <div class="col-sm-8">
+                        <label for="password_confirmation" class="col-sm-5 col-form-label">Confirm New Password <span class="text-danger">*</span></label>
+                        <div class="col-sm-7">
                             <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="mb-3 row">
-                        <div class="col-sm-8 offset-sm-4">
+                        <div class="col-sm-7 offset-sm-5">
                             <button type="submit" class="btn btn-primary">Change</button>
                         </div>
                     </div>

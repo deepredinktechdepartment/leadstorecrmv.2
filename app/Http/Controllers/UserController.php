@@ -700,7 +700,7 @@ catch (\Exception $exception) {
       public function changePasswordForm()
       {
 
-           $pageTitle="Reset Password";
+           $pageTitle="Change Password";
           return view('changePassword.change_password', compact('pageTitle'));
       }
 
@@ -723,9 +723,6 @@ catch (\Exception $exception) {
               // Redirect with success message
               return redirect()->back()->with('toast_success', 'Password changed successfully.');
           } catch (\Exception $e) {
-              // Log the error message for debugging
-              \Log::error('Password change failed: ' . $e->getMessage());
-
               // Redirect with error message
               return redirect()->back()->with('toast_error', 'Failed to change password. Please try again.');
           }
@@ -733,9 +730,14 @@ catch (\Exception $exception) {
 
       public function showProfileForm(){
 
+        try{
         $users_data=User::get()->where("id",auth()->user()->id)->first();
         $pageTitle="Update Profile";
         return view('users.edit_profile',compact('users_data','pageTitle'));
+    } catch (\Exception $e) {
+        // Redirect with error message
+        return redirect()->back()->with('toast_error', 'Failed to '.$pageTitle.'. Please try again.');
+    }
 
 }
 
