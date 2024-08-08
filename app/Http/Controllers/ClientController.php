@@ -26,17 +26,33 @@ use App\Models\Client;
 class ClientController extends Controller
 {
 // Display a listing of the resource.
-public function index()
+
+public function index(Request $request)
 {
     $pageTitle = 'Projects List'; // Set the page title
     $clients = [];
-$addlink=route('clients.create');
-    try {
+    $addlink = route('clients.create');
 
-        $clients = Client::select('clients.*')
-        ->orderBy('clients.active', 'DESC')
-        ->orderBy('clients.client_name')
-        ->get();
+    try {
+        // Initialize the query builder
+        $query = Client::select('clients.*')
+            ->orderBy('clients.active', 'DESC')
+            ->orderBy('clients.client_name');
+
+        // Check if 'active' query parameter is present
+        if ($request->has('active')) {
+            $active = $request->input('active');
+
+            // Normalize the value to boolean
+            $isActive = filter_var($active, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+
+            if ($isActive !== null) {
+                $query->where('clients.active', $isActive);
+            }
+        }
+
+        // Execute the query
+        $clients = $query->get();
     } catch (\Exception $e) {
         // Log the exception message
         \Log::error('Failed to retrieve clients: ' . $e->getMessage());
@@ -44,8 +60,9 @@ $addlink=route('clients.create');
         return view('clients.index', ['pageTitle' => $pageTitle, 'error' => 'An error occurred while fetching clients.']);
     }
 
-    return view('clients.index', compact('clients', 'pageTitle','addlink'));
+    return view('clients.index', compact('clients', 'pageTitle', 'addlink'));
 }
+
 
     // Show the form for creating a new resource.
     public function create()

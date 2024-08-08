@@ -4,13 +4,25 @@
 @section('content')
 
 
+@php
+
+use App\Models\Client;
+// Count active clients
+$activeClientCount = Client::where('active', true)->count();
+@endphp
       <div class="row mb-5">
+
         <div class="col-sm-3">
-          <div class="dashboard-card-wrapper bg-primary">
+            <a href="{{ URL::to('clients?active=true') }}">
+            <div class="card bg-primary">
             <p class="dashboard-heading text-white">Active Projects</p>
-            <p class="dashboard-count text-white">34</p>
-          </div>
+            <p class="dashboard-count text-white">{{ $activeClientCount??0 }}</p>
+            </div>
+            </a>
         </div>
+
+
+
         <div class="col-sm-3">
           <div class="dashboard-card-wrapper bg-success">
             <p class="dashboard-heading text-white">Performing Well</p>
@@ -180,7 +192,7 @@
                 </div>
               </div>
             </div>
-          
+
         </div>
       </div>
 
