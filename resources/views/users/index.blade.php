@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
   <!-- DataTable -->
@@ -33,7 +32,7 @@
                   <td>
                     <a href="{{ route('users.edit', ["userID"=>Crypt::encrypt($user->id)]) }}" class="btn btn-warning btn-sm">
 
-                        <i class="{{ config('constants.icons.edit') }}"></i> {{ $user->id }}
+                        <i class="{{ config('constants.icons.edit') }}"></i>
                       </a>
                       <form action="{{ route('users.destroy', ['user' => Crypt::encrypt($user->id)]) }}" method="POST" style="display:inline;">
                           @csrf

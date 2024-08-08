@@ -39,6 +39,7 @@
     {{-- Custom styles --}}
     <link rel="stylesheet" href="{{ URL::to('assets/css/layouts.css') }}" />
     <link rel="stylesheet" href="{{ URL::to('assets/css/responsive.css') }}" />
+     <link rel="stylesheet" href="{{ URL::to('assets/css/sass.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
 </head>
 
