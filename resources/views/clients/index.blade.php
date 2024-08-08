@@ -19,7 +19,7 @@
                 @foreach($clients as $client)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $client->client_name }}</td>
+                        <td><a href="{{ route('projectLeads',['projectId'=>Crypt::encrypt($client->id)]) }}"> {{ $client->client_name }}</a></td>
                         <td>{{ $client->industry_category }}</td>
                         <td>
                             @if($client->active)
