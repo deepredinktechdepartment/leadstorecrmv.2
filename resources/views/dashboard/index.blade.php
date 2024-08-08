@@ -116,28 +116,28 @@
                   <div class="col-lg-3">
                     <div>
                       <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-1 d-block mx-auto">
-                      <h6 class="text-center">Suneel Garnepudi</h6>
+                      <p class="text-center">Suneel Garnepudi</p>
                       <p class="italic text-center">21 Minutes Ago</p>
                     </div>
                   </div>
                   <div class="col-lg-3">
                     <div>
                       <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-1 d-block mx-auto">
-                      <h6 class="text-center">Suneel Garnepudi</h6>
+                      <p class="text-center">Suneel Garnepudi</p>
                       <p class="italic text-center">21 Minutes Ago</p>
                     </div>
                   </div>
                   <div class="col-lg-3">
                     <div>
                       <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-1 d-block mx-auto">
-                      <h6 class="text-center">Suneel Garnepudi</h6>
+                      <p class="text-center">Suneel Garnepudi</p>
                       <p class="italic text-center">21 Minutes Ago</p>
                     </div>
                   </div>
                   <div class="col-lg-3">
                     <div>
                       <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-1 d-block mx-auto">
-                      <h6 class="text-center">Suneel Garnepudi</h6>
+                      <p class="text-center">Suneel Garnepudi</p>
                       <p class="italic text-center">21 Minutes Ago</p>
                     </div>
                   </div>
