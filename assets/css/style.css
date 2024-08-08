@@ -1237,9 +1237,7 @@ label {
 /*#region top* ================================ DASHBOARD CSS START ============================*/
 
 .content-wrapper {
-    margin-left: 240px;
     transition: 0.4s;
-    margin-top: 4rem;
     border-top-left-radius: 50px;
     background-color: #f5f4fa !important;
     min-height: 100vh;

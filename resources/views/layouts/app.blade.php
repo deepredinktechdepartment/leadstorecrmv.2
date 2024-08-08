@@ -66,13 +66,15 @@
 
         <section class="mt-5 pt-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="main_wrapper">
-                            @include('partials.pagetitle')
-                            {{-- @include('errors.alerts')
-                            @include('errors.errors') --}}
-                            @yield('content')
+                <div class="content-wrapper">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="main_wrapper">
+                                @include('partials.pagetitle')
+                                {{-- @include('errors.alerts')
+                                @include('errors.errors') --}}
+                                @yield('content')
+                            </div>
                         </div>
                     </div>
                 </div>
