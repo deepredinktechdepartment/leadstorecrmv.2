@@ -21,6 +21,7 @@ use Mail;
 use App\Mail\ResetPassword;
 use Illuminate\Support\Facades\Storage;
 
+
 class UserController extends Controller
 {
 
@@ -370,6 +371,35 @@ public function updateProfile(Request $request)
 }
 
 
+public function updatePassword(Request $request)
+{
+    $userId = Crypt::decrypt($request->input('userId'));
+    $password = $request->input('password');
+
+    $user = User::find($userId);
+    if ($user) {
+        $user->password = Hash::make($password);
+        $user->save();
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false], 400);
+}
+
+public function toggleStatus(Request $request)
+{
+    $userId = Crypt::decrypt($request->input('userId'));
+    $status = $request->input('status');
+
+    $user = User::find($userId);
+    if ($user) {
+        $user->active = $status;
+        $user->save();
+        return response()->json(['success' => true]);
+    }
+
+    return response()->json(['success' => false], 400);
+}
 
 
 

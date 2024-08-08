@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::post('users/deleteData', [UserController::class, 'storeOrUpdate'])->name('users.destroy');
 
 
+    Route::post('/users/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
+    Route::post('/users/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
 
     Route::resource('clients', ClientController::class);
 
