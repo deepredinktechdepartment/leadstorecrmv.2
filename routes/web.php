@@ -55,8 +55,8 @@ Route::middleware('auth')->group(function () {
     // Route::get('user/delete/{id}', [UserController::class, 'deleteUser']);
 
 
-
-    Route::resource('users', UserController::class);
+    Route::get('users/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::resource('users', UserController::class)->except(['edit']);
 
 
 // sources & their Group
