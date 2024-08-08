@@ -398,17 +398,23 @@ public function updatePassword(Request $request)
 
 public function toggleStatus(Request $request)
 {
-    $userId = Crypt::decrypt($request->input('userId'));
-    $status = $request->input('status');
+    try {
+        $userId = Crypt::decrypt($request->input('userId'));
+        $status = $request->input('status');
 
-    $user = User::find($userId);
-    if ($user) {
-        $user->active = $status;
-        $user->save();
-        return response()->json(['success' => true]);
+        $user = User::find($userId);
+        if ($user) {
+            $user->active = $status;
+            $user->save();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 404); // User not found
+    } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+        return response()->json(['success' => false, 'error' => 'Invalid user ID'], 400);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'error' => 'An error occurred while toggling status'], 500);
     }
-
-    return response()->json(['success' => false], 400);
 }
 
 

@@ -3,17 +3,48 @@
 // app/Http/Controllers/ClientController.php
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\UserType;
+use App\Models\Organizations;
+use App\Models\GroupLevel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Hash;
+use Validator;
+use Auth;
+use Illuminate\Support\Facades\Session;
+use Carbon;
+Use Exception;
+use Illuminate\Support\Facades\Crypt;
+use Config;
+use Mail;
+use App\Mail\ResetPassword;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Client;
 
 class ClientController extends Controller
 {
-    // Display a listing of the resource.
-    public function index()
-    {
-        $clients = Client::all();
-        return view('clients.index', compact('clients'));
+// Display a listing of the resource.
+public function index()
+{
+    $pageTitle = 'Projects List'; // Set the page title
+    $clients = [];
+$addlink=route('clients.create');
+    try {
+
+        $clients = Client::select('clients.*')
+        ->orderBy('clients.active', 'DESC')
+        ->get();
+    } catch (\Exception $e) {
+        // Log the exception message
+        \Log::error('Failed to retrieve clients: ' . $e->getMessage());
+        // Optionally, set a user-friendly error message
+        return view('clients.index', ['pageTitle' => $pageTitle, 'error' => 'An error occurred while fetching clients.']);
     }
+
+    return view('clients.index', compact('clients', 'pageTitle','addlink'));
+}
 
     // Show the form for creating a new resource.
     public function create()
