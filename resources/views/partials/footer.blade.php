@@ -1,3 +1,8 @@
-<div class="footer">
-    <p>&copy; 2024 My Application. All rights reserved.</p>
-</div>
+<footer class="bg-dark py-3">
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <p class="m-0 p-0">© Deep Red Ink Consulting Pvt. Ltd.</p>
+            <img src="assets/images/leadstore-logo-white.png" alt="leadstore logo" class="img-fluid" />
+        </div>
+    </div>
+</footer>

@@ -1237,9 +1237,7 @@ label {
 /*#region top* ================================ DASHBOARD CSS START ============================*/
 
 .content-wrapper {
-    margin-left: 240px;
     transition: 0.4s;
-    margin-top: 4rem;
     border-top-left-radius: 50px;
     background-color: #f5f4fa !important;
     min-height: 100vh;
@@ -2222,4 +2220,9 @@ div.dataTables_wrapper div.dataTables_length select {
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
+}
+
+.recently_active_users p {
+    font-style: italic;
+    font-size: 13px;
 }
