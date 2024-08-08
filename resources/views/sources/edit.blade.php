@@ -1,10 +1,10 @@
 @extends('layouts.app')
-
-@section('title', 'Edit Source')
-
 @section('content')
-<div class="container">
-    <h1>Edit Source</h1>
+<div class="row">
+    <!-- Start col -->
+    <div class="col-lg-6">
+    <div class="card m-b-30">
+    <div class="card-body">
     <form action="{{ route('sources.update', $source->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -37,5 +37,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
+</div>
+</div>
+</div>
 </div>
 @endsection

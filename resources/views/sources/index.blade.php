@@ -1,7 +1,11 @@
 @extends('layouts.app')
 @section('title', 'Sources')
 @section('content')
-<div class="container">
+<div class="row">
+<!-- Start col -->
+<div class="col-lg-12">
+<div class="card m-b-30">
+<div class="card-body">
 
     <table id="jquery-data-table" class="table table-striped table-hover">
         <thead>
@@ -37,4 +41,9 @@
         </tbody>
     </table>
 </div>
+</div>
+</div>
+</div>
+
+
 @endsection

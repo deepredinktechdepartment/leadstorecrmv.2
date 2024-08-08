@@ -35,6 +35,7 @@ $addlink=route('clients.create');
 
         $clients = Client::select('clients.*')
         ->orderBy('clients.active', 'DESC')
+        ->orderBy('clients.client_name')
         ->get();
     } catch (\Exception $e) {
         // Log the exception message

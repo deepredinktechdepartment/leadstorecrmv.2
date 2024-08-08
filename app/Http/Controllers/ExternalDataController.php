@@ -118,6 +118,7 @@ class ExternalDataController extends Controller
             $error=['error' => 'Error fetching data from external API'.$responseBody];
             $Jdata="";
             $leadCount_source="";
+            $pageTitle="";
             return view('marketing.crm.leads',compact('pageTitle','Jdata','error','projectID','today_count','monthly_count','leadCount_source','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
             //return response()->json(['error' => 'Error fetching data from external API'.$responseBody], $status);
             }
@@ -131,6 +132,7 @@ class ExternalDataController extends Controller
         }
         else{
 
+            $pageTitle="";
            // return redirect('/api-credentials/create/'.Crypt::encryptString($projectID));
            return view('marketing.crm.leads',compact('pageTitle','Jdata','error','projectID','today_count','monthly_count','leadCount_source','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
 
@@ -139,6 +141,7 @@ class ExternalDataController extends Controller
         } catch (\Exception $e) {
             $error=['error' => 'An error occurred: ' . $e->getMessage()];
             $Jdata="";
+            $pageTitle=$projectID="";
             return view('marketing.crm.leads',compact('pageTitle','Jdata','error','projectID'));
            //return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
 

@@ -16,7 +16,7 @@ class SourceGroupController extends Controller
         try {
             $sourceGroups = SourceGroup::all();
             $addlink=route('source_groups.create');
-            $pageTitle="Source Group";
+            $pageTitle="Source Groups";
             return view('source_groups.index', compact('sourceGroups','addlink','pageTitle'));
         } catch (\Exception $e) {
             Log::error('Error fetching source groups: ' . $e->getMessage());
@@ -27,7 +27,8 @@ class SourceGroupController extends Controller
     public function create()
     {
             try{
-            return view('source_groups.create');
+                $pageTitle="Add a source group";
+            return view('source_groups.create',compact('pageTitle'));
             } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to create source group.');
             }
@@ -65,7 +66,8 @@ class SourceGroupController extends Controller
         try {
             $decryptedId = Crypt::decrypt($id);
             $sourceGroup = SourceGroup::findOrFail($decryptedId);
-            return view('source_groups.edit', compact('sourceGroup'));
+            $pageTitle="Edit a source group";
+            return view('source_groups.edit', compact('sourceGroup','pageTitle'));
         } catch (\Exception $e) {
             // Handle decryption or not found exception
             return redirect()->route('source_groups.index')->with('error', 'Invalid source group ID.');

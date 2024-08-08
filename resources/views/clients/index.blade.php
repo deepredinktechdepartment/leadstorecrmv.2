@@ -1,8 +1,9 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="row">
-    <div class="col-12">
+    <div class="col-lg-12">
+    <div class="card m-b-30">
+    <div class="card-body">
         <!-- DataTable -->
         <table id="clients-table" class="table table-striped table-bordered">
             <thead>
@@ -50,6 +51,8 @@
             </tbody>
         </table>
     </div>
+</div>
+</div>
 </div>
 @endsection
 

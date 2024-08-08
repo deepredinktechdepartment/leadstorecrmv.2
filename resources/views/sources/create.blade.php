@@ -1,10 +1,9 @@
 @extends('layouts.app')
-
-@section('title', 'Add Source')
-
 @section('content')
-<div class="container">
-    <h1>Add Source</h1>
+<div class="row">
+    <div class="col-lg-6">
+    <div class="card m-b-30">
+    <div class="card-body">
     <form action="{{ route('sources.store') }}" method="POST">
         @csrf
         <div class="mb-1">
@@ -34,5 +33,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
+</div>
+</div>
+</div>
 </div>
 @endsection

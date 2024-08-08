@@ -1,12 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-
-
 <div class="row ">
-    <div class="col-md-12">
-
-
+ <div class="col-md-12">
 
 {{-- Leads counts --}}
 
@@ -16,7 +12,7 @@
 
 {{-- Filters over leads data --}}
 @if($projectID && !$error)
-{{-- @include("marketing.crm.filteronleads") --}}
+@include("marketing.crm.filteronleads")
 @endif
 {{-- Leads Views --}}
 

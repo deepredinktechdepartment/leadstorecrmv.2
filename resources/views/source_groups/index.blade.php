@@ -1,14 +1,12 @@
 @extends('layouts.app')
-
-@section('title', 'Source Groups')
-
 @php
-
-
-    use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage;
 @endphp
 @section('content')
-<div class="container">
+<div class="row">
+    <div class="col-lg-12">
+    <div class="card m-b-30">
+    <div class="card-body">
     <table id="jquery-data-table" class="table table-striped table-hover">
         <thead>
             <tr>
@@ -61,5 +59,8 @@
             @endforeach
         </tbody>
     </table>
+</div>
+</div>
+</div>
 </div>
 @endsection

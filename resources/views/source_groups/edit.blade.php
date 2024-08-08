@@ -1,10 +1,10 @@
 @extends('layouts.app')
-
-@section('title', 'Edit Source Group')
-
 @section('content')
-<div class="container">
-    <h1>Edit Source Group</h1>
+<div class="row">
+    <div class="col-lg-6">
+    <div class="card m-b-30">
+    <div class="card-body">
+
     <form action="{{ route('source_groups.update', Crypt::encrypt($sourceGroup->id)) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
@@ -56,5 +56,8 @@
 
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
+</div>
+</div>
+</div>
 </div>
 @endsection

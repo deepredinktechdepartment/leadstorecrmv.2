@@ -1,11 +1,12 @@
 <!-- Check if there are any validation errors -->
 @php
 
-    use App\Models\ApiCredential;
-     $intranet_project = ApiCredential::where('intranet_project_id',$projectID)->get()->first();
-     $utmData=$intranet_project->filter_options??'';
-     $utmData=json_decode($utmData,true);
-     $utmData = is_array($utmData) ? array_filter($utmData) : [];
+use App\Models\Client as Project;
+
+$intranet_project = Project::where('id',$projectID)->get()->first();
+$utmData=$intranet_project->filter_options??'';
+$utmData=json_decode($utmData,true);
+$utmData = is_array($utmData) ? array_filter($utmData) : [];
 
 
 
@@ -54,7 +55,7 @@
 -->
 <div class="row mb-5">
     <div class="col-7 card">
-        <form action="{{ route('mkt.crm',['projectID'=>Crypt::encryptString($projectID??0)]) }}" method="post">
+        <form action="{{ route('projectLeads',['projectID'=>Crypt::encrypt($projectID??0)]) }}" method="post">
             @csrf
             <div class="row">
                 <!-- From Date -->

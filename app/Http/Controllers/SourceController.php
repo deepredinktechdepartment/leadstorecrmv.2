@@ -25,7 +25,7 @@ class SourceController extends Controller
     {
         try {
             $sourceGroups = SourceGroup::all();
-            $pageTitle="Add a Source";
+            $pageTitle="Add a source";
             return view('sources.create', compact('sourceGroups','pageTitle'));
         } catch (\Exception $e) {
             Log::error('Error fetching source groups: ' . $e->getMessage());
@@ -54,7 +54,8 @@ class SourceController extends Controller
     {
         try {
             $sourceGroups = SourceGroup::all();
-            return view('sources.edit', compact('source', 'sourceGroups'));
+            $pageTitle="Edit a source";
+            return view('sources.edit', compact('source', 'sourceGroups','pageTitle'));
         } catch (\Exception $e) {
             Log::error('Error fetching source or source groups: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to fetch source or source groups.');
