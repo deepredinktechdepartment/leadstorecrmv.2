@@ -13,8 +13,8 @@
                   </button>
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-sm-start text-end align-items-center">
-                        <li class="nav-item">
-                          <a class="nav-link {{ Request::routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+                        <li class="nav-item {{ Request::routeIs('dashboard') ? 'active' : '' }}">
+                          <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                       </li>
                           <li class="nav-item">
                               <a class="nav-link {{ Request::routeIs('projects') ? 'active' : '' }}" href="./about.html">Projects</a>
@@ -22,8 +22,8 @@
                           <li class="nav-item">
                               <a class="nav-link {{ Request::routeIs('reports') ? 'active' : '' }}" href="./news-and-events.html">Reports</a>
                           </li>
-                          <li class="nav-item">
-                              <a class="nav-link {{ Request::routeIs('users') ? 'active' : '' }}" href="{{ route('users.index') }}">Users</a>
+                          <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
+                              <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                           </li>
                           <li class="nav-item dropdown {{ Request::routeIs('sources.index', 'source_groups.index') ? 'active' : '' }}">
                               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

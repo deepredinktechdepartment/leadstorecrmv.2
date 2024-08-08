@@ -13,28 +13,28 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <!-- Full Name -->
-                                    <div class="mb-3">
+                                    <div class="mb-1">
                                         <label for="firstname" class="form-label">Full Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="firstname" id="firstname" value="{{ old('firstname', Auth::user()->fullname ?? '') }}" required />
 
                                     </div>
 
                                     <!-- Email -->
-                                    <div class="mb-3">
+                                    <div class="mb-1">
                                         <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                                         <input type="email" name="email" class="form-control" id="email" value="{{ old('email', Auth::user()->username ?? '') }}" required />
 
                                     </div>
 
                                     <!-- Mobile -->
-                                    <div class="mb-3">
+                                    <div class="mb-1">
                                         <label for="phone" class="form-label">Mobile<span class="text-danger">*</span></label>
                                         <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', Auth::user()->phone ?? '') }}" required maxlength="10" minlength="10" />
 
                                     </div>
 
                                     <!-- Profile Picture -->
-                                    <div class="mb-3">
+                                    <div class="mb-1">
                                         <label for="profile" class="form-label">Profile</label>
                                         <input type="file" name="profile" class="form-control" id="profile" />
 
@@ -52,7 +52,7 @@
                        @endphp
 
                        <!-- Display Profile Picture -->
-                       <div class="mb-3 ">
+                       <div class="mb-1 ">
                            @if($fileExists && $profilePhotoPath)
                                <img src="{{ URL::to($profilePhotoPath) }}"
                                     class="img-fluid rounded-circle border border-secondary"
@@ -122,7 +122,7 @@ $(document).ready(function() {
         errorElement: 'div',
         errorPlacement: function (error, element) {
             error.addClass('invalid-feedback');
-            element.closest('.mb-3').append(error);
+            element.closest('.mb-1').append(error);
         },
         highlight: function (element, errorClass, validClass) {
             $(element).addClass('is-invalid').removeClass('is-valid');

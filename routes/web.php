@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SourceController;
 use App\Http\Controllers\SourceGroupController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ClientController;
 
 
 
@@ -46,18 +47,18 @@ Route::middleware('auth')->group(function () {
     Route::post('profile', [UserController::class, 'updateProfile'])->name('profile.update');
     Route::post('change-password', [UserController::class, 'changePassword'])->name('profile.changePassword');
 
-    // Admin users routes
-    // Route::get('users', [UserController::class, 'listUsers'])->name('reg.user');
-    // Route::get('user/create', [UserController::class, 'showCreateUserForm']);
-    // Route::post('user/store', [UserController::class, 'storeNewUser']);
-    // Route::get('user/edit/{id}', [UserController::class, 'showEditUserForm']);
-    // Route::post('user/update', [UserController::class, 'updateUser']);
-    // Route::get('user/delete/{id}', [UserController::class, 'deleteUser']);
 
 
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::get('users/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::resource('users', UserController::class)->except(['edit']);
+    Route::get('users/create', [UserController::class, 'edit'])->name('users.create');
+    Route::post('users/updateData', [UserController::class, 'storeOrUpdate'])->name('userUpdateData');
+    Route::post('users/storeData', [UserController::class, 'storeOrUpdate'])->name('userstoreData');
+    Route::post('users/deleteData', [UserController::class, 'storeOrUpdate'])->name('users.destroy');
 
+
+
+    Route::resource('clients', ClientController::class);
 
 // sources & their Group
     Route::resource('sources', SourceController::class);

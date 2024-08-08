@@ -20,13 +20,13 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
 
                 <form id="loginForm" class="form-horizontal mt-2 pt-2 needs-validation" novalidate action="{{ route('auth.verify') }}" method="post">
                     @csrf
-                    <div class="mb-3">
+                    <div class="mb-1">
                         <label for="tb-email">Username</label>
                         <input type="text" class="form-control" id="tb-email" placeholder="" required name="username" />
                         <div class="invalid-feedback">Username is required</div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-1">
                         <label for="text-password">Password</label>
                         <input type="password" class="form-control" id="text-password" placeholder="" required name="password" />
                         <div class="invalid-feedback">Password is required</div>
@@ -74,7 +74,7 @@ $(document).ready(function () {
         errorElement: 'div',
         errorPlacement: function (error, element) {
             error.addClass('invalid-feedback');
-            element.closest('.mb-3').append(error);
+            element.closest('.mb-1').append(error);
         },
         highlight: function (element, errorClass, validClass) {
             $(element).addClass('is-invalid').removeClass('is-valid');

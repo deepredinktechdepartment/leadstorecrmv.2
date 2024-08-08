@@ -8,7 +8,7 @@
     <form action="{{ route('sources.update', $source->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="mb-3">
+        <div class="mb-1">
             <label for="source_group_id" class="form-label">Source Group</label>
             <select name="source_group_id" id="source_group_id" class="form-control">
                 @foreach($sourceGroups as $group)
@@ -21,14 +21,14 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <div class="mb-3">
+        <div class="mb-1">
             <label for="name" class="form-label">Name</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ $source->name }}">
             @error('name')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <div class="mb-3">
+        <div class="mb-1">
             <label for="shortcode" class="form-label">Shortcode</label>
             <input type="text" name="shortcode" id="shortcode" class="form-control" value="{{ $source->shortcode }}">
             @error('shortcode')

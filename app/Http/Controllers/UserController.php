@@ -45,312 +45,106 @@ class UserController extends Controller
 
 
 
-    public function create_user()
-    {
-        $pageTitle="Add User";
-        $user_type_data=DB::table('user_types')->whereNotIn('user_types.id',[1])->where('is_active','1')->get();
-        return view('admin.users.add_user',compact('pageTitle','user_type_data'));
-
-    }
-    public function store_user(Request $request)
-    {
-
-
-        $request->validate([
-         'firstname' => 'required|min:1|max:100',
-         'lastname' => 'required|min:1|max:100',
-         'email' => 'required|email|unique:users,email',
-         'role' => 'required',
-         'phone' => 'required',
-         'is_active_status' => 'required',
-         'password' => 'sometimes|nullable',
-         'phone' => 'sometimes|nullable|regex:/^[6-9]{1}[0-9]{9}/',
-         'profile' => 'mimes:jpg,jpeg,png',
-         // 'password' => $this->passwordRules(),
-        ]);
-
-
-        $isexistemail = User::select('id')->where('email',$request->admin_email)->get();
-            if($isexistemail->count()==0){
-            $decrypt_password=Str::random(8);
-
-
-
-        User::insert([
-            [
-                "organization_id"=>$request->company_name??0,
-                "firstname"=>$request->firstname,
-                "lastname"=>$request->lastname,
-                "role"=>$request->role,
-                "email"=>$request->email,
-                "password"=> Hash::make($decrypt_password),
-                "phone"=>$request->phone??'',
-                "role"=>'2',
-                'created_at' =>Carbon\Carbon::now(),
-                'updated_at' =>Carbon\Carbon::now(),
-                'email_verified_at' =>Carbon\Carbon::now(),
-                'is_email_verified' =>1,
-                'is_active_status' =>1,
-                'ip' =>request()->ip()??0,
-            ]
-        ]);
-
-		   $email = $request->email;
-
-
-
-
-	 try{
-
-
-
-		 $offer = [
-            'token' => $decrypt_password,
-			 'password' =>$decrypt_password,
-			  'name' =>$request->firstname,
-			  'email' =>$request->email
-        ];
-
-		 Mail::to($request->email)->send(new ResetPassword($offer));
-
-
-
-
-
-			}
-			catch (\Exception $exception) {
-
-			}
-
-
-        return redirect(Config::get('constants.superadmin').'/admin-users')->with('success', "Success! Details are added successfully");
-    }
-
-
-
-	else{
-
-         return redirect()->back()->with('error', 'User already exist an account.');
-     }
-
-
-	}
-
-
     public function edit(Request $request)
+    {
+        try {
+            // Determine if an ID is provided for editing
+            $user_id = null;
+            if ($request->has('userID')) {
+                $id = $request->userID;
+                $user_id = Crypt::decrypt($id);
+                $users = User::findOrFail($user_id); // Fetch the user by ID
+            } else {
+                $users = new User(); // Initialize a new User instance for adding
+            }
+
+            // Fetch user types that are active
+            $user_type_data = UserType::where('is_active', 1)->get();
+
+            $pageTitle = $user_id ? "Edit User" : "Add User"; // Set the page title based on the context
+            return view('users.add_user', compact('pageTitle', 'users', 'user_type_data'));
+        } catch (DecryptException $e) {
+            // Handle the error if the ID decryption fails
+            return redirect()->route('users.index')->with('error', 'Invalid user ID.');
+        } catch (\Exception $e) {
+            // Handle any other errors
+            return redirect()->route('users.index')->with('error', 'An error occurred while retrieving the user data.');
+        }
+    }
+
+
+
+public function storeOrUpdate(Request $request)
 {
     try {
 
+        // Validate the request data
+        $request->validate([
+            'firstname' => 'required|min:1|max:100',
+            'email' => 'required|email',
+            'role' => 'required',
+            'phone' => 'required|regex:/^[6-9]{1}[0-9]{9}/',
+            'is_active_status' => 'required',
+            'profile_picture' => 'sometimes|nullable|mimes:jpg,jpeg,png|max:512', // max 500KB
+        ]);
 
+        // Check if the email already exists for updates
+        if ($request->id) {
+            $isExistEmail = User::where('username', $request->email)->where('id', '!=', $request->id)->exists();
+        } else {
+            $isExistEmail = User::where('username', $request->email)->exists();
+        }
 
-        $id=$request->userID;
-        $user_id = Crypt::decrypt($id);
+        if ($isExistEmail) {
+            return redirect()->route('users.index')->with('error', "Duplicate email not allowed");
+        }
 
-        $users_data = User::findOrFail($user_id); // Fetch the user by ID, or throw a ModelNotFoundException if not found
+        // Handle file upload
+        $profileFilename = null;
+        if ($request->hasFile('profile_picture')) {
+            $profileFilename = uniqid() . '_' . time() . '.' . $request->profile_picture->extension();
+            $request->profile_picture->move(public_path('assets/uploads'), $profileFilename);
+        }
 
-        // Fetch user types that are active
-        $user_type_data = UserType::where('is_active', 1)->get();
+        // Determine whether to create or update a user
+        if ($request->id) {
+            // Update existing user
+            $user = User::findOrFail($request->id);
+        } else {
+            // Create new user
+            $user = new User();
+        }
 
-        $pageTitle = "Edit User";
-        return view('users.add_user', compact('pageTitle', 'users_data', 'user_type_data'));
-    } catch (DecryptException $e) {
-        // Handle the error if the ID decryption fails
-        return redirect()->route('users.index')->with('error', 'Invalid user ID.');
+        // Set user data
+        $user->fullname = $request->firstname;
+        $user->role = $request->role;
+        $user->username = $request->email;
+        $user->phone = $request->phone;
+        $user->active = $request->is_active_status;
+
+        if ($profileFilename) {
+            $user->profile_photo = $profileFilename;
+        }
+
+        // Handle client data if available
+        if ($request->has('client_data') && !empty($request->input('client_data'))) {
+            $clientData = $request->input('client_data', []);
+            $user->projects_mapped = json_encode($clientData);
+        } else {
+            // Clear client data if not provided
+            $user->projects_mapped = null;
+        }
+
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', "Success! Details are saved successfully");
+
     } catch (\Exception $e) {
-        // Handle any other errors
-        return redirect()->route('users.index')->with('error', 'An error occurred while retrieving the user data.');
+        dd($e->getmessage());
+        // Log the error or handle it as necessary
+        return redirect()->route('users.index')->with('error', "An error occurred while saving the details");
     }
 }
-
-
-    public function update_user(Request $request)
-    {
-		$request->validate([
-		 'firstname' => 'required|min:1|max:100',
-         'lastname' => 'required|min:1|max:100',
-         'email' => 'required|email',
-         'role' => 'required',
-         'phone' => 'required',
-         'is_active_status' => 'required',
-         'password' => 'sometimes|nullable',
-         'phone' => 'sometimes|nullable|regex:/^[6-9]{1}[0-9]{9}/',
-         'profile' => 'mimes:jpg,jpeg,png',
-		]);
-
-
-
-		$isexistemail = User::select('id')->where('email',$request->email)->get();
-        if($isexistemail->count()==1){
-        if ($request->hasFile('profile')) {
-        $profile_filename=uniqid().'_'.time().'.'.$request->profile->extension();
-        $request->profile->move(('assets/uploads'),$profile_filename);
-
-        DB::table('users')
-        ->where('id', $request->id)
-        ->update(["profile"=>$profile_filename]);
-        }
-        else{
-            $profile_filename="";
-        }
-
-		/*
-
-        if ($request->password) {
-        $password = Hash::make($request->password);
-
-        DB::table('users')
-        ->where('id', $request->id)
-        ->update(["password"=>$password]);
-
-    }else{
-        $password ="";
-    }
-	*/
-
-        DB::table('users')
-            ->where('id', $request->id)
-            ->update(
-            [
-                "firstname"=>$request->firstname,
-                "lastname"=>$request->lastname,
-                "role"=>$request->role,
-                "email"=>$request->email,
-                "phone"=>$request->phone??'',
-                "is_active_status"=>$request->is_active_status??0,
-				"organization_id"=>$request->company_name??0,
-            ]
-            );
-        return redirect('admin/users')->with('success', "Success! Details are updated successfully");
-
-			}
-
-			else{
-
-				  return redirect('admin/users')->with('error', "Duplicate email not allowed");
-			}
-
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-    public function listUsers(Request $request)
-    {
-
-try{
-    $role="";
-        $users_data=User::leftjoin('user_types','user_types.id','=','users.role')
-        //->where('users.organization_id',Session::get('companyID')??0)
-        ->where(function($users_data) use ($role){
-        if($role){
-        $users_data->where('users.role',"=",$role);
-        }
-        })
-        ->orderby('users.created_at','desc')
-        ->get(['users.*','user_types.name as ut_name']);
-
-            $addlink=url(Config::get('constants.admin').'/user/create');
-            $role=$request->role??'';
-            $pageTitle="Users";
-            return view('users.users_list', compact('pageTitle','users_data','addlink','role'));
-
-    }
-        catch (\Exception $exception) {
-          return redirect()->back()->with('error', 'User already exist an account.'.$exception->getMessage());
-
-        }
-
-    }
-    public function department_create_user()
-    {
-
-        $pageTitle="Add User";
-        //$user_type_data=DB::table('user_types')->whereNotIn('user_types.id',[1,2])->where('organization_id',Session::get('companyID'))->get();
-        $user_type_data=DB::table('user_types')->whereNotIn('user_types.id',[1])->where('is_active','1')->get();
-        $group_level_data=GroupLevel::get();
-        return view('admin.department_users.add_user',compact('pageTitle','user_type_data','group_level_data'));
-
-    }
-
-
-
-
-
-
-	public function mapping_departments_users($DepartmentSelected,$LastInserID){
-
-
-
-
-		if(isset($LastInserID) && $LastInserID>0)
-		{
-
-		$User = User::select('id')->where('id',$LastInserID)->get()->count();
-
-			if($User>0){
-				$remove_data=Departments_Users::where('user_id',$LastInserID)->delete();
-				foreach($DepartmentSelected as $key=>$value){
-
-				$checking_exist=Departments_Users::where("department_id",$value)->where("user_id",$LastInserID)->get()->count();
-
-						if($checking_exist==0) {
-
-							if($value>0) {
-								$Dep_Users=Departments_Users::insert(
-									[
-										[
-											"department_id"=>$value,
-											"user_id"=>$LastInserID,
-											'created_at' =>Carbon\Carbon::now(),
-											'updated_at' =>Carbon\Carbon::now(),
-										]
-									]
-									);
-
-							}
-
-						}
-						else{
-
-
-							if($value>0) {
-								$Dep_Users=Departments_Users::where('department_id',$value)->where('user_id',$LastInserID)
-								->update(
-										[
-										"department_id"=>$value,
-										"user_id"=>$LastInserID,
-										'updated_at' =>Carbon\Carbon::now(),
-										]
-								);
-
-							}
-
-
-						}
-
-				}
-
-
-
-
-
-			}
-		}
-		else{
-
-		}
-
-	}
-
 
 
 

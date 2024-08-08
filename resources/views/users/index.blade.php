@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
+
   <!-- DataTable -->
   <table id="users-table" class="table table-striped table-bordered">
       <thead>
@@ -46,5 +46,5 @@
           @endforeach
       </tbody>
   </table>
-</div>
+
 @endsection
