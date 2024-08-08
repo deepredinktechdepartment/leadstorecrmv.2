@@ -13,34 +13,41 @@ $activeClientCount = Client::where('active', true)->count();
       <div class="row mb-5">
 
         <div class="col-sm-3">
+          <div class="card bg-primary p-3">
             <a href="{{ URL::to('clients?active=true') }}">
-            <div class="card bg-primary">
-            <p class="dashboard-heading text-white">Active Projects</p>
-            <p class="dashboard-count text-white">{{ $activeClientCount??0 }}</p>
-            </div>
+              <h6 class="text-white mb-5 p-0 m-0 fw-normal">Active Projects</h6>
+              <h1 class="text-white display-6 fw-bold">{{ $activeClientCount??0 }}</h1>
             </a>
-        </div>
-
-
-
-        <div class="col-sm-3">
-          <div class="dashboard-card-wrapper bg-success">
-            <p class="dashboard-heading text-white">Performing Well</p>
-            <p class="dashboard-count text-white">0</p>
           </div>
         </div>
+
         <div class="col-sm-3">
-          <div class="dashboard-card-wrapper bg-danger">
-            <p class="dashboard-heading text-white">Underperforming</p>
-            <p class="dashboard-count text-white">16</p>
+          <div class="card bg-success p-3">
+            <a href="{{ URL::to('clients?active=true') }}">
+              <h6 class="text-white mb-5 p-0 m-0 fw-normal">Performing Well</h6>
+              <h1 class="text-white display-6 fw-bold">0</h1>
+            </a>
           </div>
         </div>
+
         <div class="col-sm-3">
-          <div class="dashboard-card-wrapper bg-warning">
-            <p class="dashboard-heading text-white">Meeting Expectations</p>
-            <p class="dashboard-count text-white">2</p>
+          <div class="card bg-danger p-3">
+            <a href="{{ URL::to('clients?active=true') }}">
+              <h6 class="text-white mb-5 p-0 m-0 fw-normal">Underperforming</h6>
+              <h1 class="text-white display-6 fw-bold">0</h1>
+            </a>
           </div>
         </div>
+
+        <div class="col-sm-3">
+          <div class="card bg-warning p-3">
+            <a href="{{ URL::to('clients?active=true') }}">
+              <h6 class="text-white mb-5 p-0 m-0 fw-normal">Meeting Expectations</h6>
+              <h1 class="text-white display-6 fw-bold">2</h1>
+            </a>
+          </div>
+        </div>
+
       </div>
 
       <div class="row mb-5">

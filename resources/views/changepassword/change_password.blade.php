@@ -6,14 +6,14 @@
             <div class="card-body">
                 <form id="changePasswordForm" action="{{ route('verifying.password') }}" method="post">
                     @csrf
-                    <div class="mb-1 row">
+                    <div class="mb-2 row">
                         <label for="password" class="col-sm-5 col-form-label">New Password <span class="text-danger">*</span></label>
                         <div class="col-sm-7">
                             <input type="password" class="form-control" name="password" id="password" required>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-3 row">
                         <label for="password_confirmation" class="col-sm-5 col-form-label">Confirm New Password <span class="text-danger">*</span></label>
                         <div class="col-sm-7">
                             <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
