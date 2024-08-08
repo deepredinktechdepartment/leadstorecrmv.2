@@ -2212,3 +2212,14 @@ div.dataTables_wrapper div.dataTables_length select {
         border-right: 0px solid #cfcfcf;
     }
 }
+
+.recently_active_users img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
