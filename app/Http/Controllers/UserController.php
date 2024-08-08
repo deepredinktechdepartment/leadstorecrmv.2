@@ -35,7 +35,7 @@ class UserController extends Controller
 
         $users = User::select('users.*', 'user_types.name as ut_name')
             ->leftJoin('user_types', 'user_types.id', '=', 'users.role')
-            //->orderBy('users.active', 'DESC')
+            ->orderBy('users.fullname')
             ->orderByRaw('FIELD(users.role, 1, 2, 3)')
             ->get();
 

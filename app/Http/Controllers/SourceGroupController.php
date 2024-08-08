@@ -14,7 +14,7 @@ class SourceGroupController extends Controller
     public function index()
     {
         try {
-            $sourceGroups = SourceGroup::all();
+            $sourceGroups = SourceGroup::orderBy('name')->get();
             $addlink=route('source_groups.create');
             $pageTitle="Source Groups";
             return view('source_groups.index', compact('sourceGroups','addlink','pageTitle'));

@@ -12,10 +12,16 @@ class SourceController extends Controller
     {
         try {
             $pageTitle="Sources";
-            $sources = Source::with('sourceGroup')->get();
+            $sources = Source::with('sourceGroup')
+            ->join('source_group', 'source.source_group_id', '=', 'source_group.id')
+            ->orderBy('source_group.name')
+            ->orderBy('source.name')
+            ->get();
+
             $addlink=route('sources.create');
             return view('sources.index', compact('sources','addlink','pageTitle'));
         } catch (\Exception $e) {
+            dd($e->getMessage());
             Log::error('Error fetching sources: ' . $e->getMessage());
             return redirect()->back()->with('error', 'Failed to fetch sources.');
         }

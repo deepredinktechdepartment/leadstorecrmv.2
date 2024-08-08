@@ -55,7 +55,6 @@
                                             <button class="no-button" onclick="showPasswordModal('{{ Crypt::encrypt($user->id) }}')">
                                                 <i class="fas fa-key"></i>
                                             </button>
-                                            &nbsp;
                                             <form action="{{ route('users.destroy', ['user' => Crypt::encrypt($user->id)]) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')

@@ -3,205 +3,112 @@
 @section('title', 'Dashboard')
 @section('content')
 
-
 @php
-
 use App\Models\Client;
-// Count active clients
+
+// Count active and inactive clients
 $activeClientCount = Client::where('active', true)->count();
+$inactiveClientCount = Client::where('active', false)->count();
+
+// Fetch active and inactive clients
+$activeClients = Client::where('active', true)->orderby('client_name')->get();
+$inactiveClients = Client::where('active', false)->orderby('client_name')->get();
 @endphp
-      <div class="row mb-5">
 
-        <div class="col-sm-3">
-          <div class="card bg-primary p-3">
+<div class="row mb-5">
+    <div class="col-sm-3">
+        <div class="card bg-primary p-3">
             <a href="{{ URL::to('clients?active=true') }}">
-              <h6 class="text-white mb-5 p-0 m-0 fw-normal">Active Projects</h6>
-              <h1 class="text-white display-6 fw-bold">{{ $activeClientCount??0 }}</h1>
+                <h6 class="text-white mb-5 p-0 m-0 fw-normal">Active Projects</h6>
+                <h1 class="text-white display-6 fw-bold">{{ $activeClientCount ?? 0 }}</h1>
             </a>
-          </div>
         </div>
-
-        <div class="col-sm-3">
-          <div class="card bg-success p-3">
-            <a href="{{ URL::to('clients?active=true') }}">
-              <h6 class="text-white mb-5 p-0 m-0 fw-normal">Performing Well</h6>
-              <h1 class="text-white display-6 fw-bold">0</h1>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="card bg-danger p-3">
-            <a href="{{ URL::to('clients?active=true') }}">
-              <h6 class="text-white mb-5 p-0 m-0 fw-normal">Underperforming</h6>
-              <h1 class="text-white display-6 fw-bold">0</h1>
-            </a>
-          </div>
-        </div>
-
-        <div class="col-sm-3">
-          <div class="card bg-warning p-3">
-            <a href="{{ URL::to('clients?active=true') }}">
-              <h6 class="text-white mb-5 p-0 m-0 fw-normal">Meeting Expectations</h6>
-              <h1 class="text-white display-6 fw-bold">2</h1>
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="row mb-5">
-        <div class="col-lg-12">
-            <!-- Tabs Start-->
-              <div class="common_tabs">
-                <nav class="mb-5">
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab" aria-controls="active" aria-selected="true">
-                        Active
+    </div>
+    <!-- Add other cards as needed -->
+</div>
+<div class="row mb-5">
+  <div class="col-lg-12">
+      <!-- Tabs Start -->
+      <div class="common_tabs">
+          <nav class="mb-5">
+              <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                  @if($activeClientCount > 0)
+                  <li class="nav-item" role="presentation">
+                      <button class="nav-link {{ $activeClientCount > 0 ? 'active' : '' }}"
+                              id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button"
+                              role="tab" aria-controls="active" aria-selected="true">
+                          Active
                       </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="inactive-tab" data-bs-toggle="tab" data-bs-target="#inactive" type="button" role="tab" aria-controls="inactive" aria-selected="false">
-                        Inactive
+                  </li>
+                  @endif
+                  @if($inactiveClientCount > 0)
+                  <li class="nav-item" role="presentation">
+                      <button class="nav-link {{ $activeClientCount == 0 && $inactiveClientCount > 0 ? 'active' : '' }}"
+                              id="inactive-tab" data-bs-toggle="tab" data-bs-target="#inactive" type="button"
+                              role="tab" aria-controls="inactive" aria-selected="false">
+                          Inactive
                       </button>
-                    </li>
-                  </ul>
-                </nav>
-                <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-                    <div class="mb-4">
+                  </li>
+                  @endif
+              </ul>
+          </nav>
+          <div class="tab-content" id="myTabContent">
+              @if($activeClientCount > 0)
+              <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+                  <div class="mb-4">
                       <div class="row">
-                        <div class="col-lg-4">
-                          <div class="card">
-                            <div class="row">
-                              <div class="col-lg-3">
-                                <img src="assets/images/rmc_60.png" alt="company logo" class="img-fluid mb-3" width="70px" />
-                              </div>
-                              <div class="col-lg-8">
-                                <div>
-                                  <h6 class="mb-2">Aparna RMC</h6>
-                                  <p class="mb-1">250/1000</p>
-                                  <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">250%</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          @foreach ($activeClients as $client)
+                          <div class="col-lg-4 mb-2">
+                            <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}">
+                              @component('components.client-card', [
+                                  'logo' => asset('assets/images/rmc_60.png'),
+                                  'name' => $client->client_name,
+                                  'currentPerformance' => $client->current_performance,
+                                  'targetPerformance' => $client->target_performance
+                              ])
+                              @endcomponent
+                            </a>
                           </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <div class="card">
-                            <div class="row">
-                              <div class="col-lg-3">
-                                <img src="assets/images/rmc_60.png" alt="company logo" class="img-fluid mb-3" width="70px" />
-                              </div>
-                              <div class="col-lg-8">
-                                <div>
-                                  <h6 class="mb-2">Aparna RMC</h6>
-                                  <p class="mb-1">250/1000</p>
-                                  <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">250%</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          @endforeach
+                      </div>
+                  </div>
+              </div>
+              @endif
+
+              @if($inactiveClientCount > 0)
+              <div class="tab-pane fade {{ $activeClientCount == 0 && $inactiveClientCount > 0 ? 'show active' : '' }}" id="inactive" role="tabpanel" aria-labelledby="inactive-tab">
+                  <div class="mb-4">
+                      <div class="row">
+                          @foreach ($inactiveClients as $client)
+                          <div class="col-lg-4 mb-2">
+                            <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}">
+                              @component('components.client-card', [
+                                  'logo' => asset('assets/images/rmc_60.png'),
+                                  'name' => $client->client_name,
+                                  'currentPerformance' => $client->current_performance,
+                                  'targetPerformance' => $client->target_performance,
+                              ])
+                              @endcomponent
+                            </a>
                           </div>
-                        </div>
-
+                          @endforeach
                       </div>
-                    </div>
                   </div>
-                  <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="inactive-tab">
-                    <div class="card">
-                      <h4>Inactive</h4>
-                    </div>
-                  </div>
-                </div>
               </div>
-              <!-- Tabs End-->
-        </div>
+              @endif
+          </div>
       </div>
+      <!-- Tabs End -->
+  </div>
+</div>
 
 
-      <div class="row pb-5">
-        <div class="col-lg-12">
-          <h1 class="mb-4">Recently Active</h1>
-            <div class="row recently_active_users">
-              <div class="col-lg-6">
-                <div class="card">
-                  <h4 class="mb-4">From the Agency</h4>
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div>
-                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
-                        <h6 class="text-center">Suneel Garnepudi</h6>
-                        <p class="italic text-center">21 Minutes Ago</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3">
-                      <div>
-                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
-                        <h6 class="text-center">Suneel Garnepudi</h6>
-                        <p class="italic text-center">21 Minutes Ago</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3">
-                      <div>
-                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
-                        <h6 class="text-center">Suneel Garnepudi</h6>
-                        <p class="italic text-center">21 Minutes Ago</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3">
-                      <div>
-                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
-                        <h6 class="text-center">Suneel Garnepudi</h6>
-                        <p class="italic text-center">21 Minutes Ago</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="card">
-                  <h4 class="mb-4">From the Client</h4>
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div>
-                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
-                        <h6 class="text-center">Suneel Garnepudi</h6>
-                        <p class="italic text-center">21 Minutes Ago</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3">
-                      <div>
-                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
-                        <h6 class="text-center">Suneel Garnepudi</h6>
-                        <p class="italic text-center">21 Minutes Ago</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3">
-                      <div>
-                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
-                        <h6 class="text-center">Suneel Garnepudi</h6>
-                        <p class="italic text-center">21 Minutes Ago</p>
-                      </div>
-                    </div>
-                    <div class="col-lg-3">
-                      <div>
-                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
-                        <h6 class="text-center">Suneel Garnepudi</h6>
-                        <p class="italic text-center">21 Minutes Ago</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+{{-- Login Activity --}}
+ @component('components.login-activity')
 
-        </div>
-      </div>
+ @endcomponent
+
+
 
 
 @endsection
