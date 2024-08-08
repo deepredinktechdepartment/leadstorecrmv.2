@@ -1,48 +1,10 @@
-@extends('template_v2')
-@section('title', $pageTitle??'')
+@extends('layouts.app')
 @section('content')
-<style>
 
 
-    .selected-row{
-        background: #a0a0a387!important;
-    }
-</style>
-
-{{-- Create leads actions items --}}
-
-<div class="row">
-    <div class="col-md-12">
-                <div class="light_green_card mb-4">
-                <div class="card p-4">
-                <form id="searchForm_Hold" method="get" action="{{  route('get.crm.leads') }}">
-                @csrf
-                <div class="row d-flex">
-                      <div class="col-lg-3 ns-0 ps-0">
-
-
-                @include("masters.crmconfigprojects",['dropdownLable'=>'--Pick one--','projectID'=>$projectID??0])
-                </div>
-                     <div class="col-lg-2 mt-4 pt-1">
-                <button type="submit" id="documentsearchfilters" class="btn btn-primary btn-sm">Search</button>
-                </div>
-                </div>
-
-                </form>
-                </div>
-                </div>
-
-    </div>
-</div>
-
-@if($projectID)
-{{-- @include("marketing.crm.leads_actionsitems") --}}
-@endif
 
 <div class="row ">
     <div class="col-md-12">
-
-
 
 
 
@@ -54,7 +16,7 @@
 
 {{-- Filters over leads data --}}
 @if($projectID && !$error)
-@include("marketing.crm.filteronleads")
+{{-- @include("marketing.crm.filteronleads") --}}
 @endif
 {{-- Leads Views --}}
 

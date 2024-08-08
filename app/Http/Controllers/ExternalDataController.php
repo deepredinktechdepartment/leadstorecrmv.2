@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
-use App\Models\Organizations\Project;
+use App\Models\Client as Project; // Alias `Client` as `Project`
 use App\Http\Controllers\ApiCredentialController;
 
 class ExternalDataController extends Controller
@@ -12,6 +12,7 @@ class ExternalDataController extends Controller
 
     public function fetchCRMLeads(Request $request){
             try {
+
 
             $projectID=$request->project_id??0;
             return redirect()->route('mkt.crm', ['projectID'=>Crypt::encryptString($projectID)]);
@@ -39,7 +40,7 @@ class ExternalDataController extends Controller
 
 
             if(!empty($request->projectID)){
-                $projectID=Crypt::decryptString($request->projectID);
+                $projectID=Crypt::decrypt($request->projectID);
             }
             else{
                 $projectID=0;
@@ -47,7 +48,7 @@ class ExternalDataController extends Controller
 
 
             $Project=Project::find($projectID);
-            $pageTitle=Str::title($Project->name??'')." Leads";
+            $pageTitle=$Project->client_name." Leads";
             $startDate = $request->start_date??date('Y-m-01');
             $endDate = $request->end_date??date('Y-m-d');
             $utmCampaign = $request->utm_campaign??null;
@@ -56,13 +57,17 @@ class ExternalDataController extends Controller
             $utmStatus = $request->status??null;
 
             $Is_verified=$this->api_credentials_verification($projectID);
+
             if($Is_verified){
+
 
                 $ApiCredentialController=new ApiCredentialController();
                 $ApiCredentials=$ApiCredentialController->getApiCredentials($projectID);
                 $response = json_decode($ApiCredentials->getContent());
                 $status = $response->status;
                 $api_key = $response->api_key;
+
+
 
                 if ($status === "success") {
 
@@ -75,6 +80,7 @@ class ExternalDataController extends Controller
 
             //$token = '';
             $url = 'https://leadstore.in/api/get-leads';
+
 
             $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
@@ -90,6 +96,8 @@ class ExternalDataController extends Controller
             ]
             );
             $status = $response->status();
+
+
             $responseBody = $response->body(); // Get the response body
 
             $today_count=$monthly_count=0;
@@ -102,8 +110,10 @@ class ExternalDataController extends Controller
             $Jdata = $data['leads']??[]; // Your data here
             $today_count = $data['today_count']??0; // Your data here
             $monthly_count = $data['monthly_count']??0; // Your data here
+
             return view('marketing.crm.leads',compact('pageTitle','Jdata','error','today_count','monthly_count','leadCount_source','token','projectID','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
             } else {
+
 
             $error=['error' => 'Error fetching data from external API'.$responseBody];
             $Jdata="";

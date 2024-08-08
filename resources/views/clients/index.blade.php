@@ -19,7 +19,7 @@
                 @foreach($clients as $client)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td><a href="{{ route('projectLeads',['projectId'=>Crypt::encrypt($client->id)]) }}"> {{ $client->client_name }}</a></td>
+                        <td>{{ $client->client_name }}</td>
                         <td>{{ $client->industry_category }}</td>
                         <td>
                             @if($client->active)
@@ -40,6 +40,10 @@
                                     <i class="{{ config('constants.icons.delete') }}"></i>
                                 </button>
                             </form>
+                            <!-- New Window Icon -->
+                            <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" class="btn btn-info btn-sm" title="Open in New Window">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </td>
                     </tr>
                 @endforeach
@@ -48,7 +52,9 @@
     </div>
 </div>
 @endsection
+
 @push('scripts')
 <script>
-    </script>
+    // Your JavaScript code here
+</script>
 @endpush
