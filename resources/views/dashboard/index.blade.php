@@ -107,47 +107,80 @@
 
       <div class="row pb-5">
         <div class="col-lg-12">
-          <div class="card">
-            <h1 class="mb-4">Recently Active</h1>
+          <h1 class="mb-4">Recently Active</h1>
             <div class="row recently_active_users">
               <div class="col-lg-6">
-                <h4>From the Agency</h4>
-                <div class="row">
-                  <div class="col-lg-3">
-                    <div>
-                      <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-1 d-block mx-auto">
-                      <p class="text-center">Suneel Garnepudi</p>
-                      <p class="italic text-center">21 Minutes Ago</p>
+                <div class="card">
+                  <h4 class="mb-4">From the Agency</h4>
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div>
+                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
+                        <h6 class="text-center">Suneel Garnepudi</h6>
+                        <p class="italic text-center">21 Minutes Ago</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-3">
-                    <div>
-                      <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-1 d-block mx-auto">
-                      <p class="text-center">Suneel Garnepudi</p>
-                      <p class="italic text-center">21 Minutes Ago</p>
+                    <div class="col-lg-3">
+                      <div>
+                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
+                        <h6 class="text-center">Suneel Garnepudi</h6>
+                        <p class="italic text-center">21 Minutes Ago</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-3">
-                    <div>
-                      <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-1 d-block mx-auto">
-                      <p class="text-center">Suneel Garnepudi</p>
-                      <p class="italic text-center">21 Minutes Ago</p>
+                    <div class="col-lg-3">
+                      <div>
+                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
+                        <h6 class="text-center">Suneel Garnepudi</h6>
+                        <p class="italic text-center">21 Minutes Ago</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-3">
-                    <div>
-                      <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-1 d-block mx-auto">
-                      <p class="text-center">Suneel Garnepudi</p>
-                      <p class="italic text-center">21 Minutes Ago</p>
+                    <div class="col-lg-3">
+                      <div>
+                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
+                        <h6 class="text-center">Suneel Garnepudi</h6>
+                        <p class="italic text-center">21 Minutes Ago</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="col-lg-6">
-                <h4>From the Client</h4>
+                <div class="card">
+                  <h4 class="mb-4">From the Client</h4>
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div>
+                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
+                        <h6 class="text-center">Suneel Garnepudi</h6>
+                        <p class="italic text-center">21 Minutes Ago</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div>
+                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
+                        <h6 class="text-center">Suneel Garnepudi</h6>
+                        <p class="italic text-center">21 Minutes Ago</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div>
+                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
+                        <h6 class="text-center">Suneel Garnepudi</h6>
+                        <p class="italic text-center">21 Minutes Ago</p>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div>
+                        <img src="assets/images/suneel.png" alt="suneel garnepudi" class="mb-2 d-block mx-auto">
+                        <h6 class="text-center">Suneel Garnepudi</h6>
+                        <p class="italic text-center">21 Minutes Ago</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          
         </div>
       </div>
 
