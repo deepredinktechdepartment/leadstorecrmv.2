@@ -7,6 +7,7 @@ use App\Http\Controllers\SourceGroupController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ExternalDataController;
 
 
 
@@ -63,7 +64,12 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('clients', ClientController::class);
 
+
+
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
+    Route::any('marketing/crm', [ExternalDataController::class,'fetchDataFromExternalAPI'])->name('mkt.crm')->middleware(['auth']);
+Route::any('get/crm/leads', [ExternalDataController::class,'fetchCRMLeads'])->name('get.crm.leads')->middleware(['auth']);
 
 
 // sources & their Group
