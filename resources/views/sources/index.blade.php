@@ -25,13 +25,13 @@
                     <td>{{ $source->name }}</td>
                     <td>{{ $source->shortcode }}</td>
                     <td>
-                        <a href="{{ route('sources.edit', $source->id) }}" class="btn btn-warning btn-sm">
+                        <a href="{{ route('sources.edit', $source->id) }}">
                             <i class="{{ config('constants.icons.edit') }}"></i>
                         </a>
                         <form  action="{{ route('sources.destroy', $source->id) }}" method="POST"  class="delete-form" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
+                            <button type="submit" class="no-button">
                                 <i class="{{ config('constants.icons.delete') }}"></i>
                             </button>
                         </form>
