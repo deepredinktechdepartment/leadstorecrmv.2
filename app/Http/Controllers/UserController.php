@@ -35,7 +35,7 @@ class UserController extends Controller
 
         $users = User::select('users.*', 'user_types.name as ut_name')
             ->leftJoin('user_types', 'user_types.id', '=', 'users.role')
-            ->orderBy('users.active', 'DESC')
+            //->orderBy('users.active', 'DESC')
             ->orderByRaw('FIELD(users.role, 1, 2, 3)')
             ->get();
 
@@ -373,17 +373,27 @@ public function updateProfile(Request $request)
 
 public function updatePassword(Request $request)
 {
-    $userId = Crypt::decrypt($request->input('userId'));
-    $password = $request->input('password');
+    $request->validate([
+        'password' => 'required|string|min:8|confirmed',
+    ]);
 
-    $user = User::find($userId);
-    if ($user) {
-        $user->password = Hash::make($password);
+    try {
+        // Decrypt the user ID
+        $user = User::findOrFail(Crypt::decrypt($request->userId));
+
+        // Hash the password before saving
+        $user->password = Hash::make($request->password);
         $user->save();
-        return response()->json(['success' => true]);
-    }
 
-    return response()->json(['success' => false], 400);
+        return response()->json(['success' => true, 'message' => 'Password updated successfully.']);
+
+    } catch (Exception $e) {
+        // Log the error for debugging purposes
+        \Log::error('Password update failed: ' . $e->getMessage());
+
+        // Return a JSON response with an error message
+        return response()->json(['success' => false, 'message' => 'An error occurred while updating the password.'], 500);
+    }
 }
 
 public function toggleStatus(Request $request)

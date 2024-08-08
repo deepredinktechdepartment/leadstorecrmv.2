@@ -19,8 +19,8 @@
                           <li class="nav-item">
                               <a class="nav-link {{ Request::routeIs('projects') ? 'active' : '' }}" href="./about.html">Projects</a>
                           </li>
-                          <li class="nav-item">
-                              <a class="nav-link {{ Request::routeIs('reports') ? 'active' : '' }}" href="./news-and-events.html">Reports</a>
+                          <li class="nav-item {{ Request::routeIs('reports.index') ? 'active' : '' }}">
+                              <a class="nav-link " href="{{ route('reports.index') }}">Reports</a>
                           </li>
                           <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
                               <a class="nav-link" href="{{ route('users.index') }}">Users</a>

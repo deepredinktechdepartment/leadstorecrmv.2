@@ -6,6 +6,7 @@ use App\Http\Controllers\SourceController;
 use App\Http\Controllers\SourceGroupController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ReportController;
 
 
 
@@ -61,6 +62,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
 
     Route::resource('clients', ClientController::class);
+
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
 
 // sources & their Group
     Route::resource('sources', SourceController::class);
