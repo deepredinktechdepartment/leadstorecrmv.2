@@ -105,11 +105,13 @@ $inactiveClients = Client::mappedToUser()->where('active', false)->orderby('clie
 </div>
 
 
+@if(Auth::user()->role && Auth::user()->role==1)
 {{-- Login Activity --}}
  @component('components.login-activity')
 
  @endcomponent
 
+ @endif
 
 
 

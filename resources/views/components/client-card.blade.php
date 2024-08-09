@@ -39,6 +39,24 @@
                     </div>
                 </div> --}}
 
+                  <!-- Progress Bar -->
+                  <div class="progress ml-3" style="width: 200px;">
+                    @php
+                        $targetPerformance = $client->target_performance ?? 0;
+                        $currentPerformance = $client->current_performance ?? 0;
+                        $progress = $targetPerformance > 0 ? ($currentPerformance / $targetPerformance) * 100 : 0;
+                        $progressColor = $targetPerformance > 0 ? 'green' : 'red';
+                        $progressText = $targetPerformance > 0 ? $progress . '%' : 'N/A';
+                    @endphp
+
+                    <div class="progress-bar" role="progressbar"
+                        style="width: {{ $progress }}%; background-color: {{ $progressColor }};"
+                        aria-valuenow="{{ $progress }}"
+                        aria-valuemin="0" aria-valuemax="100">
+                        {{ $progressText }}
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
