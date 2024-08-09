@@ -56,17 +56,17 @@
                                             $timeDiff = $daysBetween > 0 ? "$daysBetween Day" . ($daysBetween > 1 ? 's' : '') : 'Today';
                                         }
                                     @endphp
-                                    <div class="col-lg-3">
-                                        <a href="#">
+                                    <div class="col-lg-3 col-6 mb-4">
+                                        <a href="#" class="w-100">
                                             <div>
                                                 @if (!empty($user->profile_photo) && File::exists(storage_path('app/public/' . $user->profile_photo)))
-                                                <img src="{{ URL::to(env('APP_STORAGE').''.$user->profile_photo) }}" alt="{{ $userName }}" class="d-block mx-auto client_logo mb-2">
+                                                <img src="{{ URL::to(env('APP_STORAGE').''.$user->profile_photo) }}" alt="{{ $userName }}" class="d-block mx-md-auto client_logo mb-2">
                                                 @else
-                                                <img src="assets/images/person.png" alt="Client Logo" class="d-block mx-auto client_logo mb-2">
+                                                <img src="assets/images/place_holder.png" alt="Client Logo" class="d-block mx-md-auto client_logo mb-2">
                                                 @endif
                                                 <div>
-                                                    <h6 class="text-center mb-1">{{ $userName }}</h6>
-                                                    <p class="text-center">{{ $timeDiff }} Ago</p>
+                                                    <h6 class="text-md-center mb-1">{{ $userName }}</h6>
+                                                    <p class="text-md-center">{{ $timeDiff }} Ago</p>
                                                 </div>
                                             </div>
                                         </a>
