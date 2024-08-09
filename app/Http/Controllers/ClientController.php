@@ -1,6 +1,4 @@
 <?php
-
-// app/Http/Controllers/ClientController.php
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -238,6 +236,7 @@ public function destroy($encryptedId)
 
             $client = $id ? Client::findOrFail(Crypt::decrypt($id)) : new Client;
 
+
             // Assign values to client properties
             $client->client_name = $request->name;
             $client->short_name = $request->short_name;
@@ -261,12 +260,12 @@ public function destroy($encryptedId)
             $client->save();
 
             // Redirect with success message
-            $message = $id ? 'Client updated successfully!' : 'Client created successfully!';
+            $message = $id ? 'Project updated successfully!' : 'Project created successfully!';
             return redirect()->route('clients.index')->with('success', $message);
         } catch (\Exception $e) {
-            Log::error('Error saving client: ' . $e->getMessage());
+            Log::error('Error saving project: ' . $e->getMessage());
 
-            return back()->with('error', 'An error occurred while saving the client.');
+            return back()->with('error', 'An error occurred while saving the project.');
         }
     }
 
