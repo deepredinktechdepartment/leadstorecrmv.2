@@ -68,12 +68,13 @@
 </div>
 </div>
 
-
-<div id="editRemarkModal" class="modal fade">
+<div id="editRemarkModal" class="modal fade" tabindex="-1" aria-labelledby="editRemarkModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Remark</h4>
+                <h5 class="modal-title" id="editRemarkModalLabel">Edit Remark</h5>
+                <!-- Close button with Bootstrap 5 styling -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- Wrap your code in a <form> element -->
@@ -86,7 +87,7 @@
                     <div class="form-group">
                         <label for="status">Status{!!Config::get('constants.astric_syb')!!}</label>
                         <select style="padding: 0px 0px; margin: 0px; font-size: 13px;" name="status" id="status" class="form-control">
-                            <option value="New Lead" selected="">New Lead</option>
+                            <option value="New Lead" selected>New Lead</option>
                             <option value="Lead Valid">Lead Valid</option>
                             <option value="Call Back">Call Back</option>
                             <option value="Converted">Converted</option>
@@ -94,16 +95,17 @@
                         </select>
                     </div>
                     <input type="hidden" class="form-control" id="LeadID" name="LeadID">
-                     <button type="submit" class="btn btn-primary saveRemark" id="loading-message">Save</button>
+                    <button type="submit" class="btn btn-primary saveRemark" id="loading-message">Save</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <!-- Change the button type to "submit" -->
-
+                <!-- Optionally, you can include a secondary button here -->
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
             </div>
         </div>
     </div>
 </div>
+
 
 
 

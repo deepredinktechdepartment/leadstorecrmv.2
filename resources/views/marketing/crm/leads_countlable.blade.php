@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="data_seperator2">
-                    <h5 class="text-white">Monthly Sales</h5>
+                    <h5 class="text-white">Monthly Leads</h5>
                     <h2 class="number text-white">{{ $monthly_count??0 }}</h2>
                 </div>
             </div>

@@ -286,7 +286,7 @@ catch (\Exception $exception) {
       {
 
            $pageTitle="Change Password";
-          return view('changePassword.change_password', compact('pageTitle'));
+          return view('changepassword.change_password', compact('pageTitle'));
       }
 
       public function saveChangePassword(Request $request)
