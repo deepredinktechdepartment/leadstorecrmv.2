@@ -22,9 +22,12 @@
                           <li class="nav-item {{ Request::routeIs('reports.index') ? 'active' : '' }}">
                               <a class="nav-link " href="{{ route('reports.index') }}">Reports</a>
                           </li>
+
+                          @if(Auth::user()->role && Auth::user()->role==1)
                           <li class="nav-item {{ Request::routeIs('users.index') ? 'active' : '' }}">
                               <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                           </li>
+                          @endif
                           <li class="nav-item dropdown {{ Request::routeIs('sources.index', 'source_groups.index') ? 'active' : '' }}">
                               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   UTM
@@ -34,14 +37,14 @@
                                   <li><a class="dropdown-item {{ Request::routeIs('source_groups.index') ? 'active' : '' }}" href="{{ route('source_groups.index') }}">Source Group</a></li>
                               </ul>
                           </li>
+
+
                           <li class="nav-item dropdown {{ Request::routeIs('profile.show', 'reset.password', 'logout') ? 'active' : '' }}">
                             <a class="nav-link dropdown-toggle profile-dropdown" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                                 @php
                                     $user = Auth::user();
-                                    $profileImageUrl = isset($user->profile_photo) && File::exists(storage_path('app/public/' . $user->profile_photo))
-                                        ? URL::to(env('APP_STORAGE').''. $user->profile_photo)
-                                        : 'https://via.placeholder.com/40'; // Default placeholder image if none exists
+
 
                                     // Determine user initials or first character
                                     $nameParts = explode(' ', $user->fullname ?? '');
@@ -49,12 +52,17 @@
                                     if (count($nameParts) > 1) {
                                         $initials = strtoupper($nameParts[0][0] . $nameParts[1][0]);
                                     } else {
-                                        $initials = strtoupper($nameParts[0][0]);
+                                        $initials = Str::title($nameParts[0]);
                                     }
                                 @endphp
 
-                                <img src="{{ $profileImageUrl }}" class="profile-image img-circle" height="40" alt="{{ $user->fullname }}">
-                                {{ $initials }}
+
+@if($user->profile_photo && File::exists(storage_path('app/public/' . $user->profile_photo)))
+<img src="{{ URL::to(env('APP_STORAGE').''.$user->profile_photo) }}" class="profile-image img-circle" height="40" alt="{{ $user->fullname }}">
+@else
+
+@endif
+{{ $initials }}
                             </a>
 
 
@@ -63,6 +71,8 @@
                                   <li><a class="dropdown-item {{ Request::routeIs('reset.password') ? 'active' : '' }}" href="{{ route('reset.password') }}">Change Password</a></li>
                                   <li><a class="dropdown-item {{ Request::routeIs('logout') ? 'active' : '' }}" href="{{ route('logout') }}">Logout</a></li>
                               </ul>
+
+
                           </li>
                       </ul>
                   </div>
