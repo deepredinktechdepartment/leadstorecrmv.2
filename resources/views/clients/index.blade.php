@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="card m-b-30">
-            <div class="card-body">
+            <div class="common_tabs">
                 <!-- Nav Tabs -->
                 <ul class="nav nav-tabs" id="clientTabs" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -119,10 +119,9 @@
 @endpush
 
 @push('styles')
-<style>
-    /* Custom Underline Style for Active Tab */
+<!-- <style>
     .nav-tabs .nav-link.active {
         border-bottom: 2px solid #007bff; /* Change color as needed */
     }
-</style>
+</style> -->
 @endpush
