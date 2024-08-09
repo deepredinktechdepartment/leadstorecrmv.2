@@ -39,9 +39,7 @@
 
                                 @php
                                     $user = Auth::user();
-                                    $profileImageUrl = isset($user->profile_photo) && File::exists(storage_path('app/public/' . $user->profile_photo))
-                                        ? URL::to(env('APP_STORAGE').''. $user->profile_photo)
-                                        : 'https://via.placeholder.com/40'; // Default placeholder image if none exists
+
 
                                     // Determine user initials or first character
                                     $nameParts = explode(' ', $user->fullname ?? '');
@@ -53,8 +51,13 @@
                                     }
                                 @endphp
 
-                                <img src="{{ $profileImageUrl }}" class="profile-image img-circle" height="40" alt="{{ $user->fullname }}">
-                                {{ $initials }}
+
+@if($user->profile_photo && File::exists(storage_path('app/public/' . $user->profile_photo)))
+<img src="{{ URL::to(env('APP_STORAGE').''.$user->profile_photo) }}" class="profile-image img-circle" height="40" alt="{{ $user->fullname }}">
+@else
+
+@endif
+{{ $initials }}
                             </a>
 
 

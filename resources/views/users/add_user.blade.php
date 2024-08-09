@@ -50,12 +50,12 @@ $selectedClientData = json_decode($users->projects_mapped ?? '[]', true); // Dec
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                           <div class="mb-1">
                               <label for="profile_picture" class="form-label">Profile Picture</label>
                               <input type="file" class="form-control" name="profile_picture" id="profile_picture">
                           </div>
-                      </div>
+                      </div> --}}
 
                         <div class="col-md-12">
                             <div class="mb-1">
