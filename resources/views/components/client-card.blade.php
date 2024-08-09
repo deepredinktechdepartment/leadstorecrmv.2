@@ -61,8 +61,10 @@
                         {{ $progressText }} 
                     </div>
                 </div> -->
+
+                
                   <!-- Progress Bar -->
-                  <div class="progress ml-3">
+                  <!-- <div class="progress ml-3">
                     <div class="progress-bar" role="progressbar"
                         style="width: 50%; background-color: #00ba8b;"
                         aria-valuenow="50%"
@@ -70,11 +72,14 @@
                         50%
                     </div>
                 </div>
-                <p class="mb-1 text-end">
-                        50/100
-                    </p>
+                <p class="mb-1 text-end">50/100</p> -->
 
-
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 30%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">30%</div>
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">30%</div>
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 40%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">40%</div>
+                </div>
+                <p class="mb-1 text-end">50/100</p>
 
             </div>
         </div>
