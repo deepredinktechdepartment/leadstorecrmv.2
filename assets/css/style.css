@@ -51,12 +51,21 @@ header .dropdown-menu {
 
 header .dropdown-item {
     font-size: 14px;
-    border-bottom: 1px solid #ddd;
-    border-radius: 0;
+    border-radius: 0px;
+    border-bottom: 0px;
 }
 
-header .dropdown-menu:last-child .dropdown-item {
-    border-bottom: 0;
+header .dropdown-menu:last-child a {
+    border-bottom: 0px;
+}
+header .dropdown-menu a:hover {
+    border-bottom: 1px solid #e1e1e1 !important;
+    background: transparent !important;
+    border-radius: 0px !important;
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    -ms-border-radius: 0px !important;
+    -o-border-radius: 0px !important;
 }
 
 header .profile-dropdown {

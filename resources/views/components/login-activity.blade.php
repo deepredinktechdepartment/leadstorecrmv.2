@@ -60,9 +60,9 @@
                                         <a href="#">
                                             <div>
                                                 <!-- <img class="d-block mx-auto" src="{{ asset('salesteampics/'.$profilePhoto) }}"> -->
-                                                <img class="d-block mx-auto" src="assets/images/suneel.png">
+                                                <img class="d-block mx-auto mb-2" src="assets/images/suneel.png">
                                                 <div>
-                                                    <h4 class="text-center mb-1">{{ $userName }}</h4>
+                                                    <h6 class="text-center mb-1">{{ $userName }}</h6>
                                                     <p class="text-center">{{ $timeDiff }} Ago</p>
                                                 </div>
                                             </div>
