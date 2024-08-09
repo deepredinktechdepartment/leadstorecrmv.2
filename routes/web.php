@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('users/create', [UserController::class, 'edit'])->name('users.create');
     Route::post('users/updateData', [UserController::class, 'storeOrUpdate'])->name('userUpdateData');
     Route::post('users/storeData', [UserController::class, 'storeOrUpdate'])->name('userstoreData');
-    Route::post('users/deleteData', [UserController::class, 'storeOrUpdate'])->name('users.destroy');
+    Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 
     Route::post('/users/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');

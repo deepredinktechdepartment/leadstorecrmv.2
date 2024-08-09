@@ -416,7 +416,23 @@ public function toggleStatus(Request $request)
         return response()->json(['success' => false, 'error' => 'An error occurred while toggling status'], 500);
     }
 }
+public function destroy($id)
+{
+    try {
+        // Decrypt the user ID
+        $userId = Crypt::decrypt($id);
 
+        // Find the user by ID and delete
+        $user = User::findOrFail($userId);
+        $user->delete();
+
+        // Redirect or return success message
+        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+    } catch (Exception $e) {
+        // Handle exceptions (e.g., user not found, decryption failure)
+        return redirect()->route('users.index')->with('error', 'Failed to delete user: ' . $e->getMessage());
+    }
+}
 
 
 }

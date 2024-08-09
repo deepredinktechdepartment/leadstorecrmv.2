@@ -41,10 +41,10 @@
                         &nbsp;&nbsp;&nbsp; <!-- Add space between icons -->
 
                         <!-- Delete Icon -->
-                        <form action="{{ route('clients.destroy', ['client' => Crypt::encrypt($client->id)]) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('clients.destroy', ['client' => Crypt::encrypt($client->id)]) }}" method="POST" class="delete-form" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="no-button" onclick="return confirm('Are you sure you want to delete this client?');" title="Delete Client">
+                            <button type="submit" class="no-button"  title="Delete Client">
                                 <i class="{{ config('constants.icons.delete') }}" aria-label="Delete"></i>
                             </button>
                         </form>

@@ -39,13 +39,14 @@
                     </button>
                     &nbsp;&nbsp;&nbsp; <!-- Add space between icons -->
 
-                    <form action="{{ route('users.destroy', ['user' => Crypt::encrypt($user->id)]) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('users.destroy', ['user' => Crypt::encrypt($user->id)]) }}" method="POST" class="delete-form" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="no-button" onclick="return confirm('Are you sure you want to delete this user?');">
+                        <button type="submit" class="no-button">
                             <i class="{{ config('constants.icons.delete') }}"></i>
                         </button>
                     </form>
+
                 </td>
             </tr>
         @endforeach
