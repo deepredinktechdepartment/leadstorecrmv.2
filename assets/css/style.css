@@ -804,10 +804,10 @@ textarea {
     padding: 1.5rem;
 }
 
-.card img {
+/* .card img {
     border-radius: 8px;
-    /*    width: 100%;*/
-}
+       width: 100%;
+} */
 
 
 /*.card:hover {
@@ -821,9 +821,9 @@ textarea {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 } */
 
-.card img {
+/* .card img {
     border-radius: 8px;
-}
+} */
 
 .basic_card .card {
     border-radius: 8px;
@@ -2316,6 +2316,7 @@ div.dataTables_wrapper div.dataTables_length select {
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
+    /* border: 1px solid #000; */
 }
 
 .recently_active_users p {

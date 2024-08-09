@@ -6,9 +6,9 @@
 
 
             @if (!empty($client->client_logo) && File::exists(storage_path('app/public/' . $client->client_logo)))
-            <img src="{{ URL::to(env('APP_STORAGE').''.$client->client_logo) }}" alt="Client Logo" class="img-fluid client_logo d-block mx-auto">
+            <img src="{{ URL::to(env('APP_STORAGE').''.$client->client_logo) }}" alt="Client Logo" class="img-fluid client_logo d-block mx-md-auto mb-2">
             @else
-            <img src="assets/images/person.png" alt="Client Logo" class="img-fluid client_logo d-block mx-auto">
+            <img src="assets/images/place_holder.png" alt="Client Logo" class="img-fluid client_logo d-block mx-md-auto mb-2">
             @endif
 
 
