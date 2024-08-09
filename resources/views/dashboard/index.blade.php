@@ -19,8 +19,8 @@ $inactiveClients = Client::where('active', false)->orderby('client_name')->get()
     <div class="col-sm-3">
         <div class="card bg-primary p-3">
             <a href="{{ URL::to('clients?active=true') }}">
-                <h6 class="text-white mb-5 p-0 m-0 fw-normal">Active Projects</h6>
-                <h1 class="text-white display-6 fw-bold">{{ $activeClientCount ?? 0 }}</h1>
+                <h6 class="text-white mb-2 p-0 m-0 fw-normal">Active Projects</h6>
+                <h1 class="text-white display-6 fw-bold p-0 m-0">{{ $activeClientCount ?? 0 }}</h1>
             </a>
         </div>
     </div>
