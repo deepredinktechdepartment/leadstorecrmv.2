@@ -5,8 +5,10 @@
     <div class="col-lg-12">
         <div class="card m-b-30">
             <div class="card-body">
+                <div class="common_tabs">
                 <!-- Nav Tabs -->
-                <ul class="nav nav-tabs" id="userTabs" role="tablist">
+
+                    <ul class="nav nav-tabs" id="userTabs" role="tablist">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" id="active-tab" data-bs-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Active</a>
                     </li>
@@ -19,107 +21,17 @@
                 <div class="tab-content" id="userTabsContent">
                     <!-- Active Users Tab -->
                     <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-                        <table id="active-users-table" class="table table-striped table-bordered mt-3">
-                            <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Phone</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($users->where('active', true) as $user)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $user->fullname }}</td>
-                                        <td>{{ $user->username }}</td>
-                                        <td>{{ $user->phone }}</td>
-                                        <td>{{ Str::title($user->ut_name ?? '') }}</td>
-                                        <td>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="activeSwitch{{ $user->id }}" {{ $user->active ? 'checked' : '' }} onchange="toggleStatus('{{ Crypt::encrypt($user->id) }}', this.checked)">
-                                                <span class="badge {{ $user->active ? 'bg-success' : 'bg-danger' }}">
-                                                    {{ $user->active ? 'Active' : 'Inactive' }}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('users.edit', ['userID' => Crypt::encrypt($user->id)]) }}">
-                                                <i class="{{ config('constants.icons.edit') }}"></i>
-                                            </a>
-                                            &nbsp;
-                                            <button class="no-button" onclick="showPasswordModal('{{ Crypt::encrypt($user->id) }}')">
-                                                <i class="fas fa-key"></i>
-                                            </button>
-                                            <form action="{{ route('users.destroy', ['user' => Crypt::encrypt($user->id)]) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="no-button" onclick="return confirm('Are you sure you want to delete this user?');">
-                                                    <i class="{{ config('constants.icons.delete') }}"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        @component('components.user-table', ['users' => $users->where('active', true), 'tableId' => 'active-users-table'])
+                        @endcomponent
                     </div>
 
                     <!-- Inactive Users Tab -->
                     <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="inactive-tab">
-                        <table id="inactive-users-table" class="table table-striped table-bordered mt-3">
-                            <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Phone</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($users->where('active', false) as $user)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $user->fullname }}</td>
-                                        <td>{{ $user->username }}</td>
-                                        <td>{{ $user->phone }}</td>
-                                        <td>{{ Str::title($user->ut_name ?? '') }}</td>
-                                        <td>
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="inactiveSwitch{{ $user->id }}" {{ $user->active ? 'checked' : '' }} onchange="toggleStatus('{{ Crypt::encrypt($user->id) }}', this.checked)">
-                                                <span class="badge {{ $user->active ? 'bg-success' : 'bg-danger' }}">
-                                                    {{ $user->active ? 'Active' : 'Inactive' }}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('users.edit', ['userID' => Crypt::encrypt($user->id)]) }}">
-                                                <i class="{{ config('constants.icons.edit') }}"></i>
-                                            </a>
-                                            <button class="no-button" onclick="showPasswordModal('{{ Crypt::encrypt($user->id) }}')">
-                                                <i class="fas fa-key"></i>
-                                            </button>
-                                            <form action="{{ route('users.destroy', ['user' => Crypt::encrypt($user->id)]) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="no-button" onclick="return confirm('Are you sure you want to delete this user?');">
-                                                    <i class="{{ config('constants.icons.delete') }}"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        @component('components.user-table', ['users' => $users->where('active', false), 'tableId' => 'inactive-users-table'])
+                        @endcomponent
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -212,7 +124,7 @@
             success: function(response) {
                 let label = status ? 'Active' : 'Inactive';
                 let badgeClass = status ? 'bg-success' : 'bg-danger';
-                $('#activeSwitch' + userId).next('span').text(label).removeClass('bg-success bg-danger').addClass(badgeClass);
+                $('#' + (status ? 'active' : 'inactive') + 'Switch' + userId).next('span').text(label).removeClass('bg-success bg-danger').addClass(badgeClass);
 
                 // Optional: If you want to refresh the page after the status change
                 location.reload();

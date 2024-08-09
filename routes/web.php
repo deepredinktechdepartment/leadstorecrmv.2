@@ -62,11 +62,19 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/updatePassword', [UserController::class, 'updatePassword'])->name('users.updatePassword');
     Route::post('/users/toggleStatus', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
 
-    Route::resource('clients', ClientController::class);
+// Define a custom route for editing clients (must come before the resource route)
+Route::get('clients/edit', [ClientController::class, 'edit'])->name('clients.edit');
+
+// Define the resource route for clients (will generate standard CRUD routes)
+Route::resource('clients', ClientController::class)->except([
+    'edit' // Exclude the edit route from the resource controller
+]);
+Route::post('/clients/update-status', [ClientController::class, 'updateStatus'])->name('clients.updateStatus');
+Route::delete('clients/{client}', [ClientController::class, 'destroy'])->name('clients.destroy');
 
 
 
-    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
 Route::any('projectLeads', [ExternalDataController::class,'fetchDataFromExternalAPI'])->name('projectLeads');
 Route::any('get/crm/leads', [ExternalDataController::class,'fetchCRMLeads'])->name('get.crm.leads');

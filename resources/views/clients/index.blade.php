@@ -18,105 +18,13 @@
                 <div class="tab-content" id="clientTabsContent">
                     <!-- Active Clients Tab -->
                     <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-                        <div class="table-responsive">
-                            <table id="active-clients-table" class="table table-striped table-bordered mt-3 w-100">
-                                <thead>
-                                    <tr>
-                                        <th>S.No.</th>
-                                        <th>Name</th>
-                                        <th>Industry</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($clients->where('active', true) as $client)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $client->client_name }}</td>
-                                            <td>{{ $client->industry_category }}</td>
-                                            <td>
-                                                <span class="badge bg-success">Active</span>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('clients.edit', ['client' => Crypt::encrypt($client->id)]) }}">
-                                                    <i class="{{ config('constants.icons.edit') }}"></i>
-                                                </a>
-                                                &nbsp;
-                                                <form action="{{ route('clients.destroy', ['client' => Crypt::encrypt($client->id)]) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="no-button" onclick="return confirm('Are you sure you want to delete this client?');">
-                                                        <i class="{{ config('constants.icons.delete') }}"></i>
-                                                    </button>
-                                                </form>
-                                                &nbsp;
-                                                <!-- New Window Icon -->
-                                                <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Open in New Window">
-                                                    <i class="fas fa-external-link-alt"></i>
-                                                </a>
-                                                &nbsp;
-                                                <!-- Settings Icon -->
-                                                <a href="{{ route('project.settings', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Settings">
-                                                    <i class="fas fa-cog"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                        @component('components.client-table', ['clients' => $clients->where('active', true), 'tableId' => 'active-clients-table'])
+                        @endcomponent
                     </div>
                     <!-- Inactive Clients Tab -->
                     <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="inactive-tab">
-                        <div class="table-responsive">
-                            <table id="inactive-clients-table" class="table table-striped table-bordered mt-3 w-100">
-                                <thead>
-                                    <tr>
-                                        <th>S.No.</th>
-                                        <th>Name</th>
-                                        <th>Industry</th>
-                                        <th>Status</th>
-                                        <th>Address</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($clients->where('active', false) as $client)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $client->client_name }}</td>
-                                            <td>{{ $client->industry_category }}</td>
-                                            <td>
-                                                <span class="badge bg-danger">Inactive</span>
-                                            </td>
-                                            <td>{{ $client->address }}</td>
-                                            <td>
-                                                <a href="{{ route('clients.edit', ['client' => Crypt::encrypt($client->id)]) }}">
-                                                    <i class="{{ config('constants.icons.edit') }}"></i>
-                                                </a>
-                                                <form action="{{ route('clients.destroy', ['client' => Crypt::encrypt($client->id)]) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="no-button" onclick="return confirm('Are you sure you want to delete this client?');">
-                                                        <i class="{{ config('constants.icons.delete') }}"></i>
-                                                    </button>
-                                                </form>
-                                                <!-- New Window Icon -->
-                                                <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Open in New Window">
-                                                    <i class="fas fa-external-link-alt"></i>
-                                                </a>
-                                                &nbsp;
-                                                <!-- Settings Icon -->
-                                                <a href="{{ route('project.settings', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Settings">
-                                                    <i class="fas fa-cog"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                        @component('components.client-table', ['clients' => $clients->where('active', false), 'tableId' => 'inactive-clients-table'])
+                        @endcomponent
                     </div>
                 </div>
             </div>
@@ -127,14 +35,43 @@
 
 @push('scripts')
 <script>
-    // Your JavaScript code here if needed
-</script>
-@endpush
+    $(document).ready(function() {
+        $('.status-toggle').on('change', function() {
+            var clientId = $(this).data('id');
+            var isActive = $(this).is(':checked') ? 1 : 0; // Convert boolean to integer
 
-@push('styles')
-<!-- <style>
-    .nav-tabs .nav-link.active {
-        border-bottom: 2px solid #007bff; /* Change color as needed */
-    }
-</style> -->
+            $.ajax({
+                url: '{{ route("clients.updateStatus") }}', // Adjust route as necessary
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: clientId,
+                    active: isActive
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Update the label text
+                        var row = $('tr[data-client-id="' + clientId + '"]');
+                        var statusLabel = row.find('.form-check-label');
+                        if (isActive) {
+                            statusLabel.text('Active');
+                        } else {
+                            statusLabel.text('Inactive');
+                        }
+                        location.reload();
+                    } else {
+                        alert('Failed to update status');
+                        // Reset the toggle switch state on failure
+                        $('.status-toggle[data-id="' + clientId + '"]').prop('checked', !isActive);
+                    }
+                },
+                error: function() {
+                    alert('An error occurred');
+                    // Reset the toggle switch state on error
+                    $('.status-toggle[data-id="' + clientId + '"]').prop('checked', !isActive);
+                }
+            });
+        });
+    });
+</script>
 @endpush
