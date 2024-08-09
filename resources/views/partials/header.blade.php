@@ -35,9 +35,29 @@
                               </ul>
                           </li>
                           <li class="nav-item dropdown {{ Request::routeIs('profile.show', 'reset.password', 'logout') ? 'active' : '' }}">
-                              <a class="nav-link dropdown-toggle profile-dropdown" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                  <img src="https://leadstore.in/salesteampics/deep-red-ink-consultancy-squarelogo.png" class="profile-image img-circle" height="40"> Deepredink
-                              </a>
+                            <a class="nav-link dropdown-toggle profile-dropdown" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                @php
+                                    $user = Auth::user();
+                                    $profileImageUrl = isset($user->profile_photo) && File::exists(env('APP_STORAGE').''.$user->profile_photo)
+                                        ? URL::to(env('APP_STORAGE').''. $user->profile_photo)
+                                        : 'https://via.placeholder.com/40'; // Default placeholder image if none exists
+
+                                    // Determine user initials or first character
+                                    $nameParts = explode(' ', $user->fullname ?? '');
+                                    $initials = '';
+                                    if (count($nameParts) > 1) {
+                                        $initials = strtoupper($nameParts[0][0] . $nameParts[1][0]);
+                                    } else {
+                                        $initials = strtoupper($nameParts[0][0]);
+                                    }
+                                @endphp
+
+                                <img src="{{ $profileImageUrl }}" class="profile-image img-circle" height="40" alt="{{ $user->fullname }}">
+                                {{ $initials }}
+                            </a>
+
+
                               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                   <li><a class="dropdown-item {{ Request::routeIs('profile.show') ? 'active' : '' }}" href="{{ route('profile.show') }}">Your Profile</a></li>
                                   <li><a class="dropdown-item {{ Request::routeIs('reset.password') ? 'active' : '' }}" href="{{ route('reset.password') }}">Change Password</a></li>

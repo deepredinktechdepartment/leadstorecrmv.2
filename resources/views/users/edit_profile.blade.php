@@ -13,28 +13,28 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <!-- Full Name -->
-                                    <div class="mb-1">
+                                    <div class="mb-0">
                                         <label for="firstname" class="form-label">Full Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="firstname" id="firstname" value="{{ old('firstname', Auth::user()->fullname ?? '') }}" required />
 
                                     </div>
 
                                     <!-- Email -->
-                                    <div class="mb-1">
+                                    <div class="mb-0">
                                         <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                                         <input type="email" name="email" class="form-control" id="email" value="{{ old('email', Auth::user()->username ?? '') }}" required />
 
                                     </div>
 
                                     <!-- Mobile -->
-                                    <div class="mb-1">
+                                    <div class="mb-0">
                                         <label for="phone" class="form-label">Mobile<span class="text-danger">*</span></label>
                                         <input type="text" name="phone" id="phone" class="form-control" value="{{ old('phone', Auth::user()->phone ?? '') }}" required maxlength="10" minlength="10" />
 
                                     </div>
 
                                     <!-- Profile Picture -->
-                                    <div class="mb-1">
+                                    <div class="mb-0">
                                         <label for="profile" class="form-label">Profile</label>
                                         <input type="file" name="profile" class="form-control" id="profile" />
 
@@ -43,19 +43,15 @@
                            <!-- Display Profile Picture -->
                            @php
                            use Illuminate\Support\Facades\File;
-                           use Illuminate\Support\Facades\Storage;
-
-                           $profilePhotoPath = Auth::user()->profile_photo ?? '';
-                           // Check if the file exists
-                           $fileExists = File::exists($profilePhotoPath);
 
                        @endphp
 
                        <!-- Display Profile Picture -->
                        <div class="mb-1 ">
-                           @if($fileExists && $profilePhotoPath)
-                               <img src="{{ URL::to($profilePhotoPath) }}"
-                                    class="img-fluid rounded-circle border border-secondary"
+
+                           @if(isset(Auth::user()->profile_photo) && File::exists(env('APP_STORAGE').''.Auth::user()->profile_photo))
+                               <img src="{{ URL::to(env('APP_STORAGE').''.Auth::user()->profile_photo) }}"
+                                    class="img-fluid rounded-circle border border-secondary mt-2"
                                     width="100"
                                     alt="Profile Picture" />
                            @else

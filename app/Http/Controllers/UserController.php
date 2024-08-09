@@ -348,7 +348,7 @@ public function updateProfile(Request $request)
             $profileFilePath = $profileFile->storeAs('uploads', $profileFilename, 'public');
 
             // Store the full path in the database, including 'storage/app/' prefix
-            $user->profile_photo = 'storage/app/public/' . $profileFilePath;
+            $user->profile_photo = $profileFilePath;
         }
 
         // Update user details
