@@ -16,16 +16,24 @@ $inactiveClients = Client::mappedToUser()->where('active', false)->orderby('clie
 @endphp
 
 <div class="row mb-5">
+
+
     <div class="col-sm-3">
-        <div class="card bg-primary p-3">
-            <a href="{{ URL::to('clients?active=true') }}">
-                <h6 class="text-white mb-2 p-0 m-0 fw-normal">Active Projects</h6>
-                <h1 class="text-white display-6 fw-bold p-0 m-0">{{ $activeClientCount ?? 0 }}</h1>
-            </a>
-        </div>
+            {{-- Use the Card component --}}
+    <x-card title="Active Projects" :value="$activeClientCount ?? 0" linkUrl="{{ URL::to('clients?active=true') }}" />
+    {{-- Add more cards or other content here as needed --}}
+
     </div>
-    <!-- Add other cards as needed -->
+    <div class="col-sm-3">
+        {{-- Use the Card component --}}
+<x-card title="Inactive Projects" :value="$inactiveClientCount ?? 0" linkUrl="{{ URL::to('clients?active=false') }}" />
+{{-- Add more cards or other content here as needed --}}
+
 </div>
+
+</div>
+
+
 <div class="row mb-5">
   <div class="col-lg-12">
       <!-- Tabs Start -->

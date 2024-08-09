@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 @php
-$ClientData = App\Models\Client::get(); // Fetch all clients
+$ClientData = App\Models\Client::orderBy('clients.active', 'DESC')->orderby('client_name')->get(); // Fetch all clients
 $selectedClientData = json_decode($users->projects_mapped ?? '[]', true); // Decode JSON data for pre-filling checkboxes
 @endphp
 <div class="row">
