@@ -1,7 +1,7 @@
 <div class="card">
     <div class="row">
         <div class="col-lg-3">
-<<<<<<< Updated upstream
+
             <!-- <img src="assets/images/rmc_60.png" alt="{{ $name }}" class="img-fluid mb-3" width="70px" /> -->
 
 
@@ -11,11 +11,7 @@
             <i class="fas fa-user-circle fa-8x demo_img"></i>
             @endif
 
-=======
-            <img src="assets/images/rmc_60.png" alt="{{ $name }}" class="img-fluid mb-3" width="70px" />
-            <img src="assets/images/rmc_60.png" alt="{{ $name }}" class="img-fluid mb-3" width="70px" />
-            <!-- <i class="fas fa-user-circle fa-8x demo_img"></i> -->
->>>>>>> Stashed changes
+
         </div>
         <div class="col-lg-8">
             <div>
