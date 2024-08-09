@@ -47,7 +47,7 @@
                                     if (count($nameParts) > 1) {
                                         $initials = strtoupper($nameParts[0][0] . $nameParts[1][0]);
                                     } else {
-                                        $initials = strtoupper($nameParts[0][0]);
+                                        $initials = Str::title($nameParts[0]);
                                     }
                                 @endphp
 
