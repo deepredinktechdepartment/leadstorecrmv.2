@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+
+
 <div class="row">
 
     <!-- Column 1 -->
@@ -36,71 +38,91 @@
 
                         <div class="mb-0">
                             <label for="address1" class="form-label">Address 1</label>
-                            <input type="text" id="address1" name="address1" class="form-control" value="{{ old('address1', $client->address1 ?? '') }}">
+                            <input type="text" id="address1" name="address1" class="form-control" value="{{ old('address1', $client->client_address1 ?? '') }}" required>
                         </div>
                         <div class="mb-0">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" id="city" name="city" class="form-control" value="{{ old('city', $client->city ?? '') }}">
+                            <label for="address2" class="form-label">Address 2</label>
+                            <input type="text" id="address2" name="address2" class="form-control" value="{{ old('address2', $client->client_address2 ?? '') }}">
                         </div>
 
                         <div class="mb-0">
-                            <label for="pan" class="form-label">PAN</label>
-                            <input type="text" id="pan" name="pan" class="form-control" value="{{ old('pan', $client->pan ?? '') }}">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" id="city" name="city" class="form-control" value="{{ old('city', $client->client_city ?? '') }}">
+                        </div>
+
+                        <div class="mb-0">
+                            <label for="state" class="form-label">State</label>
+                            <input type="text" id="state" name="state" class="form-control" value="{{ old('state', $client->client_state ?? '') }}">
                         </div>
                         <div class="mb-0">
-                            <label for="facebook" class="form-label">Facebook URL</label>
-                            <input type="url" id="facebook" name="facebook" class="form-control" value="{{ old('facebook', $client->facebook ?? '') }}">
+                            <label for="zip" class="form-label">Zip Code</label>
+                            <input type="text" id="zip" name="zip" class="form-control" value="{{ old('zip', $client->zip_code ?? '') }}">
                         </div>
+
+
                         <div class="mb-0">
                             <label for="logo" class="form-label">Project Logo</label>
                             <input type="file" id="logo" name="logo" class="form-control">
-                            @if(isset($client) && $client->logo)
-                                <small class="form-text text-muted">Current logo: {{ $client->logo }}</small>
+                            @if(isset($client) && File::exists(env('APP_STORAGE').''.$client->client_logo))
+                            <img src="{{ URL::to(env('APP_STORAGE').''.$client->client_logo) }}" alt="Client Logo" style="width: 100px; height: auto;">
                             @endif
                         </div>
                     </div>
                     <!-- Column 2 -->
                     <div class="col-md-6">
-                        <div class="mb-0">
-                            <label for="address2" class="form-label">Address 2</label>
-                            <input type="text" id="address2" name="address2" class="form-control" value="{{ old('address2', $client->address2 ?? '') }}">
-                        </div>
-                        <div class="mb-0">
-                            <label for="state" class="form-label">State</label>
-                            <input type="text" id="state" name="state" class="form-control" value="{{ old('state', $client->state ?? '') }}">
-                        </div>
-                        <div class="mb-0">
-                            <label for="zip" class="form-label">Zip Code</label>
-                            <input type="text" id="zip" name="zip" class="form-control" value="{{ old('zip', $client->zip ?? '') }}">
-                        </div>
 
                         <div class="mb-0">
+                            <label for="pan" class="form-label">PAN</label>
+                            <input type="text" id="pan" name="pan" class="form-control" value="{{ old('pan', $client->client_tan ?? '') }}">
+                        </div>
+                        <div class="mb-0">
                             <label for="tan" class="form-label">TAN</label>
-                            <input type="text" id="tan" name="tan" class="form-control" value="{{ old('tan', $client->tan ?? '') }}">
+                            <input type="text" id="tan" name="tan" class="form-control" value="{{ old('tan', $client->client_pan ?? '') }}">
+                        </div>
+
+
+                        <div class="mb-0">
+                            <label for="facebook" class="form-label">Facebook URL</label>
+                            <input type="url" id="facebook" name="facebook" class="form-control"
+                                   value="{{ old('facebook', $client->social_media_pages['facebook'] ?? '') }}">
                         </div>
                         <div class="mb-0">
                             <label for="twitter" class="form-label">Twitter URL</label>
-                            <input type="url" id="twitter" name="twitter" class="form-control" value="{{ old('twitter', $client->twitter ?? '') }}">
+                            <input type="url" id="twitter" name="twitter" class="form-control"
+                                   value="{{ old('twitter', $client->social_media_pages['twitter'] ?? '') }}">
                         </div>
                         <div class="mb-0">
                             <label for="linkedin" class="form-label">LinkedIn URL</label>
-                            <input type="url" id="linkedin" name="linkedin" class="form-control" value="{{ old('linkedin', $client->linkedin ?? '') }}">
+                            <input type="url" id="linkedin" name="linkedin" class="form-control"
+                                   value="{{ old('linkedin', $client->social_media_pages['linkedin'] ?? '') }}">
                         </div>
                         <div class="mb-0">
                             <label for="instagram" class="form-label">Instagram URL</label>
-                            <input type="url" id="instagram" name="instagram" class="form-control" value="{{ old('instagram', $client->instagram ?? '') }}">
+                            <input type="url" id="instagram" name="instagram" class="form-control"
+                                   value="{{ old('instagram', $client->social_media_pages['instagram'] ?? '') }}">
                         </div>
                         <div class="mb-0">
                             <label for="api_url" class="form-label">External API URL</label>
-                            <input type="url" id="api_url" name="api_url" class="form-control" value="{{ old('api_url', $client->api_url ?? '') }}">
+                            <input type="url" id="api_url" name="api_url" class="form-control"
+                                   value="{{ old('api_url', $client->social_media_pages['api_url'] ?? '') }}">
                         </div>
-                        <div class="mb-0">
-                            <label for="notes" class="form-label">Notes</label>
-                            <textarea id="notes" name="notes" class="form-control">{{ old('notes', $client->notes ?? '') }}</textarea>
-                        </div>
+
+
+    <div class="mb-0">
+        <label for="crm_merchant_id" class="form-label">CRM Merchant ID</label>
+        <input type="text" id="crm_merchant_id" name="crm_merchant_id" class="form-control"
+               value="{{ old('crm_merchant_id', $client->merchant_id ?? '') }}">
+    </div>
+    <div class="mb-0">
+        <label for="crm_api_key" class="form-label">CRM API Key</label>
+        <input type="text" id="crm_api_key" name="crm_api_key" class="form-control"
+               value="{{ old('crm_api_key', $client->api_key ?? '') }}">
+    </div>
+
+
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">{{ isset($client) ? 'Update Client' : 'Create Client' }}</button>
+                <button type="submit" class="btn btn-primary mt-2">{{ isset($client) ? 'Update Client' : 'Create Client' }}</button>
             </form>
         </div>
     </div>
@@ -135,6 +157,7 @@
                     required: true,
                 },
                 address1: {
+                    required: true,
                     maxlength: 255
                 },
                 address2: {
@@ -172,9 +195,6 @@
                 },
                 api_url: {
                     url: true
-                },
-                notes: {
-                    maxlength: 1000
                 },
                 logo: {
                     extension: "jpeg|png",

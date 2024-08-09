@@ -64,7 +64,8 @@ $inactiveClients = Client::where('active', false)->orderby('client_name')->get()
                                   'logo' => asset('assets/images/rmc_60.png'),
                                   'name' => $client->client_name,
                                   'currentPerformance' => $client->current_performance,
-                                  'targetPerformance' => $client->target_performance
+                                  'targetPerformance' => $client->target_performance,
+                                  'client' => $client,
                               ])
                               @endcomponent
                             </a>
@@ -87,6 +88,7 @@ $inactiveClients = Client::where('active', false)->orderby('client_name')->get()
                                   'name' => $client->client_name,
                                   'currentPerformance' => $client->current_performance,
                                   'targetPerformance' => $client->target_performance,
+                                  'client' => $client,
                               ])
                               @endcomponent
                             </a>

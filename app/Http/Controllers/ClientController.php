@@ -20,7 +20,6 @@ use Mail;
 use App\Mail\ResetPassword;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Client;
-use App\Rules\ImageDimension;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
 class ClientController extends Controller
@@ -113,8 +112,19 @@ public function index(Request $request)
         // Decrypt the client ID
         $clientId = Crypt::decrypt($encryptedId);
 
-        // Find the client by ID
         $client = Client::findOrFail($clientId);
+
+        // Check if the 'social_media_pages' column contains data and decode it, otherwise set a default array
+        $client->social_media_pages = $client->social_media_pages
+            ? json_decode($client->social_media_pages, true)
+            : [
+                'facebook' => '',
+                'twitter' => '',
+                'linkedin' => '',
+                'instagram' => '',
+                'api_url' => '',
+            ];
+
 
         // Set the page title
         $pageTitle = 'Edit Project';
@@ -197,7 +207,7 @@ public function destroy($encryptedId)
             'name' => 'required|string|max:255',
             'short_name' => 'required|string|max:150',
             'industry' => 'required|string|max:255',
-            'address1' => 'nullable|string|max:255',
+            'address1' => 'required|string|max:255',
             'address2' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'state' => 'nullable|string|max:255',
@@ -208,8 +218,7 @@ public function destroy($encryptedId)
             'tan' => 'nullable|string|max:10',
             'social_media' => 'nullable|string|max:255',
             'api_url' => 'nullable|url|max:255',
-            'notes' => 'nullable|string',
-            'logo' => ['nullable', 'image', 'mimes:jpeg,png', 'max:2048', new ImageDimension(55)], // Validate image
+            'logo' => ['nullable', 'image', 'mimes:jpeg,png', 'max:2048'], // Validate image
         ];
 
     // Validate the request
@@ -224,14 +233,6 @@ public function destroy($encryptedId)
         try {
             // If $id is provided, find the client for update; otherwise, create a new instance
 
-                // Handle file upload
-        if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/logos', $filename);
-        } else {
-            $filename = null;
-        }
 
 
             $client = $id ? Client::findOrFail(Crypt::decrypt($id)) : new Client;
@@ -242,10 +243,34 @@ public function destroy($encryptedId)
             $client->short_name = $request->short_name;
 
             // Set logo path if available
-            if ($filename) {
-            $client->logo = 'logos/' . $filename;
+            if ($request->hasFile('logo')) {
+                // Store the new logo and get the file path
+                $file = $request->file('logo');
+                $path = $file->store('logos', 'public');
+
+                // If a logo already exists, delete the old file
+                if ($client->client_logo && Storage::exists('public/' . $client->client_logo)) {
+                    Storage::delete('public/' . $client->client_logo);
+                }
+
+                // Save the new logo path in the database
+                $client->client_logo = $path;
             }
+
+
             $client->industry_category = $request->industry;
+
+                // Serialize the social media URLs into a JSON object
+                $client->social_media_pages = json_encode([
+                'facebook' => $request->input('facebook'),
+                'twitter' => $request->input('twitter'),
+                'linkedin' => $request->input('linkedin'),
+                'instagram' => $request->input('instagram'),
+                'api_url' => $request->input('api_url'),
+                ]);
+
+
+
 
             $client->client_address1 = $request->address1;
             $client->client_address2 = $request->address2;
@@ -256,7 +281,10 @@ public function destroy($encryptedId)
             $client->client_pan = $request->pan;
             $client->client_tan = $request->tan;
 
-            $client->client_notes = $request->notes;
+               // Save CRM Merchant ID and API Key in their respective columns
+    $client->merchant_id = $request->input('crm_merchant_id', '');
+    $client->api_key = $request->input('crm_api_key', '');
+
             $client->save();
 
             // Redirect with success message

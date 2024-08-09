@@ -2,7 +2,13 @@
     <div class="row">
         <div class="col-lg-3">
             <!-- <img src="assets/images/rmc_60.png" alt="{{ $name }}" class="img-fluid mb-3" width="70px" /> -->
+
+            @if(isset($client) && File::exists(env('APP_STORAGE').''.$client->client_logo))
+            <img src="{{ URL::to(env('APP_STORAGE').''.$client->client_logo) }}" alt="Client Logo" style="width: 100px; height: auto;">
+            @else
             <i class="fas fa-user-circle fa-8x demo_img"></i>
+            @endif
+
         </div>
         <div class="col-lg-8">
             <div>
