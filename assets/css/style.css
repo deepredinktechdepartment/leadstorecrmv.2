@@ -2249,9 +2249,9 @@ div.dataTables_wrapper div.dataTables_length select {
     }
 }
 
-.recently_active_users img {
-    width: 60px;
-    height: 60px;
+.client_logo {
+    width: 50px;
+    height: 50px;
     object-fit: cover;
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -2325,14 +2325,4 @@ div.dataTables_wrapper div.dataTables_length select {
     background: #ffffff;
 }
 
-.demo_img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
-    font-size: 60px;
-}
+

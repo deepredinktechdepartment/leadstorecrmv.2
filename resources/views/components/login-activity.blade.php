@@ -60,9 +60,9 @@
                                         <a href="#">
                                             <div>
                                                 @if (!empty($user->profile_photo) && File::exists(storage_path('app/public/' . $user->profile_photo)))
-                                                <img src="{{ URL::to(env('APP_STORAGE').''.$user->profile_photo) }}" alt="{{ $userName }}" style="width: 100px; height: auto;">
+                                                <img src="{{ URL::to(env('APP_STORAGE').''.$user->profile_photo) }}" alt="{{ $userName }}" class="d-block mx-auto client_logo mb-2">
                                                 @else
-                                                <i class="fas fa-user-circle fa-8x demo_img"></i>
+                                                <img src="assets/images/person.png" alt="Client Logo" class="d-block mx-auto client_logo mb-2">
                                                 @endif
                                                 <div>
                                                     <h6 class="text-center mb-1">{{ $userName }}</h6>
