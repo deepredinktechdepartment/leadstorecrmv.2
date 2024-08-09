@@ -40,11 +40,12 @@
                 </div> --}}
 
                       <!-- Default Performance Values Display -->
-                      <p class="mb-1">
+                      <!-- <p class="mb-1">
                         {{ $currentPerformance > 0 ? $currentPerformance : '0' }}/{{ $targetPerformance > 0 ? $targetPerformance : '0' }}
-                    </p>
+                    </p> -->
+                     
                   <!-- Progress Bar -->
-                  <div class="progress ml-3" style="width: 200px;">
+                  <!-- <div class="progress ml-3" style="width: 200px;">
                     @php
                         $targetPerformance = $client->target_performance ?? 0;
                         $currentPerformance = $client->current_performance ?? 0;
@@ -57,9 +58,21 @@
                         style="width: {{ $progress }}%; background-color: {{ $progressColor }};"
                         aria-valuenow="{{ $progress }}"
                         aria-valuemin="0" aria-valuemax="100">
-                        {{ $progressText }}
+                        {{ $progressText }} 
+                    </div>
+                </div> -->
+                  <!-- Progress Bar -->
+                  <div class="progress ml-3">
+                    <div class="progress-bar" role="progressbar"
+                        style="width: 50%; background-color: #00ba8b;"
+                        aria-valuenow="50%"
+                        aria-valuemin="0" aria-valuemax="100">
+                        50%
                     </div>
                 </div>
+                <p class="mb-1 text-end">
+                        50/100
+                    </p>
 
 
 
