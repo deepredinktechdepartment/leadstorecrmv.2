@@ -59,7 +59,7 @@ $inactiveClients = Client::where('active', false)->orderby('client_name')->get()
                       <div class="row">
                           @foreach ($activeClients as $client)
                           <div class="col-lg-4 mb-2">
-                            <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}">
+                            <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" class="w-100">
                               @component('components.client-card', [
                                   'logo' => asset('assets/images/rmc_60.png'),
                                   'name' => $client->client_name,
@@ -81,7 +81,7 @@ $inactiveClients = Client::where('active', false)->orderby('client_name')->get()
                       <div class="row">
                           @foreach ($inactiveClients as $client)
                           <div class="col-lg-4 mb-2">
-                            <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}">
+                            <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" class="w-100">
                               @component('components.client-card', [
                                   'logo' => asset('assets/images/rmc_60.png'),
                                   'name' => $client->client_name,

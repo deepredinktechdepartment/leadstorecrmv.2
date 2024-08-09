@@ -36,37 +36,40 @@
 
                 @if($users->isNotEmpty())
                     <div class="col-lg-6">
-                        <h3 class="mb-4">{{ $role == 3 ? 'From the Agency' : 'From the Client' }}</h3>
-                        <div class="row recently_active_users">
-                            @foreach($users as $user)
-                                @php
-                                    $userName = ucwords($user->fullname);
-                                    $profilePhoto = empty($user->profile_photo) ? 'default_profile_pic.png' : $user->profile_photo;
+                        <div class="card">
+                            <h2 class="mb-4">{{ $role == 3 ? 'From the Agency' : 'From the Client' }}</h2>
+                            <div class="row recently_active_users">
+                                @foreach($users as $user)
+                                    @php
+                                        $userName = ucwords($user->fullname);
+                                        $profilePhoto = empty($user->profile_photo) ? 'default_profile_pic.png' : $user->profile_photo;
 
-                                    $lastLoggedOn = \Carbon\Carbon::parse($user->last_logged_on);
-                                    $now = \Carbon\Carbon::now();
+                                        $lastLoggedOn = \Carbon\Carbon::parse($user->last_logged_on);
+                                        $now = \Carbon\Carbon::now();
 
-                                    if ($lastLoggedOn->isToday()) {
-                                        $hours = $now->diffInHours($lastLoggedOn);
-                                        $minutes = $now->diffInMinutes($lastLoggedOn) % 60;
-                                        $timeDiff = $hours > 0 ? "$hours Hour" . ($hours > 1 ? 's' : '') : "$minutes Minute" . ($minutes > 1 ? 's' : '');
-                                    } else {
-                                        $daysBetween = $now->diffInDays($lastLoggedOn);
-                                        $timeDiff = $daysBetween > 0 ? "$daysBetween Day" . ($daysBetween > 1 ? 's' : '') : 'Today';
-                                    }
-                                @endphp
-                                <div class="col-lg-3">
-                                    <a href="#">
-                                        <div class="card">
-                                            <img class="img-circle" src="{{ asset('salesteampics/'.$profilePhoto) }}" style="width:100%">
-                                            <div class="card_container">
-                                                <h4><b>{{ $userName }}</b></h4>
-                                                <p><i>{{ $timeDiff }} Ago</i></p>
+                                        if ($lastLoggedOn->isToday()) {
+                                            $hours = $now->diffInHours($lastLoggedOn);
+                                            $minutes = $now->diffInMinutes($lastLoggedOn) % 60;
+                                            $timeDiff = $hours > 0 ? "$hours Hour" . ($hours > 1 ? 's' : '') : "$minutes Minute" . ($minutes > 1 ? 's' : '');
+                                        } else {
+                                            $daysBetween = $now->diffInDays($lastLoggedOn);
+                                            $timeDiff = $daysBetween > 0 ? "$daysBetween Day" . ($daysBetween > 1 ? 's' : '') : 'Today';
+                                        }
+                                    @endphp
+                                    <div class="col-lg-3">
+                                        <a href="#">
+                                            <div>
+                                                <!-- <img class="d-block mx-auto" src="{{ asset('salesteampics/'.$profilePhoto) }}"> -->
+                                                <img class="d-block mx-auto" src="assets/images/suneel.png">
+                                                <div>
+                                                    <h4 class="text-center mb-1">{{ $userName }}</h4>
+                                                    <p class="text-center">{{ $timeDiff }} Ago</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 @endif
