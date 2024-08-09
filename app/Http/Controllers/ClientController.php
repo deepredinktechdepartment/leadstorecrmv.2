@@ -35,7 +35,7 @@ public function index(Request $request)
 
     try {
         // Initialize the query builder
-        $query = Client::select('clients.*')
+        $query = Client::mappedToUser()->select('clients.*')
             ->orderBy('clients.active', 'DESC')
             ->orderBy('clients.client_name');
 

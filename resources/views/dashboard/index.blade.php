@@ -7,12 +7,12 @@
 use App\Models\Client;
 
 // Count active and inactive clients
-$activeClientCount = Client::where('active', true)->count();
-$inactiveClientCount = Client::where('active', false)->count();
+$activeClientCount = Client::mappedToUser()->where('active', true)->count();
+$inactiveClientCount = Client::mappedToUser()->where('active', false)->count();
 
 // Fetch active and inactive clients
-$activeClients = Client::where('active', true)->orderby('client_name')->get();
-$inactiveClients = Client::where('active', false)->orderby('client_name')->get();
+$activeClients = Client::mappedToUser()->where('active', true)->orderby('client_name')->get();
+$inactiveClients = Client::mappedToUser()->where('active', false)->orderby('client_name')->get();
 @endphp
 
 <div class="row mb-5">

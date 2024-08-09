@@ -2,11 +2,14 @@
 
 /* INDEX */
 
+
 /* ======== SIDEBAS NAVIGATION ========= */
+
 
 /*.nav-sub-strip-container{
     margin-top: 20px !important;
 }*/
+
 
 /* Header CSS BEGiNS */
 
@@ -58,6 +61,7 @@ header .dropdown-item {
 header .dropdown-menu:last-child a {
     border-bottom: 0px;
 }
+
 header .dropdown-menu a:hover {
     border-bottom: 1px solid #e1e1e1 !important;
     background: transparent !important;
@@ -87,7 +91,9 @@ header .profile-image {
     }
 }
 
+
 /* Header CSS ENDS */
+
 
 /* Dashboard CSS BEGiNS */
 
@@ -112,6 +118,7 @@ header .profile-image {
     margin-bottom: 0;
 }
 
+
 /* Login CSS BEGiNS */
 
 .login-sec {
@@ -135,12 +142,7 @@ header .profile-image {
 }
 
 .login-img-bg {
-    background: radial-gradient(
-            rgb(210, 241, 223),
-            rgb(211, 215, 250),
-            rgb(186, 216, 244)
-        )
-        0% 0%/400% 400%;
+    background: radial-gradient( rgb(210, 241, 223), rgb(211, 215, 250), rgb(186, 216, 244)) 0% 0%/400% 400%;
 }
 
 .login-form-wrapper .form-group {
@@ -196,6 +198,7 @@ header .profile-image {
         height: auto !important;
     }
 }
+
 
 /* Login CSS ENDS */
 
@@ -287,21 +290,29 @@ header .profile-image {
     color: #0d6efd !important;
 }
 
+
 /* .nav-avatar-item.active {
     color: #8f2292 !important;
 } */
 
+
 /* .nav-list-avatar-group.active { */
+
 
 /*    background: #ddd;*/
 
+
 /*    padding: 2px 1px 2px 5px;*/
+
 
 /*    border-radius: 5px;*/
 
+
 /* color: #8f2292 !important; */
 
+
 /* } */
+
 
 /* .nav-list-avatar-group.active a {
     color: #0d6efd;
@@ -333,21 +344,30 @@ header .profile-image {
     transform: rotate(-136deg) !important;
 }
 
+
 /* ======== COMMON CSS ========= */
+
 
 /* ======== COMPANY PROFILE TAB ========= */
 
-/* ======== SINGLE PAGE BLOG ========= */
 
 /* ======== SINGLE PAGE BLOG ========= */
+
+
+/* ======== SINGLE PAGE BLOG ========= */
+
 
 /* ======== BLOG PAGE ========= */
 
+
 /* ======== EMPLOYEE PROFILE ========= */
+
 
 /* ======== DASHBOARD ========= */
 
+
 /* ======== SOCIAL MEDIA MANAGEMENT MODAL ========= */
+
 
 /*#region top ================================ SUBNAV CSS START ============================*/
 
@@ -364,7 +384,9 @@ header .profile-image {
     color: var(--black-medium);
 }
 
+
 /*#endregion* ================================ SUBNAV CSS END ============================*/
+
 
 /*#region top ================================ COMMON CSS START ============================*/
 
@@ -407,6 +429,7 @@ h5 {
     /*    padding-bottom: 10px;*/
     /*    margin: 15px 0 15px 0!important;*/
 }
+
 
 /*
 h5 {
@@ -763,6 +786,7 @@ textarea {
     background-color: #ff9933;
 }
 
+
 /* .bg-primary {
     background-color: #3083e8b8 !important;
 }
@@ -785,10 +809,12 @@ textarea {
     /*    width: 100%;*/
 }
 
+
 /*.card:hover {
     transform: scale(1.02);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }*/
+
 
 /* .card:hover {
     transform: scale(1.02);
@@ -829,6 +855,7 @@ textarea {
     height: 50px;
     object-fit: contain !important;
 }
+
 
 /* .action_icons a {
     transition: 0.3s;
@@ -923,7 +950,9 @@ label {
     color: var(--red) !important;
 }
 
+
 /*#endregion* ================================ COMMON CSS END ============================*/
+
 
 /*#region top ================================ COMPANY PROFILE TAB CSS START ============================*/
 
@@ -957,7 +986,9 @@ label {
     right: 25px;
 }
 
+
 /*#endregion* ================================ COMPANY PROFILE TAB CSS END ============================*/
+
 
 /*#region top ================================ SINGLE PAGE BLOG CSS START ============================*/
 
@@ -968,6 +999,7 @@ label {
 .single_blog .card a .fa-pen-to-square {
     font-size: 25px;
 }
+
 
 /*.single_blog .card h2 {
     color: #4b79c2;
@@ -982,6 +1014,7 @@ label {
     color: #6e6d71;
     font-weight: 500;
 }
+
 
 /* timeline css start*/
 
@@ -1009,7 +1042,7 @@ label {
     display: flex;
 }
 
-.tl-item > * {
+.tl-item>* {
     padding: 0px 10px;
 }
 
@@ -1144,6 +1177,7 @@ label {
     border-color: var(--red) !important;
 }
 
+
 /* .boot_table .table tbody tr td {
   margin: 0.3rem 0.4rem !important;
   padding: 0.3rem 0.4rem !important;
@@ -1159,9 +1193,12 @@ label {
     height: 35px !important;
 }
 
+
 /* timeline css end*/
 
+
 /*#endregion* ================================ SINGLE PAGE BLOG CSS END ============================*/
+
 
 /*#region top ================================== BLOG PAGE CSS START ==================================*/
 
@@ -1195,7 +1232,9 @@ label {
     color: #6e6d71;
 }
 
+
 /*#endregion*================================== BLOG PAGE CSS END ==================================*/
+
 
 /*#region top* ================================ EMPLOYEE PROFILE CSS START ============================*/
 
@@ -1263,7 +1302,9 @@ label {
     font-style: normal;
 }
 
+
 /*#endregion* ================================  EMPLOYEE PROFILE CSS END ============================*/
+
 
 /*#region top* ================================ DASHBOARD CSS START ============================*/
 
@@ -1279,12 +1320,13 @@ label {
 }
 
 .container-fluid,
-.page-wrapper > .container-lg,
-.page-wrapper > .container-md,
-.page-wrapper > .container-sm,
-.page-wrapper > .container-xl {
+.page-wrapper>.container-lg,
+.page-wrapper>.container-md,
+.page-wrapper>.container-sm,
+.page-wrapper>.container-xl {
     padding: 40px 25px 25px 25px;
 }
+
 
 /*.main_wrapper {
     padding: 0rem 1rem;
@@ -1336,6 +1378,7 @@ label {
 .chart-nav.hover {
     color: var(--blue);
 }
+
 
 /* == top-section chart bottom row style start ==*/
 
@@ -1389,9 +1432,12 @@ label {
     background: var(--green-dark);
 }
 
+
 /* == top-section chart bottom row style End ==*/
 
+
 /*#endregion* ================================ DASHBOARD CSS END ============================*/
+
 
 /*#region top* ======= SOCIAL MEDIA MANAGEMENT MODAL CSS START ================================== */
 
@@ -1430,6 +1476,7 @@ label {
     border-radius: 8px;
     box-shadow: -2px 3px 13px 0px #ddd6;
 }
+
 
 /*Invoices Dashboard*/
 
@@ -1478,6 +1525,7 @@ label {
     color: #dddfeb;
 }
 
+
 /*#endregion* ======= Social Media Management Modal CSS End======= */
 
 tbody tr td .form-control {
@@ -1493,6 +1541,7 @@ img {
 .dropdown-item {
     font-size: 12px !important;
 }
+
 
 /*Proposals*/
 
@@ -1520,24 +1569,26 @@ img {
     padding: 20px;
 }
 
+
 /*.bootstrap-select .btn {
     background: #fff !important;
 }*/
 
-.bootstrap-select > .dropdown-toggle.bs-placeholder,
-.bootstrap-select > .dropdown-toggle.bs-placeholder:active,
-.bootstrap-select > .dropdown-toggle.bs-placeholder:focus,
-.bootstrap-select > .dropdown-toggle.bs-placeholder:hover {
+.bootstrap-select>.dropdown-toggle.bs-placeholder,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:active,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
     color: #fff !important;
 }
 
-.table > thead {
+.table>thead {
     background-color: #f1f4f9 !important;
     padding: 8px !important;
     border-bottom: 1px solid #ccc !important;
     color: #333 !important;
     /*text-align: center !important;*/
 }
+
 
 /* Custom CSS for underlined tabs */
 
@@ -1604,6 +1655,7 @@ div.dataTables_wrapper div.dataTables_length select {
     /* Add spacing between the icon and label */
 }
 
+
 /* Add this CSS to your stylesheet */
 
 .expand-icon {
@@ -1614,6 +1666,7 @@ div.dataTables_wrapper div.dataTables_length select {
     cursor: pointer;
     /* Add a pointer cursor to indicate interactivity */
 }
+
 
 /* Define your custom background color */
 
@@ -1861,6 +1914,7 @@ div.dataTables_wrapper div.dataTables_length select {
     margin-left: 15px !important;
 }
 
+
 /* Style the checkboxes as needed */
 
 .table-task-card {
@@ -1878,7 +1932,9 @@ div.dataTables_wrapper div.dataTables_length select {
     padding: 3px;
 }
 
+
 /* Style for right-sided offcanvas */
+
 
 /* Styles for the soft offcanvas */
 
@@ -1920,6 +1976,7 @@ div.dataTables_wrapper div.dataTables_length select {
     /* Add any additional styles you want */
 }
 
+
 /* CSS for the loading animation */
 
 .loader {
@@ -1942,6 +1999,7 @@ div.dataTables_wrapper div.dataTables_length select {
         transform: rotate(360deg);
     }
 }
+
 
 /* Hide the loader by default */
 
@@ -1999,6 +2057,7 @@ div.dataTables_wrapper div.dataTables_length select {
     /* Optional: Show ellipsis (...) for overflowed text */
 }
 
+
 /* Print styles */
 
 @media print {
@@ -2033,7 +2092,7 @@ div.dataTables_wrapper div.dataTables_length select {
     text-decoration: underline !important;
 }
 
-.table > :not(:last-child) > :last-child > * {
+.table> :not(:last-child)> :last-child>* {
     border-bottom-color: lightgrey !important;
 }
 
@@ -2167,8 +2226,7 @@ div.dataTables_wrapper div.dataTables_length select {
 
 .progress {
     width: 100%;
-    box-shadow: -3px -3px 7px #ffffff73,
-        inset 3px 3px 5px rgba(94, 104, 121, 0.288);
+    box-shadow: -3px -3px 7px #ffffff73, inset 3px 3px 5px rgba(94, 104, 121, 0.288);
 }
 
 .color_green {
@@ -2272,6 +2330,7 @@ div.dataTables_wrapper div.dataTables_length select {
     cursor: pointer;
 }
 
+
 /* Go to Top Button Styles */
 
 #go-to-top {
@@ -2315,14 +2374,22 @@ div.dataTables_wrapper div.dataTables_length select {
     font-size: 14px;
     font-weight: normal;
 }
+
 .lead_adds_sec .lead_adds_side_bar .heading {
     color: #444443;
     font-weight: bold;
     font-size: 18px;
     padding-top: 8px;
 }
+
 .lead_adds_sec {
     background: #ffffff;
 }
 
+.active-dot {
+    background-color: green;
+}
 
+.inactive-dot {
+    background-color: red;
+}

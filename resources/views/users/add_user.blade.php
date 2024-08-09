@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 @php
-$ClientData = App\Models\Client::where('active', true)->get(); // Fetch all clients
+$ClientData = App\Models\Client::get(); // Fetch all clients
 $selectedClientData = json_decode($users->projects_mapped ?? '[]', true); // Decode JSON data for pre-filling checkboxes
 @endphp
 <div class="row">
@@ -82,7 +82,17 @@ $selectedClientData = json_decode($users->projects_mapped ?? '[]', true); // Dec
                                                 @if($index % 2 == 0)
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" name="client_data[]" value="{{ $client->id }}" {{ in_array($client->id, $selectedClientData) ? 'checked' : '' }}>
-                                                        <label class="form-check-label">{{ $client->client_name }}</label>
+                                                        <label class="form-check-label">{{ $client->client_name }}
+                                                            <span class="client-status-dot {{ $client->active ? 'active-dot' : 'inactive-dot' }}"></span>
+
+{{--
+@if($client->active)
+<span class="badge bg-success">Active</span>
+@else
+<span class="badge bg-danger">Inactive</span>
+@endif --}}
+
+                                                        </label>
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -97,6 +107,13 @@ $selectedClientData = json_decode($users->projects_mapped ?? '[]', true); // Dec
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox" name="client_data[]" value="{{ $client->id }}" {{ in_array($client->id, $selectedClientData) ? 'checked' : '' }}>
                                                         <label class="form-check-label">{{ $client->client_name }}</label>
+                                                        <span class="client-status-dot {{ $client->active ? 'active-dot' : 'inactive-dot' }}"></span>
+
+                                                           {{-- @if($client->active)
+                    <span class="badge bg-success">Active</span>
+                @else
+                    <span class="badge bg-danger">Inactive</span>
+                @endif --}}
                                                     </div>
                                                 @endif
                                             @endforeach

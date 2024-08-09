@@ -16,9 +16,11 @@
                         <li class="nav-item {{ Request::routeIs('dashboard') ? 'active' : '' }}">
                           <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                       </li>
+                        @if(Auth::user()->role && Auth::user()->role==1)
                           <li class="nav-item {{ Request::routeIs('clients.index') ? 'active' : '' }}">
                               <a class="nav-link" href="{{ route('clients.index') }}">Projects</a>
                           </li>
+                          @endif
                           <li class="nav-item {{ Request::routeIs('reports.index') ? 'active' : '' }}">
                               <a class="nav-link " href="{{ route('reports.index') }}">Reports</a>
                           </li>
@@ -28,6 +30,7 @@
                               <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                           </li>
                           @endif
+                          @if(Auth::user()->role && Auth::user()->role==1)
                           <li class="nav-item dropdown {{ Request::routeIs('sources.index', 'source_groups.index') ? 'active' : '' }}">
                               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                   UTM
@@ -37,7 +40,7 @@
                                   <li><a class="dropdown-item {{ Request::routeIs('source_groups.index') ? 'active' : '' }}" href="{{ route('source_groups.index') }}">Source Group</a></li>
                               </ul>
                           </li>
-
+                          @endif
 
                           <li class="nav-item dropdown {{ Request::routeIs('profile.show', 'reset.password', 'logout') ? 'active' : '' }}">
                             <a class="nav-link dropdown-toggle profile-dropdown" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
