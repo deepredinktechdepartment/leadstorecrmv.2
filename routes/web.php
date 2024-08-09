@@ -72,6 +72,7 @@ Route::any('projectLeads', [ExternalDataController::class,'fetchDataFromExternal
 Route::any('get/crm/leads', [ExternalDataController::class,'fetchCRMLeads'])->name('get.crm.leads');
 Route::get('/SingleLeadData/{params?}', [ExternalDataController::class, 'SingleLeadData'])->name('Single.Lead.Data');
 Route::get('/project/settings', [ClientController::class, 'projectSetting'])->name('project.settings');
+Route::match(['get', 'post'], '/clients/save/{id?}', [ClientController::class, 'save'])->name('clients.save');
 
 
 // sources & their Group
