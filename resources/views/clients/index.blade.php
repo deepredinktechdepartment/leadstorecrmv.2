@@ -38,7 +38,6 @@
                                             <td>
                                                 <span class="badge bg-success">Active</span>
                                             </td>
-    
                                             <td>
                                                 <a href="{{ route('clients.edit', ['client' => Crypt::encrypt($client->id)]) }}">
                                                     <i class="{{ config('constants.icons.edit') }}"></i>
@@ -55,6 +54,11 @@
                                                 <!-- New Window Icon -->
                                                 <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Open in New Window">
                                                     <i class="fas fa-external-link-alt"></i>
+                                                </a>
+                                                &nbsp;
+                                                <!-- Settings Icon -->
+                                                <a href="{{ route('project.settings', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Settings">
+                                                    <i class="fas fa-cog"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -101,6 +105,11 @@
                                                 <!-- New Window Icon -->
                                                 <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Open in New Window">
                                                     <i class="fas fa-external-link-alt"></i>
+                                                </a>
+                                                &nbsp;
+                                                <!-- Settings Icon -->
+                                                <a href="{{ route('project.settings', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Settings">
+                                                    <i class="fas fa-cog"></i>
                                                 </a>
                                             </td>
                                         </tr>

@@ -116,4 +116,15 @@ public function index(Request $request)
         $client->delete();
         return redirect()->route('clients.index')->with('success', 'Client deleted successfully.');
     }
+
+    public function projectSetting(Request $request)
+{
+
+
+    $clientId = Crypt::decrypt($request->projectID);
+    $client = Client::findOrFail($clientId);
+
+    return view('clients.settings', compact('client'));
+}
+
 }
