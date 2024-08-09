@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
     <div class="col-lg-12">
     <div class="card m-b-30">
     <div class="card-body">
-    <table id="jquery-data-table" class="table table-striped table-hover">
+    <table id="jquery-data-table" class="table table-striped table-bordered mt-3 w-100"">
         <thead>
             <tr>
                 <th>S.No.</th>
@@ -47,6 +47,7 @@ use Illuminate\Support\Facades\Storage;
                         <a href="{{ route('source_groups.edit', Crypt::encrypt($sourceGroup->id)) }}">
                             <i class="{{ config('constants.icons.edit') }}"></i>
                         </a>
+                        &nbsp;&nbsp;&nbsp; <!-- Add space between icons -->
                         <form action="{{ route('source_groups.destroy', Crypt::encrypt($sourceGroup->id)) }}" method="POST" class="delete-form" style="display:inline;">
                             @csrf
                             @method('DELETE')

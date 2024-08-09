@@ -7,7 +7,7 @@
 <div class="card m-b-30">
 <div class="card-body">
 
-    <table id="jquery-data-table" class="table table-striped table-hover">
+    <table id="jquery-data-table" class="table table-striped table-bordered mt-3 w-100"">
         <thead>
             <tr>
                 <th>S.No.</th>
@@ -28,6 +28,7 @@
                         <a href="{{ route('sources.edit', $source->id) }}">
                             <i class="{{ config('constants.icons.edit') }}"></i>
                         </a>
+                        &nbsp;&nbsp;&nbsp; <!-- Add space between icons -->
                         <form  action="{{ route('sources.destroy', $source->id) }}" method="POST"  class="delete-form" style="display:inline;">
                             @csrf
                             @method('DELETE')
