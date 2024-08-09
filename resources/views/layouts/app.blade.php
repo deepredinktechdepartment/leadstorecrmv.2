@@ -63,7 +63,7 @@
         @endauth --}}
         <!-- Sidebar End -->
 
-
+        @auth
         <section class="mt-5 pt-5">
             <div class="container">
                 <div class="content-wrapper">
@@ -80,6 +80,27 @@
                 </div>
             </div>
         </section>
+        @endauth
+
+        @guest
+
+
+            <div class="container">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+
+
+
+                                @yield('content')
+
+                        </div>
+                    </div>
+
+            </div>
+        </section>
+
+        @endguest
 
         @auth
         @include('partials.footer')
