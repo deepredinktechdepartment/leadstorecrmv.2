@@ -39,6 +39,10 @@
                     </div>
                 </div> --}}
 
+                      <!-- Default Performance Values Display -->
+                      <p class="mb-1">
+                        {{ $currentPerformance > 0 ? $currentPerformance : '0' }}/{{ $targetPerformance > 0 ? $targetPerformance : '0' }}
+                    </p>
                   <!-- Progress Bar -->
                   <div class="progress ml-3" style="width: 200px;">
                     @php
@@ -56,6 +60,8 @@
                         {{ $progressText }}
                     </div>
                 </div>
+
+
 
             </div>
         </div>
