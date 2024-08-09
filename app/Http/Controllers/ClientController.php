@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Client;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 class ClientController extends Controller
 {
 // Display a listing of the resource.

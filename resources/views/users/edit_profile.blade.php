@@ -41,15 +41,13 @@
                                     </div>
 
                            <!-- Display Profile Picture -->
-                           @php
-                           use Illuminate\Support\Facades\File;
 
-                       @endphp
 
                        <!-- Display Profile Picture -->
                        <div class="mb-1 ">
 
-                           @if(isset(Auth::user()->profile_photo) && File::exists(env('APP_STORAGE').''.Auth::user()->profile_photo))
+                           @if(isset(Auth::user()->profile_photo) && File::exists(storage_path('app/public/' . Auth::user()->profile_photo)))
+
                                <img src="{{ URL::to(env('APP_STORAGE').''.Auth::user()->profile_photo) }}"
                                     class="img-fluid rounded-circle border border-secondary mt-2"
                                     width="100"

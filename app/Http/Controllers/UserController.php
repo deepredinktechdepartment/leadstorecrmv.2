@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Crypt;
 use Config;
 use Mail;
 use App\Mail\ResetPassword;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 

@@ -39,7 +39,7 @@
 
                                 @php
                                     $user = Auth::user();
-                                    $profileImageUrl = isset($user->profile_photo) && File::exists(env('APP_STORAGE').''.$user->profile_photo)
+                                    $profileImageUrl = isset($user->profile_photo) && File::exists(storage_path('app/public/' . $user->profile_photo))
                                         ? URL::to(env('APP_STORAGE').''. $user->profile_photo)
                                         : 'https://via.placeholder.com/40'; // Default placeholder image if none exists
 

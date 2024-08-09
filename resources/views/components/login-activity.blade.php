@@ -42,7 +42,7 @@
                                 @foreach($users as $user)
                                     @php
                                         $userName = ucwords($user->fullname);
-                                        $profilePhoto = empty($user->profile_photo) ? 'default_profile_pic.png' : $user->profile_photo;
+
 
                                         $lastLoggedOn = \Carbon\Carbon::parse($user->last_logged_on);
                                         $now = \Carbon\Carbon::now();
@@ -59,8 +59,11 @@
                                     <div class="col-lg-3">
                                         <a href="#">
                                             <div>
-                                                <!-- <img class="d-block mx-auto" src="{{ asset('salesteampics/'.$profilePhoto) }}"> -->
-                                                <img class="d-block mx-auto mb-2" src="assets/images/suneel.png">
+                                                @if (!empty($user->profile_photo) && File::exists(storage_path('app/public/' . $user->profile_photo)))
+                                                <img src="{{ URL::to(env('APP_STORAGE').''.$user->profile_photo) }}" alt="{{ $userName }}" style="width: 100px; height: auto;">
+                                                @else
+                                                <i class="fas fa-user-circle fa-8x demo_img"></i>
+                                                @endif
                                                 <div>
                                                     <h6 class="text-center mb-1">{{ $userName }}</h6>
                                                     <p class="text-center">{{ $timeDiff }} Ago</p>
