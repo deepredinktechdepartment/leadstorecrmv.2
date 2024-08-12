@@ -10,7 +10,7 @@
             <div class="card-body">
                 <div class="text-center mb-4">
                   <a href="{{ url('/') }}">
-                    <h3>{{ $pageTitle ?? '' }}</h3>
+                    <h2 class="mb-4 text-center">{{ $pageTitle ?? '' }}</h2>
                   </a>
                 </div>
 

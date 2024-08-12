@@ -28,7 +28,7 @@ $theme_options_data = Themeoptions::withoutGlobalScope(new ActiveOrgaization)->g
         <div class="card">
             <div class="card-body">
                 <div class="text-center mb-0">
-                    <h3>{{ $pageTitle ?? '' }}</h3>
+                  <h2 class="mb-4 text-center">{{ $pageTitle ?? '' }}</h2>
                 </div>
 
                 <form method="POST" action="{{ route('forget.password.post') }}">
