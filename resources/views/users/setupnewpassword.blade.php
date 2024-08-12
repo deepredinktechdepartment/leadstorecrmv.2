@@ -1,12 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-@php
-use App\Scopes\ActiveOrgaization;
-use App\Models\Themeoptions;
-$theme_options_data = Themeoptions::withoutGlobalScope(new ActiveOrgaization)->first();
-@endphp
-
 <div class="row auth-wrapper gx-0 d-flex justify-content-center min-vh-100 align-items-center">
     <div class="col-lg-4 col-md-4 col-sm-10">
         <div class="text-center mb-4">
