@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-    <div class="col-6">
+    <div class="col-5">
         <div class="card mb-1">
             <div class="card-body">
                 <form id="changePasswordForm" action="{{ route('verifying.password') }}" method="post">
