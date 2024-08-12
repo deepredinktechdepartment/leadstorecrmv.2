@@ -184,6 +184,10 @@ public function storeOrUpdate(Request $request)
 
 
 
+              // Send the password reset email
+              try {
+
+
               // Generate a reset token and save it
               $token = Str::random(64);
               UserVerify::create([
@@ -206,8 +210,6 @@ public function storeOrUpdate(Request $request)
                   'url' => url('updateyourpassword/?userID=' . Crypt::encryptString($user->id) . '&token=' . $token),
               ];
 
-              // Send the password reset email
-              try {
                   Mail::to($email)->send(new ResetPassword($offer));
                   return back()->with('success', 'We have e-mailed your password reset link.');
               } catch (\Exception $exception) {
