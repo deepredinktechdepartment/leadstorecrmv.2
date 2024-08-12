@@ -56,6 +56,7 @@ class ExternalDataController extends Controller
             $utmSource = $request->utm_source??null;
             $utmStatus = $request->status??null;
 
+
             $Is_verified=$this->api_credentials_verification($projectID);
 
             if($Is_verified){
@@ -103,6 +104,7 @@ class ExternalDataController extends Controller
             $today_count=$monthly_count=0;
             if ($response->successful()) {
             $data = $response->json();
+        
             // Process the JSON data here
             $leadCount_source = $data['leadCount_source']??[]; // Your data here
 
@@ -110,8 +112,14 @@ class ExternalDataController extends Controller
             $Jdata = $data['leads']??[]; // Your data here
             $today_count = $data['today_count']??0; // Your data here
             $monthly_count = $data['monthly_count']??0; // Your data here
+            $utmData['getUniqueUtmValues']=[
+                'utm_sources'=>$data['utm_sources']??[],
+                'utm_mediums'=>$data['utm_mediums']??[],
+                'utm_campaigns'=>$data['utm_campaigns']??[],
+                
+                ];
 
-            return view('marketing.crm.leads',compact('pageTitle','Jdata','error','today_count','monthly_count','leadCount_source','token','projectID','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
+            return view('marketing.crm.leads',compact('utmData','pageTitle','Jdata','error','today_count','monthly_count','leadCount_source','token','projectID','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
             } else {
 
 
@@ -119,6 +127,7 @@ class ExternalDataController extends Controller
             $Jdata="";
             $leadCount_source="";
             $pageTitle="";
+            $utmData=[];
             return view('marketing.crm.leads',compact('pageTitle','Jdata','error','projectID','today_count','monthly_count','leadCount_source','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
             //return response()->json(['error' => 'Error fetching data from external API'.$responseBody], $status);
             }

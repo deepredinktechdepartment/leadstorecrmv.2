@@ -30,10 +30,11 @@
 
         <thead>
             <tr>
+                <th>S.No.</th>
                 <th>Date</th>
                 <th>Lead Customer</th>
                 <th>Source&Medium</th>
-                <th>Revenue</th>
+                <!--<th>Revenue</th>-->
                 <th>Status</th>
                 <th>Actions</th>
                 <!-- Add other column headers as needed -->
@@ -116,6 +117,7 @@
 
 
 <script>
+
 $(document).ready(function() {
     var jsonData = @json($Jdata);
     var yourDataArray =jsonData;
@@ -126,6 +128,16 @@ $(document).ready(function() {
         processing: false,
         data: yourDataArray, // Replace with your JSON data array
         columns: [
+{
+data: null,
+render: function (data, type, full, meta) {
+// Return the serial number (index + 1)
+return meta.row + 1;
+},
+title: "No", // Add title for the serial number column
+orderable: false, // Disable sorting on this column
+searchable: false // Disable searching on this column
+},
 
 {
     data: null,
@@ -205,12 +217,12 @@ $(document).ready(function() {
                     }
                     ,
 
-{
-data: null,
-render: function(data, type, full, meta) {
-    return "0";
-}
-},
+// {
+// data: null,
+// render: function(data, type, full, meta) {
+//     return "0";
+// }
+// },
 
                             {
                                 data: null, // Target the 'Status' column (index 1)
@@ -414,6 +426,14 @@ function formatRowData(data) {
 </script>
 
 
+<script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true
+        });
+    });
+</script>
 
 
 @endpush

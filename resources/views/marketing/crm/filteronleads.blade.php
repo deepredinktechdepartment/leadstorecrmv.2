@@ -1,28 +1,4 @@
 <!-- Check if there are any validation errors -->
-@php
-
-use App\Models\Client as Project;
-
-$intranet_project = Project::where('id',$projectID)->get()->first();
-$utmData=$intranet_project->filter_options??'';
-$utmData=json_decode($utmData,true);
-$utmData = is_array($utmData) ? array_filter($utmData) : [];
-
-
-
-
-
-@endphp
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-
 <!-- Use the Blade directive to check if the form is submitted -->
 @php
     // Initialize variables
@@ -145,28 +121,21 @@ $utmData = is_array($utmData) ? array_filter($utmData) : [];
     </div>
 
                 <!-- Status -->
-                <div class="col-3">
-                    <div class="form-group">
-                        <!-- Select Dropdown for Statuses -->
-                        <label for="filter_status">Select Status:</label>
-                        @php
-                            if (isset($utmData['getUniqueUtmValues']['statuses'])) {
-                                $statuses = $utmData['getUniqueUtmValues']['statuses'];
-                            } else {
-                                $statuses = [];
-                            }
-                        @endphp
-                        <select id="status" name="status" class="form-select">
-                            <option value="">Status</option>
-                            @foreach ($statuses as $status)
-                                <option value="{{ $status }}" @if ($status == old('status', $utm_status??'')) selected @endif>{{ $status }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+
                   <div class="col-3">
                   <button type="submit" class="btn btn-primary btn-sm mt-1 mt-4">Search</button>
                  </div>
+                <!-- Export Button -->
+<div class="col-3">
+    <a href="{{ route('exportLeads', [
+        'start_date' => $start_date,
+        'end_date' => $end_date,
+        'utm_source' => $utm_source,
+        'utm_medium' => $utm_medium,
+        'utm_campaign' => $utm_campaign
+    ]) }}" class="btn btn-success btn-sm mt-1 mt-4 text-white">Export</a>
+</div>
+
             </div>
 
 

@@ -328,4 +328,113 @@ public function destroy($encryptedId)
         }
     }
 
+
+    public function dashboard($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function facebook($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function facebookPages($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function competitorScores($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function exotel($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function emailServer($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function firstResponseEmailer($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function leadNotifications($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function freTemplate($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function leadNotificationTemplate($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function leadSummaryNotifications($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function smsGateway($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function firstResponseSms($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function setupMonthlyGoals($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function leadCapture($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function leadActions($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function blacklisting($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function hideCustInfo($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    public function revenueTracking($clientID = null)
+    {
+        return $this->underConstruction($clientID);
+    }
+
+    private function underConstruction($clientID)
+    {
+        try {
+
+            $clientID=Crypt::decrypt($clientID);
+            $client= Client::find($clientID);
+
+            return view('under-construction', compact('client'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
+    }
+
 }

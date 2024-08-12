@@ -39,9 +39,9 @@ $theme_options_data=Themeoptions::withoutGlobalScope(new ActiveOrgaization)->get
 
                 <div class="row">
                     <div class="col-sm-6">
-                        <div class="login-info-text">
-                            <a href="{{ route('forget.password') }}">Forgot Password?</a>
-                        </div>
+                        <!--<div class="login-info-text">-->
+                        <!--    <a href="{{ route('forget.password') }}">Forgot Password?</a>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
