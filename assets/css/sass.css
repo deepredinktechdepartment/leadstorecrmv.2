@@ -89,9 +89,12 @@ a {
   color: var(--white);
 } */
 
-ul,
-ol {
+ul {
     list-style: none;
+}
+
+ol li{
+    margin-bottom: 10px;
 }
 
 button:focus {
