@@ -62,7 +62,7 @@
                                                 @if (!empty($user->profile_photo) && File::exists(storage_path('app/public/' . $user->profile_photo)))
                                                 <img src="{{ URL::to(env('APP_STORAGE').''.$user->profile_photo) }}" alt="{{ $userName }}" class="d-block mx-md-auto client_logo mb-2">
                                                 @else
-                                                <img src="assets/images/place_holder.png" alt="Client Logo" class="d-block mx-md-auto client_logo mb-2">
+                                                <img src="assets/images/no_image.png" alt="Client Logo" class="d-block mx-md-auto client_logo mb-2">
                                                 @endif
                                                 <div>
                                                     <h6 class="text-md-center mb-1">{{ $userName }}</h6>
