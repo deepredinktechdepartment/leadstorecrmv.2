@@ -11,9 +11,13 @@
     <title>{{ env('APP_NAME') }} - {{ $pageTitle ?? '' }}</title>
 
     <!-- Favicon -->
-    @if(isset($theme_options_data))
-        <link rel="shortcut icon" href="{{ URL::to($theme_options_data->favicon ?? '') }}">
-    @endif
+
+
+@if(isset($favicon) && File::exists($favicon))
+<link rel="shortcut icon" href="{{ URL::to(asset($favicon)) }}">
+@else
+{{ env('APP_NAME') }}
+@endif
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">

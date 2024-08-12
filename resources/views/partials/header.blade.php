@@ -2,9 +2,19 @@
   <div class="container">
       <div class="row align-items-sm-center">
           <div class="col-sm-4 col-6">
+
+
               <a href="{{ route('dashboard') }}">
-                  <img src="https://imgur.com/EiMbaC5.png" class="img-fluid header-logo" alt="Leadstore">
+
+                    @if(isset($header_logo) && File::exists($header_logo))
+                        <img src=" {{ URL::to(asset($header_logo)) }}" class="img-fluid header-logo" alt="{{ env('APP_NAME') }}">
+                    @else
+                    {{ env('APP_NAME') }}
+                    @endif
+
               </a>
+
+
           </div>
           <div class="col-sm-8 col-6">
               <nav class="navbar navbar-expand-lg justify-content-end">
@@ -38,6 +48,18 @@
                               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                   <li><a class="dropdown-item {{ Request::routeIs('sources.index') ? 'active' : '' }}" href="{{ route('sources.index') }}">Source</a></li>
                                   <li><a class="dropdown-item {{ Request::routeIs('source_groups.index') ? 'active' : '' }}" href="{{ route('source_groups.index') }}">Source Group</a></li>
+                              </ul>
+                          </li>
+                          @endif
+
+                          @if(Auth::user()->role && Auth::user()->role==1)
+                          <li class="nav-item dropdown {{ Request::routeIs('theme_options.index', 'theme_options.index') ? 'active' : '' }}">
+                              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Setting
+                              </a>
+                              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item {{ Request::routeIs('theme_options.index') ? 'active' : '' }}" href="{{ route('theme_options.index') }}">Theme Options</a></li>
+
                               </ul>
                           </li>
                           @endif

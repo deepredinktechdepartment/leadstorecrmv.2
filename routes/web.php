@@ -9,6 +9,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ExternalDataController;
 use App\Http\Controllers\LeadController;
+use App\Http\Controllers\ThemeoptionsController;
 
 
 /*
@@ -91,28 +92,36 @@ Route::match(['get', 'post'], '/clients/save/{id?}', [ClientController::class, '
     Route::get('/export-leads', [LeadController::class, 'export'])->name('exportLeads');
 
 
+/*Admin Theme options*/
+Route::resource('theme_options', ThemeoptionsController::class);
+Route::get('theme_options/create',[ThemeoptionsController::class,'create_theme_options']);
+Route::post('theme_options/store',[ThemeoptionsController::class,'store_theme_options']);
+Route::get('theme_options/edit/{id?}',[ThemeoptionsController::class,'edit_theme_options']);
+Route::post('theme_options/update/{id?}', [ThemeoptionsController::class, 'update_theme_options']);
 
-Route::get('/client/{clientID?}/dashboard', [ClientController::class, 'dashboard'])->name('projectLeads');
-Route::get('/client/{clientID?}/facebook', [ClientController::class, 'facebook'])->name('facebook');
-Route::get('/client/{clientID?}/facebook-pages', [ClientController::class, 'facebookPages'])->name('facebookPages');
-Route::get('/client/{clientID?}/competitor-scores', [ClientController::class, 'competitorScores'])->name('competitorScores');
-Route::get('/client/{clientID?}/exotel', [ClientController::class, 'exotel'])->name('exotel');
-Route::get('/client/{clientID?}/email-server', [ClientController::class, 'emailServer'])->name('emailServer');
-Route::get('/client/{clientID?}/first-response-emailer', [ClientController::class, 'firstResponseEmailer'])->name('firstResponseEmailer');
-Route::get('/client/{clientID?}/email-lead-notifications', [ClientController::class, 'leadNotifications'])->name('emailLeadNotifications');
-Route::get('/client/{clientID?}/sms-lead-notifications', [ClientController::class, 'leadNotifications'])->name('smsLeadNotifications');
-Route::get('/client/{clientID?}/fre-template', [ClientController::class, 'freTemplate'])->name('freTemplate');
-Route::get('/client/{clientID?}/email-lead-notification-template', [ClientController::class, 'leadNotificationTemplate'])->name('emailleadNotificationTemplate');
-Route::get('/client/{clientID?}/sms-lead-notification-template', [ClientController::class, 'leadNotificationTemplate'])->name('smsleadNotificationTemplate');
-Route::get('/client/{clientID?}/lead-notification-template', [ClientController::class, 'leadSummaryNotifications'])->name('leadSummaryNotifications');
-Route::get('/client/{clientID?}/sms-gateway', [ClientController::class, 'smsGateway'])->name('smsGateway');
-Route::get('/client/{clientID?}/first-response-sms', [ClientController::class, 'firstResponseSms'])->name('firstResponseSms');
-Route::get('/client/{clientID?}/setup-monthly-goals', [ClientController::class, 'setupMonthlyGoals'])->name('setupMonthlyGoals');
-Route::get('/client/{clientID?}/lead-capture', [ClientController::class, 'leadCapture'])->name('leadCapture');
-Route::get('/client/{clientID?}/lead-actions', [ClientController::class, 'leadActions'])->name('leadActions');
-Route::get('/client/{clientID?}/blacklisting', [ClientController::class, 'blacklisting'])->name('blacklisting');
-Route::get('/client/{clientID?}/hide-cust-info', [ClientController::class, 'hideCustInfo'])->name('hideCustInfo');
-Route::get('/client/{clientID?}/revenue-tracking', [ClientController::class, 'revenueTracking'])->name('revenueTracking');
+Route::get('theme_options/delete/{id}',[ThemeoptionsController::class,'delete_theme_options']);
+
+
+Route::get('/singleproject/{clientID?}/facebook', [ClientController::class, 'facebook'])->name('facebook');
+Route::get('/singleproject/{clientID?}/facebook-pages', [ClientController::class, 'facebookPages'])->name('facebookPages');
+Route::get('/singleproject/{clientID?}/competitor-scores', [ClientController::class, 'competitorScores'])->name('competitorScores');
+Route::get('/singleproject/{clientID?}/exotel', [ClientController::class, 'exotel'])->name('exotel');
+Route::get('/singleproject/{clientID?}/email-server', [ClientController::class, 'emailServer'])->name('emailServer');
+Route::get('/singleproject/{clientID?}/first-response-emailer', [ClientController::class, 'firstResponseEmailer'])->name('firstResponseEmailer');
+Route::get('/singleproject/{clientID?}/email-lead-notifications', [ClientController::class, 'leadNotifications'])->name('emailLeadNotifications');
+Route::get('/singleproject/{clientID?}/sms-lead-notifications', [ClientController::class, 'leadNotifications'])->name('smsLeadNotifications');
+Route::get('/singleproject/{clientID?}/fre-template', [ClientController::class, 'freTemplate'])->name('freTemplate');
+Route::get('/singleproject/{clientID?}/email-lead-notification-template', [ClientController::class, 'leadNotificationTemplate'])->name('emailleadNotificationTemplate');
+Route::get('/singleproject/{clientID?}/sms-lead-notification-template', [ClientController::class, 'leadNotificationTemplate'])->name('smsleadNotificationTemplate');
+Route::get('/singleproject/{clientID?}/lead-notification-template', [ClientController::class, 'leadSummaryNotifications'])->name('leadSummaryNotifications');
+Route::get('/singleproject/{clientID?}/sms-gateway', [ClientController::class, 'smsGateway'])->name('smsGateway');
+Route::get('/singleproject/{clientID?}/first-response-sms', [ClientController::class, 'firstResponseSms'])->name('firstResponseSms');
+Route::get('/singleproject/{clientID?}/setup-monthly-goals', [ClientController::class, 'setupMonthlyGoals'])->name('setupMonthlyGoals');
+Route::get('/singleproject/{clientID?}/lead-capture', [ClientController::class, 'leadCapture'])->name('leadCapture');
+Route::get('/singleproject/{clientID?}/lead-actions', [ClientController::class, 'leadActions'])->name('leadActions');
+Route::get('/singleproject/{clientID?}/blacklisting', [ClientController::class, 'blacklisting'])->name('blacklisting');
+Route::get('/singleproject/{clientID?}/hide-cust-info', [ClientController::class, 'hideCustInfo'])->name('hideCustInfo');
+Route::get('/singleproject/{clientID?}/revenue-tracking', [ClientController::class, 'revenueTracking'])->name('revenueTracking');
 
 
 });

@@ -1,6 +1,6 @@
 <div class="lead_adds_side_bar py-5 px-4">
     <ul class="setting_menu">
-        <li><a href="{{ route('projectLeads', ['clientID' => Crypt::encrypt($client->id)]) }}" >Dashboard</a></li>
+        <li><a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" >Dashboard</a></li>
 
         <li class="heading">Social</li>
         <li><a href="{{ route('facebook', ['clientID' => Crypt::encrypt($client->id)]) }}">Facebook</a></li>

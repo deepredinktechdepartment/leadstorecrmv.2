@@ -4,6 +4,7 @@
 
 @php
 use App\Models\Client;
+use App\Models\Lead;
 use Carbon\Carbon;
 
 // Count active and inactive clients
@@ -23,10 +24,11 @@ $currentMonthLeadsCount = [];
 
 // Retrieve all clients and use the `each` method to populate the array
 Client::all()->each(function ($client) use (&$currentMonthLeadsCount, $currentMonth) {
-    $currentMonthLeadsCount[$client->id] = Client::where('id', $client->id)
-                                                 ->whereMonth('created_at', $currentMonth)
+    $currentMonthLeadsCount[$client->id] = Lead::where('client_id', $client->id)
+                                                 ->whereMonth('lead_last_update_date', $currentMonth)
                                                  ->count();
 });
+
 
 
 
@@ -54,7 +56,7 @@ Client::all()->each(function ($client) use (&$currentMonthLeadsCount, $currentMo
             $meetingExpectationsCount++;
         }
     });
-        
+
 @endphp
 
 <div class="row mb-5">
@@ -64,7 +66,7 @@ Client::all()->each(function ($client) use (&$currentMonthLeadsCount, $currentMo
     </div>
     <div class="col-sm-3">
         {{-- Card for Performing Well --}}
-        <x-card title="Performing Well" :value="$performingWellCount" linkUrl="{{ URL::to('clients?performance=well') }}" backgroundColor="bg-info" />
+        <x-card title="Performing Well" :value="$performingWellCount" linkUrl="{{ URL::to('clients?performance=well') }}" backgroundColor="bg-primary" />
     </div>
     <div class="col-sm-3">
         {{-- Card for Underperforming --}}

@@ -111,7 +111,7 @@ class ActiveOrgaization implements Scope
         }
 
         elseif($this->active_table=="themeoptions"){
-                $builder->where('themeoptions.org_id', '=',$Session_OrgID??0)->where('themeoptions.licence_id', '=',$Licence_ID??0);
+
         }
 
         elseif($this->active_table=="reminders_settings"){
