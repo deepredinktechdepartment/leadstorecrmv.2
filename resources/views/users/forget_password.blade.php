@@ -11,12 +11,16 @@ $theme_options_data = Themeoptions::withoutGlobalScope(new ActiveOrgaization)->g
     <div class="col-lg-4 col-md-4 col-sm-12">
         @if(isset($theme_options_data->header_logo) && !empty($theme_options_data->header_logo))
             <div class="text-center mb-4">
+              <a href="{{ url('/') }}">
               <h1>{{ env('APP_NAME') }}</h1>
+              </a>
             </div>
         @else
             @if(Auth::check())
                 <div class="text-center mb-4">
+                  <a href="{{ url('/') }}">
                     <h1>{{ env('APP_NAME') }}</h1>
+                  </a>
                 </div>
             @endif
         @endif

@@ -9,7 +9,9 @@
         <div class="card">
             <div class="card-body">
                 <div class="text-center mb-4">
+                  <a href="{{ url('/') }}">
                     <h3>{{ $pageTitle ?? '' }}</h3>
+                  </a>
                 </div>
 
                 <form method="POST" action="{{ route('setup.password.update', ['userID' => Crypt::encryptString($user->id ?? 0)]) }}">
