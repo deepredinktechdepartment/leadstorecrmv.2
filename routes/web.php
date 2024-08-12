@@ -28,8 +28,14 @@ Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('auth/verify', [LoginController::class, 'authenticate'])->name('auth.verify');
 
 // Forgot and reset password routes
+
+
+
+/** Reset * Forgot  password route URL */
 Route::get('forgotpassword', [UserController::class, 'showForgetPasswordForm'])->name('forget.password');
 Route::post('forget-password', [UserController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('updateyourpassword/{userid?}', [UserController::class, 'setupPassword']);
+Route::any('setup.password.update', [UserController::class, 'post_setuppassword'])->name('setup.password.update');
 
 // Logout route
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
@@ -100,6 +106,10 @@ Route::get('theme_options/edit/{id?}',[ThemeoptionsController::class,'edit_theme
 Route::post('theme_options/update/{id?}', [ThemeoptionsController::class, 'update_theme_options']);
 
 Route::get('theme_options/delete/{id}',[ThemeoptionsController::class,'delete_theme_options']);
+
+
+
+
 
 
 Route::get('/singleproject/{clientID?}/facebook', [ClientController::class, 'facebook'])->name('facebook');

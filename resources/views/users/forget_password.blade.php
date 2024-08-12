@@ -11,20 +11,24 @@ $theme_options_data = Themeoptions::withoutGlobalScope(new ActiveOrgaization)->g
     <div class="col-lg-4 col-md-4 col-sm-12">
         @if(isset($theme_options_data->header_logo) && !empty($theme_options_data->header_logo))
             <div class="text-center mb-4">
+              <a href="{{ url('/') }}">
               <h1>{{ env('APP_NAME') }}</h1>
+              </a>
             </div>
         @else
             @if(Auth::check())
                 <div class="text-center mb-4">
+                  <a href="{{ url('/') }}">
                     <h1>{{ env('APP_NAME') }}</h1>
+                  </a>
                 </div>
             @endif
         @endif
 
         <div class="card">
             <div class="card-body">
-                <div class="text-center mb-4">
-                    <h3>{{ $pageTitle ?? '' }}</h3>
+                <div class="text-center mb-0">
+                  <h2 class="mb-4 text-center">{{ $pageTitle ?? '' }}</h2>
                 </div>
 
                 <form method="POST" action="{{ route('forget.password.post') }}">
@@ -47,7 +51,7 @@ $theme_options_data = Themeoptions::withoutGlobalScope(new ActiveOrgaization)->g
                 </form>
 
                 <p class="text-small mt-0">
-                    <a href="{{ route('login') }}" class="resetpwd_form_title pt-4 mt-4"><u>Sign In</u></a>
+                    <a href="{{ route('login') }}" class="resetpwd_form_title pt-1 mt-1"><u>Sign In</u></a>
                 </p>
             </div>
         </div>

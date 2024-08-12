@@ -26,7 +26,7 @@ class ResetPassword extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Reset Your Password',
+            subject: 'Reset Your Password for '.config('app.name'),
         );
     }
 
