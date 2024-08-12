@@ -6,32 +6,35 @@
         <div class="card m-b-30">
             <div class="card-body">
                 <div class="common_tabs">
-                <!-- Nav Tabs -->
-
+                    <!-- Nav Tabs -->
                     <ul class="nav nav-tabs" id="userTabs" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="active-tab" data-bs-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Active</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="inactive-tab" data-bs-toggle="tab" href="#inactive" role="tab" aria-controls="inactive" aria-selected="false">Inactive</a>
-                    </li>
-                </ul>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="active-tab" data-bs-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">
+                                Active <span class="badge bg-success">{{ $users->where('active', true)->count() }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="inactive-tab" data-bs-toggle="tab" href="#inactive" role="tab" aria-controls="inactive" aria-selected="false">
+                                Inactive <span class="badge bg-danger">{{ $users->where('active', false)->count() }}</span>
+                            </a>
+                        </li>
+                    </ul>
 
-                <!-- Tab Content -->
-                <div class="tab-content" id="userTabsContent">
-                    <!-- Active Users Tab -->
-                    <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
-                        @component('components.user-table', ['users' => $users->where('active', true), 'tableId' => 'active-users-table'])
-                        @endcomponent
-                    </div>
+                    <!-- Tab Content -->
+                    <div class="tab-content" id="userTabsContent">
+                        <!-- Active Users Tab -->
+                        <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+                            @component('components.user-table', ['users' => $users->where('active', true), 'tableId' => 'active-users-table'])
+                            @endcomponent
+                        </div>
 
-                    <!-- Inactive Users Tab -->
-                    <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="inactive-tab">
-                        @component('components.user-table', ['users' => $users->where('active', false), 'tableId' => 'inactive-users-table'])
-                        @endcomponent
+                        <!-- Inactive Users Tab -->
+                        <div class="tab-pane fade" id="inactive" role="tabpanel" aria-labelledby="inactive-tab">
+                            @component('components.user-table', ['users' => $users->where('active', false), 'tableId' => 'inactive-users-table'])
+                            @endcomponent
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
@@ -91,7 +94,7 @@
             data: {
                 _token: '{{ csrf_token() }}',
                 password: password,
-                password_confirmation: confirmPassword, // This is required for validation
+                password_confirmation: confirmPassword,
                 userId: userId
             },
             success: function(response) {
@@ -99,7 +102,6 @@
                 alert('Password updated successfully.');
             },
             error: function(xhr) {
-                // Handling validation errors
                 if (xhr.status === 422) {
                     var errors = xhr.responseJSON.errors;
                     if (errors.password) {
@@ -125,8 +127,6 @@
                 let label = status ? 'Active' : 'Inactive';
                 let badgeClass = status ? 'bg-success' : 'bg-danger';
                 $('#' + (status ? 'active' : 'inactive') + 'Switch' + userId).next('span').text(label).removeClass('bg-success bg-danger').addClass(badgeClass);
-
-                // Optional: If you want to refresh the page after the status change
                 location.reload();
             },
             error: function(xhr) {
@@ -139,9 +139,8 @@
 
 @push('styles')
 <style>
-    /* Custom Underline Style for Active Tab */
     .nav-tabs .nav-link.active {
-        border-bottom: 2px solid #007bff; /* Change color as needed */
+        border-bottom: 2px solid #007bff;
     }
 </style>
 @endpush

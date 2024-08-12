@@ -8,10 +8,14 @@
                 <!-- Nav Tabs -->
                 <ul class="nav nav-tabs" id="clientTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="active-tab" data-bs-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">Active</a>
+                        <a class="nav-link active" id="active-tab" data-bs-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="true">
+                            Active <span class="badge bg-success">{{ $clients->where('active', true)->count() }}</span>
+                        </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="inactive-tab" data-bs-toggle="tab" href="#inactive" role="tab" aria-controls="inactive" aria-selected="false">Inactive</a>
+                        <a class="nav-link" id="inactive-tab" data-bs-toggle="tab" href="#inactive" role="tab" aria-controls="inactive" aria-selected="false">
+                            Inactive <span class="badge bg-danger">{{ $clients->where('active', false)->count() }}</span>
+                        </a>
                     </li>
                 </ul>
                 <!-- Tab Content -->

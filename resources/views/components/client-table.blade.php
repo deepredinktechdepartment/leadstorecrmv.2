@@ -16,7 +16,7 @@
             @foreach($clients as $client)
                 <tr data-client-id="{{ $client->id }}">
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $client->client_name }}</td>
+                    <td><a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Open in New Window">{{ $client->client_name }}</a></td>
                     <td>{{ $client->industry_category }}</td>
                     @if(Auth::user()->role && Auth::user()->role==1)
                     <td>
@@ -38,7 +38,7 @@
                         </a>
                         @endif
                         @if(Auth::user()->role && Auth::user()->role==1)
-                        &nbsp;&nbsp;&nbsp; <!-- Add space between icons -->
+                        &nbsp;&nbsp; <!-- Add space between icons -->
 
                         <!-- Delete Icon -->
                         <form action="{{ route('clients.destroy', ['client' => Crypt::encrypt($client->id)]) }}" method="POST" class="delete-form" style="display:inline;">
@@ -50,15 +50,12 @@
                         </form>
                         @endif
 
-                        &nbsp;&nbsp;&nbsp; <!-- Add space between icons -->
+                        &nbsp;&nbsp; <!-- Add space between icons -->
 
-                        <!-- New Window Icon -->
-                        <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Open in New Window">
-                            <i class="fas fa-external-link-alt" aria-label="Open in New Window"></i>
-                        </a>
+
 
                         @if(Auth::user()->role && Auth::user()->role==1)
-                        &nbsp;&nbsp;&nbsp; <!-- Add space between icons -->
+                        &nbsp;&nbsp; <!-- Add space between icons -->
 
                         <!-- Settings Icon -->
                         <a href="{{ route('project.settings', ['projectID' => Crypt::encrypt($client->id)]) }}" title="Settings">
