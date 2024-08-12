@@ -36,7 +36,7 @@
 
                 @if($users->isNotEmpty())
                     <div class="col-lg-6">
-                        <div class="card">
+                        <div class="card h-100">
                             <h2 class="mb-4">{{ $role == 3 ? 'From the Agency' : 'From the Client' }}</h2>
                             <div class="row recently_active_users">
                                 @foreach($users as $user)
