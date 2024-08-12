@@ -30,7 +30,7 @@
 </div>
 -->
 <div class="row mb-2">
-    <div class="col-8 card me-3"> <!-- Added margin-end-3 class for spacing -->
+    <div class="col-8 card"> <!-- Added margin-end-3 class for spacing -->
         <form action="{{ route('projectLeads',['projectID'=>Crypt::encrypt($projectID??0)]) }}" method="post">
             @csrf
             <div class="row">
@@ -145,7 +145,7 @@
     </div>
 
 
-            <div class="col-3  card">
+            <div class="col-4  card">
             <label for="Status">Statistics for Medium</label>
             <div class="row mt-4">
            @if (isset($leadCount_source) && !empty($leadCount_source))
