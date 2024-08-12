@@ -27,10 +27,10 @@
             </form>
 
             <div class="row">
-                <div class="col-sm-12 text-center">
-                    <!--<div class="login-info-text">-->
-                    <!--    <a href="{{ route('forget.password') }}">Forgot Password?</a>-->
-                    <!--</div>-->
+                <div class="col-sm-12 text-left">
+                    <div class="login-info-text">
+                    <a href="{{ route('forget.password') }}">Forgot Password?</a>
+                    </div>
                 </div>
             </div>
         </div>

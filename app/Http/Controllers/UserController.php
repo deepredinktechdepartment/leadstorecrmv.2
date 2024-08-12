@@ -142,91 +142,87 @@ public function storeOrUpdate(Request $request)
         return redirect()->route('users.index')->with('success', "Success! Details are saved successfully");
 
     } catch (\Exception $e) {
-        dd($e->getmessage());
         // Log the error or handle it as necessary
         return redirect()->route('users.index')->with('error', "An error occurred while saving the details");
     }
 }
 
-
-
-	public function showForgetPasswordForm()
+    public function showForgetPasswordForm()
       {
-
-         return view('frontend.auth.forgetPassword');
+            try{
+            $pageTitle="Forgot Password?";
+            return view('users.forget_password', compact('pageTitle'));
+            }
+            catch (Exception $exception){
+            return redirect('/')->with('error', 'Something went wrong.');
+            }
       }
 
 
-	  public function submitForgetPasswordForm(Request $request)
+      public function submitForgetPasswordForm(Request $request)
       {
+          $request->validate([
+              'email' => 'required|email',
+          ]);
 
+          try {
+              $email = $request->email;
 
+              // Validate the email format
+              if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                  return back()->with('error', 'Input value is not a valid email address.');
+              }
 
-		try{
+            // Retrieve the user with the provided email
+            $user = User::withoutGlobalScope(ActiveOrgaization::class)
+                        ->where('username', $email)
+                        ->first();
 
-			$nof_customer=DB::table('users')->where('email',$request->email)->where('is_active_status','1')->get()->count();
-          $customers=DB::table('users')->where('email',$request->email)->where('is_active_status','1')->get()->first();
+              if (!$user) {
+                  return back()->with('error', 'Email id does not exist.');
+              }
 
+              // Retrieve the contact information associated with the user
+              $contact = Contacts::withoutGlobalScope(ActiveOrgaization::class)
+                                 ->where('id', $user->contact_id ?? 0)
+                                 ->first();
 
-		  if($nof_customer==0){
+              // Generate a reset token and save it
+              $token = Str::random(64);
+              UserVerify::create([
+                  'user_id' => $user->id,
+                  'token' => $token,
+              ]);
 
-			return back()->with('error', 'Email id does not exist.');
+              // Update user's password fields
+              User::withoutGlobalScope(ActiveOrgaization::class)
+                  ->where('id', $user->id)
+                  ->update([
+                      'password' => null,
+                      'password_created_at' => null,
+                  ]);
 
-		  }
+              // Prepare the email data
+              $offer = [
+                  'token' => $token,
+                  'name' => $user->fullname ??'',
+                  'url' => url('updateyourpassword/?userID=' . Crypt::encryptString($user->id) . '&token=' . $token),
+              ];
 
-		  else{
+              // Send the password reset email
+              try {
+                  Mail::to($email)->send(new ResetPassword($offer));
+                  return back()->with('success', 'We have e-mailed your password reset link.');
+              } catch (\Exception $exception) {
+                  return back()->with('error', 'Something went wrong. Mail is not delivered.');
+              }
 
-
-					if(isset($customers->email) == $request->email){
-
-					$request->validate([
-					'email' => 'required|email|exists:users',
-					]);
-
-					$token = Str::random(64);
-
-
-					$password_resets=DB::table('password_resets')->insert([
-					'email' => $request->email,
-					'token' => $token,
-					]);
-
-
-
-					$email = $request->email;
-					$offer = [
-					'token' => $token
-					];
-
-
-try{
-Mail::to($email)->send(new ResetPassword($offer));
-	return back()->with('success', 'We have e-mailed your password reset link.');
-
-}
-catch (\Exception $exception) {
- return back()->with('error', 'Something Went Wrong. Mail is not delivered.');
-}
-
-
-
-
-
-
-					}
-					else{
-					return back()->with('error', 'Something Went Wrong!');
-					}
-
-
-		  }
-
-
-		  }
-		catch (\Exception $exception) {
-		return redirect()->back()->with('error', "Something went wrong.". $exception->getMessage()??'');
-		}
+          } catch (\Exception $exception) {
+              return redirect()->back()->with('error', 'Something went wrong: ' . $exception->getMessage());
+          }
       }
+
+
 	    public function showResetPasswordForm($token) {
 			try{
 			$reset_data=DB::table('password_resets')->where('token',$token)->get()->first();
@@ -265,11 +261,11 @@ catch (\Exception $exception) {
               return back()->withInput()->with('error', 'Invalid token!');
           }
 
-          $user = DB::table('users')
-		  ->where('email', $request->email)
-          ->update([
-		  'password' => Hash::make($request->password)
-		  ]);
+        //   $user = DB::table('users')
+		//   ->where('username', $request->email)
+        //   ->update([
+		//   'password' => Hash::make($request->password)
+		//   ]);
 
 		  if($user){
           $DeleteToken=DB::table('password_resets')->where(['email'=> $request->email])->delete();
