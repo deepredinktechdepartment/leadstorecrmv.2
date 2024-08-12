@@ -1,5 +1,5 @@
 
-    <div class="row leads_card_panel mb-4">
+    <div class="row leads_card_panel mb-2">
         <div class="col-md-12">
 
 
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="data_seperator2">
-                
+
                     <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($projectID ?? 0), 'start_date' => \Carbon\Carbon::now()->format('Y-m-01'), 'end_date' => \Carbon\Carbon::now()->format('Y-m-t')]) }}">
 
                     <h5 class="text-white">Monthly Leads</h5>

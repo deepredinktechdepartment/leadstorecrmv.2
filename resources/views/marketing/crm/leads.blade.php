@@ -1,14 +1,17 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="row ">
- <div class="col-md-12">
+    <div class="row">
+        <div class="col-md-12">
 
 {{-- Leads counts --}}
 
 @if($projectID && !$error)
 @include("marketing.crm.leads_countlable")
 @endif
+
+
+<div class="container-fluid pt-4">
 
 {{-- Filters over leads data --}}
 @if($projectID && !$error)
@@ -46,8 +49,6 @@
     @else
 
         @if(!empty($error) && isset($error))
-        {{-- <h4 class="alert alert-danger">{{ $error['error']??'' }}</h4> --}}
-
         <p>Configuration is not setup.<p>
         @endif
     @endif
@@ -56,6 +57,7 @@
 
 
 
+</div>
 </div>
 </div>
 
@@ -68,6 +70,7 @@
 
 </div>
 </div>
+
 
 <div id="editRemarkModal" class="modal fade" tabindex="-1" aria-labelledby="editRemarkModalLabel" aria-hidden="true">
     <div class="modal-dialog">
