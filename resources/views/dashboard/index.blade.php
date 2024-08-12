@@ -92,7 +92,7 @@ Client::all()->each(function ($client) use (&$currentMonthLeadsCount, $currentMo
                                 <button class="nav-link {{ $activeClientCount > 0 ? 'active' : '' }}"
                                         id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button"
                                         role="tab" aria-controls="active" aria-selected="true">
-                                    Active <sup>({{ $activeClientCount }})</sup>
+                                    Active <span class="badge bg-primary ">{{ $activeClientCount }}</span>
                                 </button>
                             </li>
                         @endif
@@ -101,7 +101,7 @@ Client::all()->each(function ($client) use (&$currentMonthLeadsCount, $currentMo
                                 <button class="nav-link {{ $activeClientCount == 0 && $inactiveClientCount > 0 ? 'active' : '' }}"
                                         id="inactive-tab" data-bs-toggle="tab" data-bs-target="#inactive" type="button"
                                         role="tab" aria-controls="inactive" aria-selected="false">
-                                    Inactive <sup>({{ $inactiveClientCount }})</sup>
+                                    Inactive <span class="badge bg-danger">{{ $inactiveClientCount }}</span>
                                 </button>
                             </li>
                         @endif

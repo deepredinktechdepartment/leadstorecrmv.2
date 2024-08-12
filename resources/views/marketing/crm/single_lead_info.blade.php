@@ -5,9 +5,9 @@
 @section('content')
 
 <!-- Back Button -->
-<button onclick="window.history.back();" class="btn btn-secondary mb-4">
+{{-- <button onclick="window.history.back();" class="btn btn-secondary mb-4">
     <i class="fas fa-arrow-left"></i> Back
-</button>
+</button> --}}
 
 @if(!$error)
     <div class="row">

@@ -19,8 +19,8 @@
 
 @if($projectID)
 
-<div class="row card">
-    <div class="col-md-12">
+<div class="row ">
+    <div class="col-md-12 card">
 
 
        @if(!$error)
