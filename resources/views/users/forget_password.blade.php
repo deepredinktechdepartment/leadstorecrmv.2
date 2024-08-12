@@ -23,7 +23,7 @@ $theme_options_data = Themeoptions::withoutGlobalScope(new ActiveOrgaization)->g
 
         <div class="card">
             <div class="card-body">
-                <div class="text-center mb-4">
+                <div class="text-center mb-0">
                     <h3>{{ $pageTitle ?? '' }}</h3>
                 </div>
 
@@ -47,7 +47,7 @@ $theme_options_data = Themeoptions::withoutGlobalScope(new ActiveOrgaization)->g
                 </form>
 
                 <p class="text-small mt-0">
-                    <a href="{{ route('login') }}" class="resetpwd_form_title pt-4 mt-4"><u>Sign In</u></a>
+                    <a href="{{ route('login') }}" class="resetpwd_form_title pt-1 mt-1"><u>Sign In</u></a>
                 </p>
             </div>
         </div>

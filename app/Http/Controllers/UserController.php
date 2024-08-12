@@ -22,6 +22,7 @@ use App\Mail\ResetPassword;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\UserVerify;
+use App\Scopes\ActiveOrgaization;
 
 class UserController extends Controller
 {
@@ -210,8 +211,18 @@ public function storeOrUpdate(Request $request)
                   'url' => url('updateyourpassword/?userID=' . Crypt::encryptString($user->id) . '&token=' . $token),
               ];
 
-                  Mail::to($email)->send(new ResetPassword($offer));
-                  return back()->with('success', 'We have e-mailed your password reset link.');
+               try {
+
+                    Mail::to($email)->send(new ResetPassword($offer));
+
+                    return back()->with('success', 'We have e-mailed your password reset link.');
+                } catch (\Exception $e) {
+                    // Log the exception
+
+                    return back()->with('error', 'Something went wrong. Mail is not delivered.');
+                }
+
+
               } catch (\Exception $exception) {
                   return back()->with('error', 'Something went wrong. Mail is not delivered.');
               }
@@ -221,61 +232,81 @@ public function storeOrUpdate(Request $request)
           }
       }
 
-
-	    public function showResetPasswordForm($token) {
-			try{
-			$reset_data=DB::table('password_resets')->where('token',$token)->get()->first();
-			if($reset_data){
-				return view('frontend.auth.forgetPasswordLink', ['token' => $token,'email'=>$reset_data->email??'']);
-			}
-			else{
-			}
-
-			}
-			catch (\Exception $exception) {
-			return redirect()->back()->with('error', "Something went wrong.". $exception->getMessage()??'');
-			}
-      }
-
-	   public function submitResetPasswordForm(Request $request)
+      public function setupPassword(Request $request)
       {
+          try {
+              // Decrypt the user ID from the request
+              $userID = Crypt::decryptString($request->input('userID'));
 
-		  try{
-
-          $request->validate([
-              'email' => 'required|email|exists:users',
-              'password' => 'required|string|min:6|confirmed',
-              'password_confirmation' => 'required'
-          ]);
+              // Find the user without applying the ActiveOrgaization scope
+              $user = User::withoutGlobalScope(ActiveOrgaization::class)->find($userID);
 
 
-          $updatePassword = DB::table('password_resets')
-                              ->where([
-                                'email' => $request->email,
-                                'token' => $request->token,
-                              ])
-                              ->first();
 
-          if(!$updatePassword){
-              return back()->withInput()->with('error', 'Invalid token!');
+              // Check if the user exists
+              if (!$user) {
+                  return redirect('/')->with('error', 'User not found.');
+              }
+
+              // Check if the user already has a password
+              if ($user->password) {
+                  return redirect('/')->with('success', 'Password is already set.');
+              } else {
+                  // Determine the page title based on the user status
+                  $pageTitle = $user->active ? 'Update password' : 'Setup a new password';
+
+                  // Return the view with the page title and user data
+
+                  return view('users.setupnewpassword', compact('pageTitle', 'user'));
+              }
+
+          } catch (Exception $exception) {
+              // Handle exceptions and return an error message
+              return redirect('/')->with('error', 'Something went wrong: ' . $exception->getMessage());
           }
-
-        //   $user = DB::table('users')
-		//   ->where('username', $request->email)
-        //   ->update([
-		//   'password' => Hash::make($request->password)
-		//   ]);
-
-		  if($user){
-          $DeleteToken=DB::table('password_resets')->where(['email'=> $request->email])->delete();
-		  }
-			return redirect('/')->with('message', 'Your password has been changed!. Please login with new credentials.');
-
-		}
-			catch (\Exception $exception) {
-			return redirect()->back()->with('error', "Something went wrong.". $exception->getMessage()??'');
-			}
       }
+
+
+
+      public function post_setuppassword(Request $request)
+{
+    // Validate the incoming request
+    $request->validate([
+        'password' => 'required|min:8|max:16|confirmed',
+    ]);
+
+    try {
+        // Decrypt userID and find the user
+        $userID = Crypt::decryptString($request->userID);
+        $user = User::withoutGlobalScope(new ActiveOrgaization)->find($userID);
+
+        if ($user) {
+            // Check if the password already exists
+            if ($user->password) {
+                return Redirect::to('/')->with('error', 'Seems password is created. Please login to access your dashboard.');
+            } else {
+                // Update the user's password and other fields
+                $user->update([
+                    'password' => Hash::make($request->password),
+                    'password_created_at' => Carbon\Carbon::now(),
+                    'active' => 1,
+                ]);
+
+                // Automatically log in the user
+                Auth::login($user);
+
+                // Redirect to the user's dashboard
+                return redirect()->route('dashboard')->with('success', 'Password updated successfully. Welcome to your dashboard.');
+            }
+        } else {
+            return Redirect::to('/')->with('error', 'User does not exist.');
+        }
+    } catch (Exception $exception) {
+        return Redirect::to('/')->with('error', 'Something went wrong.');
+    }
+}
+
+
 
       public function changePasswordForm()
       {
