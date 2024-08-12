@@ -21,7 +21,7 @@ use Mail;
 use App\Mail\ResetPassword;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\UserVerify;
 
 class UserController extends Controller
 {
@@ -182,10 +182,7 @@ public function storeOrUpdate(Request $request)
                   return back()->with('error', 'Email id does not exist.');
               }
 
-              // Retrieve the contact information associated with the user
-              $contact = Contacts::withoutGlobalScope(ActiveOrgaization::class)
-                                 ->where('id', $user->contact_id ?? 0)
-                                 ->first();
+
 
               // Generate a reset token and save it
               $token = Str::random(64);
