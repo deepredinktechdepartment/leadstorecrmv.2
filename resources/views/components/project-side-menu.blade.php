@@ -22,7 +22,7 @@
         <li><a href="{{ route('firstResponseSms', ['clientID' => Crypt::encrypt($client->id)]) }}">First Response SMS</a></li>
         <li><a href="{{ route('smsLeadNotifications', ['clientID' => Crypt::encrypt($client->id)]) }}">Lead Notifications</a></li>
         <li><a href="{{ route('smsFreTemplate', ['clientID' => Crypt::encrypt($client->id)]) }}">FRE Template</a></li>
-        <li><a href="{{ route('smsleadNotificationTemplate', ['clientID' => Crypt::encrypt($client->id)]) }}">Lead Notification Template</a></li>
+        <li><a href="{{ route('smsLeadNotificationTemplate', ['clientID' => Crypt::encrypt($client->id)]) }}">Lead Notification Template</a></li>
 
         <li class="heading">Reporting</li>
         <li><a href="{{ route('leadSummaryNotifications', ['clientID' => Crypt::encrypt($client->id)]) }}">Lead Summary Notifications</a></li>
