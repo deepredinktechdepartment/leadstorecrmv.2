@@ -123,9 +123,9 @@ Route::get('/singleproject/{clientID?}/sms-lead-notifications', [ClientControlle
 Route::get('/singleproject/{clientID?}/fre-template', [ClientController::class, 'freTemplate'])->name('freTemplate');
 Route::get('/singleproject/{clientID?}/sms-fre-template', [ClientController::class, 'smsFreTemplate'])->name('smsFreTemplate');
 Route::get('/singleproject/{clientID?}/sms-lead-notification-template', [ClientController::class, 'smsLeadNotificationTemplate'])->name('smsLeadNotificationTemplate');
+Route::get('/singleproject/{clientID?}/lead-notification-template', [ClientController::class, 'leadSummaryNotifications'])->name('leadSummaryNotifications');
 
 Route::get('/singleproject/{clientID?}/email-lead-notification-template', [ClientController::class, 'leadNotificationTemplate'])->name('emailleadNotificationTemplate');
-Route::get('/singleproject/{clientID?}/lead-notification-template', [ClientController::class, 'leadSummaryNotifications'])->name('leadSummaryNotifications');
 Route::get('/singleproject/{clientID?}/sms-gateway', [ClientController::class, 'smsGateway'])->name('smsGateway');
 Route::get('/singleproject/{clientID?}/first-response-sms', [ClientController::class, 'firstResponseSms'])->name('firstResponseSms');
 Route::get('/singleproject/{clientID?}/setup-monthly-goals', [ClientController::class, 'setupMonthlyGoals'])->name('setupMonthlyGoals');
