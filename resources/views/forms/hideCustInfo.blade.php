@@ -8,7 +8,25 @@
         </div>
         <div class="col-lg-9">
             <div class="lead_adds_main_wrapper py-5 px-4">
-                <h2 class="mb-3">A2AHome Land Hide Cust Info</h2>
+                <h2 class="mb-4">A2AHome Land Hide Cust Info</h2>
+                <div class="mb-4">   
+                    <div class="mb-2">
+                        <p for="#" class="fw-bold">Hide Email</p>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="weekly" id="weeklyYes">
+                        <label class="form-check-label" for="weeklyYes">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="weekly" id="weeklyNo" checked>
+                        <label class="form-check-label" for="weeklyNo">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <button id="send" type="submit" class="btn btn-danger">Update</button>
             </div>
         </div>
     </div>
