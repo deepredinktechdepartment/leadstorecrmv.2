@@ -369,9 +369,9 @@ public function destroy($encryptedId)
 
 
             // Set the page title
-            $pageTitle = 'Facebook Connect';
+            $pageTitle = 'A2AHome Land Facebook Pages';
             // Return the view with the client data and page title
-            return view('facebook.index', compact('pageTitle','client'));
+            return view('facebook.facebookPages', compact('pageTitle','client'));
             } catch (\Exception $e) {
             // Redirect to the clients index page with an error message
             return redirect()->route(route('projectLeads', ['projectID' => Crypt::encrypt($clientID)]))->with('error', 'An error occurred while trying to display the edit form.');
@@ -380,12 +380,42 @@ public function destroy($encryptedId)
 
     public function competitorScores($clientID = null)
     {
-        return $this->underConstruction($clientID);
+        try{
+            // Decrypt the client ID
+            $id = Crypt::decrypt($clientID);
+
+            // Find the client by ID
+            $client = Client::findOrFail($id);
+
+
+            // Set the page title
+            $pageTitle = 'A2AHome Land Competitor Scores';
+            // Return the view with the client data and page title
+            return view('facebook.competitorScores', compact('pageTitle','client'));
+            } catch (\Exception $e) {
+            // Redirect to the clients index page with an error message
+            return redirect()->route(route('projectLeads', ['projectID' => Crypt::encrypt($clientID)]))->with('error', 'An error occurred while trying to display the edit form.');
+            }
     }
 
     public function exotel($clientID = null)
     {
-        return $this->underConstruction($clientID);
+        try{
+            // Decrypt the client ID
+            $id = Crypt::decrypt($clientID);
+
+            // Find the client by ID
+            $client = Client::findOrFail($id);
+
+
+            // Set the page title
+            $pageTitle = 'A2AHome Land Exotel Connect';
+            // Return the view with the client data and page title
+            return view('cloudTelephony.index', compact('pageTitle','client'));
+            } catch (\Exception $e) {
+            // Redirect to the clients index page with an error message
+            return redirect()->route(route('projectLeads', ['projectID' => Crypt::encrypt($clientID)]))->with('error', 'An error occurred while trying to display the edit form.');
+            }
     }
 
     public function emailServer($clientID = null)
