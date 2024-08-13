@@ -148,25 +148,45 @@
             <div class="col-4  card">
             <label for="Status">Statistics for Medium</label>
             <div class="row mt-4">
-           @if (isset($leadCount_source) && !empty($leadCount_source))
-    @foreach ($leadCount_source as $lead)
-        <div class="col-12">
-            <div class="mr-4 mb-4">
-                @if ($lead['utm_source'] === 'Google')
-                    <i class="fa-brands fa-square-google-plus fa-2xl" style="color: #db4437;"></i> {{ $lead['lead_count'] }} leads
-                @elseif ($lead['utm_source'] === 'Facebook')
-                    <i class="fa-brands fa-square-facebook fa-2xl" style="color: #4267b2;"></i> {{ $lead['lead_count'] }} leads
-                @elseif ($lead['utm_source'] === 'Twitter')
-                    <i class="fa-brands fa-square-twitter fa-2xl" style="color: #1da1f2;"></i> {{ $lead['lead_count'] }} leads
-                @elseif ($lead['utm_source'] === 'LinkedIn')
-                    <i class="fa-brands fa-linkedin fa-2xl" style="color: #0072b1;"></i> {{ $lead['lead_count'] }} leads
-                @elseif ($lead['utm_source'] === 'Website')
-                    <i class="fa-brands fa-wpforms fa-flip-horizontal fa-2xl" style="color: #144aa9;"></i> {{ $lead['lead_count'] }} leads
-                @endif
-            </div>
-        </div>
-    @endforeach
-@endif
+                @if (isset($leadCount_source) && !empty($leadCount_source))
+                @foreach ($leadCount_source as $lead)
+                    <div class="col-12">
+                        <div class="mr-4 mb-4">
+                            @php
+                                // Normalize the utm_source to lowercase for comparison
+                                $utmSource = strtolower($lead['utm_source']);
+                                // Determine the correct text based on lead_count
+                                $leadText = $lead['lead_count'] == 1 ? 'lead' : 'leads';
+                            @endphp
+
+                            @if (preg_match('/^(google|facebook|twitter|linkedin)$/i', $utmSource))
+                                @switch($utmSource)
+                                    @case('google')
+                                        <i class="fa-brands fa-square-google-plus fa-2xl" style="color: #db4437;"></i>
+                                        @break
+                                    @case('facebook')
+                                        <i class="fa-brands fa-square-facebook fa-2xl" style="color: #4267b2;"></i>
+                                        @break
+                                    @case('twitter')
+                                        <i class="fa-brands fa-square-twitter fa-2xl" style="color: #1da1f2;"></i>
+                                        @break
+                                    @case('linkedin')
+                                        <i class="fa-brands fa-linkedin fa-2xl" style="color: #0072b1;"></i>
+                                        @break
+                                    @default
+                                        <i class="fa-brands fa-wpforms fa-flip-horizontal fa-2xl" style="color: #144aa9;"></i>
+                                @endswitch
+                                {{ $lead['lead_count'] }} {{ $leadText }}
+                            @elseif (preg_match('/^(website|direct)$/i', $utmSource))
+                                <i class="fa-brands fa-wpforms fa-flip-horizontal fa-2xl" style="color: #144aa9;"></i>
+                                {{ $lead['lead_count'] }} {{ $leadText }}
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+
+
 
             </div>
             </div>

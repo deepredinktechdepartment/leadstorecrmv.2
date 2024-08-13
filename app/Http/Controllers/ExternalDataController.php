@@ -9,6 +9,10 @@ use App\Http\Controllers\ApiCredentialController;
 use App\Models\Lead; // Assuming you have a Lead model
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class ExternalDataController extends Controller
 {
@@ -70,7 +74,7 @@ class ExternalDataController extends Controller
             $pageTitle=Str::title($Project->name??'')." Leads";
             $token = $api_key;
             // Set the request payload data, including the start date
-            $url = 'https://leadstore.in/api/get-filters-dropdown-options';
+            //$url = 'https://leadstore.in/api/get-filters-dropdown-options';
             $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
             ])->get($url);
@@ -104,7 +108,7 @@ class ExternalDataController extends Controller
                 $projectID=$request->projectID;
             }
             else{
-                $projectID=1;
+                $projectID=0;
             }
 
 
@@ -121,7 +125,7 @@ class ExternalDataController extends Controller
                 $Lead_ID=$request->record_id??null;
                 $error="";
                 $token = $api_key;
-                $url = 'https://leadstore.in/api/deleteLeadfromexternal';
+                $url = env('APP_URL').'api/deleteLeadfromexternal';
 
                 $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $token,
@@ -180,7 +184,7 @@ class ExternalDataController extends Controller
                 $lead_status=$request->lead_status??null;
                 $error="";
                 $token = $api_key;
-                $url = 'https://leadstore.in/api/updateLeadfromexternal';
+                $url = env('APP_URL').'api/updateLeadfromexternal';
 
                 $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $token,
@@ -339,18 +343,11 @@ class ExternalDataController extends Controller
                 $status = $response->status;
                 $api_key = $response->api_key;
 
-
-
                 if ($status === "success") {
-
 
             $error="";
             $token = $api_key;
-
-            //$token = '';
-            //$url = 'https://leadstore.in/api/get-leads';
             $url = env('APP_URL').'api/getleads';
-         
 
             $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
@@ -770,80 +767,83 @@ protected function fetchSingleLead($clientID, $leadId)
             ->count();
     }
     
-     public function handleExternalPost(Request $request){
-         
-         dd(1);
-        
-        // Get a specific header value by header name
-        $apiKey = $request->header('X-API-KEY');
-        
-        
-$validator = \Validator::make($request->all(), [
-    'firstName' => 'nullable|string|max:40',
-    'lastName' => 'nullable|string|max:20',
-    'email' => 'nullable:phoneNumber|email|max:100',
-    'phoneNumber' => 'nullable:email|string|max:20',
-    'countryCode' => 'nullable|string|max:5',
-    'utm_source' => 'nullable|string|max:30',
-    'utm_medium' => 'nullable|string|max:30',
-    'utm_campaign' => 'nullable|string|max:50',
-    'utm_term' => 'nullable|string|max:50',
-    'utm_content' => 'nullable|string|max:50',
-    'sourceURL' => 'nullable|string|max:255',
-    'message' => 'nullable|string|max:255',
-    'city' => 'nullable|string|max:255',
-]);
+  public function handleExternalPost(Request $request)
+{
+    // Get a specific header value by header name
+    $apiKey = $request->header('X-API-KEY');
 
-$validator->sometimes('email', 'required_without:phoneNumber', function ($input) {
-    return !$input->phoneNumber;
-});
+    // Define the validation rules
+    $validator = \Validator::make($request->all(), [
+        'firstName' => 'required|string|max:40',
+        'lastName' => 'nullable|string|max:20',
+        'email' => 'required|email|max:100',
+        'phoneNumber' => 'required|string|max:20',
+        'countryCode' => 'nullable|string|max:5',
+        'utm_source' => 'required|string|max:50',
+        'utm_medium' => 'nullable|string|max:50',
+        'utm_campaign' => 'nullable|string|max:50',
+        'utm_term' => 'nullable|string|max:50',
+        'utm_content' => 'nullable|string|max:50',
+        'sourceURL' => 'nullable|string|max:255',
+        'message' => 'nullable|string|max:255',
+        'city' => 'nullable|string|max:255',
+        'project_id' => 'required|integer', // Mandatory and integer validation
+    ]);
 
-$validator->sometimes('phoneNumber', 'required_without:email', function ($input) {
-    return !$input->email;
-});
-
-
-       if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        
-        try {
-        
-        // Save lead data to the database
-        //$lead = Lead::create($request->all());
-        return $this->storeLead($request);
-        
-        } catch (\Exception $e) {
-        return response()->json(['message' => $e->getMessage()], 500);
-        }
-
-    
-    
+    // Check if validation fails
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => 'error',
+            'success' => false,
+            'message' => 'Validation failed',
+            'errors' => $validator->errors(),
+        ], 422);
     }
-    
-    
 
+    try {
+        // Save lead data to the database
+        $lead = $this->storeLead($request);
+
+        return response()->json([
+            'status' => 'success',
+            'success' => true,
+            'message' => $lead['message'],
+            'lead_id' => $lead['lead_id'],
+        ], $lead['status_code']);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'success' => false,
+            'message' => 'An error occurred while processing your request',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
 
 public function storeLead($request)
 {
     try {
         $leadData = $request->all();
-        
-        
 
         // Fetch the client based on the provided apiKey
         $apiKey = $request->header('X-API-KEY');
-        $client = Client::where('api_key', $apiKey)->first();
+        $client = Project::where('api_key', $apiKey)->first();
 
         if (!$client) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            throw new \Exception('Unauthorized access');
         }
 
         $clientId = $client->id;
-        $isFRE=false;
+        $isFRE = false;
 
         $udfArray = isset($leadData['UDF']) ? $leadData['UDF'] : [];
-        $udfCount = count($udfArray);
+        $utmDetails = [
+            'utm_source' => $leadData['utm_source'] ?? null,
+            'utm_medium' => $leadData['utm_medium'] ?? null,
+            'utm_campaign' => $leadData['utm_campaign'] ?? null,
+            'utm_term' => $leadData['utm_term'] ?? null,
+            'utm_content' => $leadData['utm_content'] ?? null,
+        ];
 
         $existingLead = Lead::where(function ($query) use ($leadData) {
             $query->where('email', $leadData['email'])
@@ -853,122 +853,222 @@ public function storeLead($request)
             ->first();
 
         $conversation = new Conversation();
+        $leadMessage = '';
 
         if ($existingLead) {
-            $existingLead->utm_source = $leadData['utm_source']??null;
-            $existingLead->utm_medium = $leadData['utm_medium']??null;
-            $existingLead->utm_campaign = $leadData['utm_campaign']??null;
-            $existingLead->utm_term = $leadData['utm_term']??null;
-            $existingLead->utm_content = $leadData['utm_content']??null;
-            
-            $existingLead->lead_last_update_date = Carbon::now(); // Assuming 'addedon' is a timestamp/datetime column
-
-            // Assign UDF values individually to model attributes
-            for ($i = 0; $i < $udfCount && $i < 10; $i++) {
-                $columnName = "udf" . ($i + 1);
-                $existingLead->$columnName = json_encode($udfArray[$i]);
-            }
-
-            $leadSaveResult = $existingLead->save();
+            // Update existing lead
+            $this->updateExistingLead($existingLead, $leadData, $udfArray);
             $leadID = $existingLead->id;
+            $leadMessage = 'Lead already exists';
 
             $conversation->client_id = $clientId;
             $conversation->leadid = $leadID;
-            $conversation->lead_status = 'Existed Lead';
-            $conversation->remark = 'Existed Lead Created';
-            $conversation->description = 'Existed Lead Created#'.$leadID;
-            $conversation->addedon = Carbon::now(); // Assuming 'addedon' is a timestamp/datetime column
-            
+            $conversation->lead_status = 'existing_lead';
+            $conversation->remark = 'Existing Lead Updated';
+            $conversation->description = 'Existing Lead Updated#' . $leadID;
         } else {
+            // Create new lead
             $newLead = new Lead();
-            $newLead->client_id = $clientId;
-            $newLead->utm_source = $leadData['utm_source']??null;
-            $newLead->utm_medium = $leadData['utm_medium']??null;
-            $newLead->utm_campaign = $leadData['utm_campaign']??null;
-            $newLead->utm_term = $leadData['utm_term']??null;
-            $newLead->utm_content = $leadData['utm_content']??null;
-            
-            $newLead->firstname = $leadData['firstName']??null;
-            $newLead->lastname = $leadData['lastName']??null;
-            $newLead->email = $leadData['email']??null;
-            $newLead->message = $leadData['message']??null;
-            $newLead->city = $leadData['city']??null;
-            $newLead->phone = $leadData['phoneNumber']??null;
-            $newLead->phone_country_code = $leadData['countryCode']??null;
-            $newLead->ua_query_url = $leadData['sourceURL']??null;
-            $newLead->form_data = json_encode($leadData)??null;
-            
-            $newLead->registeredon = Carbon::now(); // Assuming 'addedon' is a timestamp/datetime column
-            $newLead->lead_last_update_date = Carbon::now(); // Assuming 'addedon' is a timestamp/datetime column
-            
-            
-            $newLead->status = 'New Lead';
-
-            // Assign UDF values individually to model attributes
-            for ($i = 0; $i < $udfCount && $i < 10; $i++) {
-                $columnName = "udf" . ($i + 1);
-                $newLead->$columnName = json_encode($udfArray[$i]);
-            }
-
-            $leadSaveResult = $newLead->save();
+            $this->createNewLead($newLead, $leadData, $udfArray, $clientId);
             $leadID = $newLead->id;
+            $leadMessage = 'New Lead created successfully';
 
             $conversation->client_id = $clientId;
             $conversation->leadid = $leadID;
-            $conversation->lead_status = 'New Lead';
+            $conversation->lead_status = 'lead_created';
             $conversation->remark = 'New Lead Created';
-            $conversation->description = 'New Lead Created#'.$leadID;
-            $conversation->addedon = Carbon::now(); // Assuming 'addedon' is a timestamp/datetime column
-            
-            
-            // Your logic to determine $leadData and $isFRE
-            $isFRE=true;
+            $conversation->description = 'New Lead Created#' . $leadID;
+
+            $isFRE = true;
             //Mail::to("venkat@deepredink.com")->send(new LeadStoredMail($leadData, $isFRE));
-            
         }
 
-        if (!$leadSaveResult) {
-            throw new \Exception('Failed to store lead');
-        }
-
-        $conversation->return_info = json_encode($leadData)??null;
+        $conversation->return_info = json_encode($leadData) ?? null;
+        $conversation->utm_details = json_encode($utmDetails) ?? null;
+        $conversation->udf_details = json_encode($udfArray) ?? null;
         $conversation->addedby = "API";
-        $conversationSaveResult = $conversation->save();
+        $conversation->addedon = Carbon::now(); // Assuming 'addedon' is a timestamp/datetime column
+        $conversation->save();
 
-        if (!$conversationSaveResult) {
-            throw new \Exception('Failed to store conversation');
-        }
-        
-        
-        // Your logic to determine $leadData and $isFRE
-        //Mail::to("venkat@deepredink.com")->send(new LeadStoredMail($leadData, $isFRE));
-
-
-    if ($existingLead) {
-        return response()->json([
-            'message' => 'Lead already exists',
-            'lead_id' => $leadID
-        ]);
-    } else {
-        return response()->json([
-            'message' => 'Lead stored successfully',
-            'lead_id' => $leadID
-        ]);
-    }  
-        
-        
+        return [
+            'status_code' => $existingLead ? 200 : 201,
+            'message' => $leadMessage,
+            'lead_id' => $leadID,
+        ];
     } catch (\Exception $e) {
-        // Collect all exceptions and errors
-        $errorMessages = [$e->getMessage()];
-
-        while ($e->getPrevious()) {
-            $e = $e->getPrevious();
-            $errorMessages[] = $e->getMessage();
-        }
-
-        return response()->json(['errors' => $errorMessages], 500);
+        throw $e;
     }
 }
+
+protected function updateExistingLead($existingLead, $leadData, $udfArray)
+{
+    $existingLead->utm_source = $leadData['utm_source'] ?? null;
+    $existingLead->utm_medium = $leadData['utm_medium'] ?? null;
+    $existingLead->utm_campaign = $leadData['utm_campaign'] ?? null;
+    $existingLead->utm_term = $leadData['utm_term'] ?? null;
+    $existingLead->utm_content = $leadData['utm_content'] ?? null;
+    $existingLead->udf_details = json_encode($udfArray) ?? null;
+    $existingLead->lead_last_update_date = Carbon::now();
+    $existingLead->save();
+}
+
+protected function createNewLead($newLead, $leadData, $udfArray, $clientId)
+{
+    $newLead->client_id = $clientId;
+    $newLead->utm_source = $leadData['utm_source'] ?? null;
+    $newLead->utm_medium = $leadData['utm_medium'] ?? null;
+    $newLead->utm_campaign = $leadData['utm_campaign'] ?? null;
+    $newLead->utm_term = $leadData['utm_term'] ?? null;
+    $newLead->utm_content = $leadData['utm_content'] ?? null;
+    $newLead->udf_details = json_encode($udfArray) ?? null;
+
+    $newLead->firstname = $leadData['firstName'] ?? null;
+    $newLead->lastname = $leadData['lastName'] ?? null;
+    $newLead->email = $leadData['email'] ?? null;
+    $newLead->message = $leadData['message'] ?? null;
+    $newLead->city = $leadData['city'] ?? null;
+    $newLead->phone = $leadData['phoneNumber'] ?? null;
+    $newLead->phone_country_code = $leadData['countryCode'] ?? null;
+    $newLead->ua_query_url = $leadData['sourceURL'] ?? null;
+    $newLead->form_data = json_encode($leadData) ?? null;
+
+    $newLead->registeredon = Carbon::now();
+    $newLead->lead_last_update_date = Carbon::now();
+    $newLead->status = 'lead_created';
+
+    $newLead->save();
+}
+
+
+
+public function deleteLead(Request $request)
+{
+    // Get the Authorization header
+    $authorizationHeader = $request->header('Authorization');
+    $leadId = $request->query('Lead_ID'); // For query parameters
+
+    // Extract the token from the Authorization header
+    $token = $this->extractToken($authorizationHeader);
+
+    // Check if the Authorization header is present
+    if (!$token) {
+        return response()->json(['message' => 'Authorization header missing'], 401);
+    }
+
+    // Validate the token (implement your validation logic here)
+    if (!$this->validateToken($token)) {
+        return response()->json(['message' => 'Invalid authorization token'], 401);
+    }
+
+    // Start a database transaction
+    DB::beginTransaction();
+
+    try {
+        // Attempt to delete the lead record
+        $lead = Lead::find($leadId);
+
+        if ($lead) {
+            // Delete the lead record
+            $lead->delete();
+
+            // Attempt to delete related conversation records
+            Conversation::where('leadid', $leadId)->delete();
+
+            // Commit the transaction
+            DB::commit();
+
+            // Record was deleted successfully
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Data deleted',
+                'Lead_ID' => $leadId,
+            ]);
+        } else {
+            // Record not found
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Lead not found',
+                'Lead_ID' => $leadId,
+            ], 404);
+        }
+    } catch (\Exception $e) {
+        // Rollback transaction on error
+        DB::rollBack();
+        // Log the exception or handle it accordingly
+        return response()->json([
+            'status' => 'error',
+            'message' => 'An error occurred: ' . $e->getMessage(),
+        ], 500);
+    }
+}
+
+public function updateLead(Request $request)
+{
+    // Get the Authorization header
+    $authorizationHeader = $request->header('Authorization');
+    $leadId = $request->query('Lead_ID');
+    $remark = $request->query('remark');
+    $leadStatus = $request->query('lead_status');
+    
+
+
+    // Extract token from Authorization header
+    $token = $this->extractToken($authorizationHeader);
+
+    // Check if the Authorization header is present
+    if (!$token) {
+        return response()->json(['message' => 'Authorization header missing'], 401);
+    }
+
+    // Validate the token
+    if (!$this->validateToken($token)) {
+        return response()->json(['message' => 'Invalid authorization token'], 401);
+    }
+
+    try {
+        // Find the lead record
+        $lead = Lead::find($leadId);
+
+        if (!$lead) {
+            return response()->json(['status' => 'error', 'message' => 'Lead not found'], 404);
+        }
+
+
+            $lead->status = $leadStatus;
+            // Update other fields individually
+            $lead->save();
+    
+
+
+        
+    
+    $conversation = new Conversation();
+    $conversation->leadid = $leadId;
+    $conversation->lead_status = $leadStatus;
+    $conversation->remark = $remark;
+    $conversation->addedon = Carbon::now();
+    $conversation->addedby = 'API';
+    $conversation->client_id = $this->validateToken($token);
+    $conversation->save();
+
+
+        // Success response
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Data updated',
+            'Lead_ID' => $leadId,
+        ]);
+    } catch (\Exception $e) {
+        // Error response
+        return response()->json([
+            'status' => 'error',
+            'message' => 'An error occurred while updating the lead record'.$e->getMessage(),
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
+
 
 
 

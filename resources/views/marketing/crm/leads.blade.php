@@ -91,11 +91,12 @@
                     <div class="form-group">
                         <label for="status">Status{!!Config::get('constants.astric_syb')!!}</label>
                         <select style="padding: 0px 0px; margin: 0px; font-size: 13px;" name="status" id="status" class="form-control">
-                            <option value="New Lead" selected>New Lead</option>
-                            <option value="Lead Valid">Lead Valid</option>
-                            <option value="Call Back">Call Back</option>
-                            <option value="Converted">Converted</option>
-                            <option value="Discard">Discard</option>
+
+                            <option value="on_hold">On Hold</option>
+                            <option value="qualified">Qualified</option>
+                            <option value="disqualified">Disqualified</option>
+                            <option value="callback">Callback</option>
+                            <option value="callback">Callback</option>
                         </select>
                     </div>
                     <input type="hidden" class="form-control" id="LeadID" name="LeadID">
@@ -191,33 +192,31 @@ searchable: false // Disable searching on this column
 
             ,
             {
-                data: null,
-                        render: function(data, type, full, meta) {
-                            var source = data.utm_source; // Assuming 'Source' is in the second column (index 1)
+    data: null,
+    render: function(data, type, full, meta) {
+        var source = data.utm_source.toLowerCase(); // Convert source to lowercase for case-insensitive comparison
 
-                            // Define icons based on the source
-                            var iconsHtml = '';
-                            if (source === 'Google') {
-                                iconsHtml = '<i class="fa-brands fa-square-google-plus fa-lg" style="color: #db4437;"></i>';
-                            } else if (source === 'Facebook') {
-                                iconsHtml = '<i class="fa-brands fa-square-facebook fa-lg" style="color: #4267b2;"></i>';
-                            } else if (source === 'Twitter') {
-                                iconsHtml = '<i class="fa-brands fa-square-twitter fa-lg" style="color: #1da1f2;"></i>';
-                            }
-                            else if (source === 'LinkedIn') {
-                                iconsHtml = '<i class="fa-brands fa-linkedin fa-lg" style="color: #0072b1;"></i>';
-                            }
-                            else if (source === 'Direct') {
-                                iconsHtml = '<i class="fa-brands fa-wpforms fa-flip-horizontal fa-lg" style="color: #144aa9;"></i>';
-                            }
-                            else{
-                                iconsHtml = '<i class="fa-brands fa-wpforms fa-flip-horizontal fa-lg" style="color: #144aa9;"></i>';
-                            }
-                            // You can add more conditions for other social media sources
+        // Define icons based on the source
+        var iconsHtml = '';
+        if (/^google$/i.test(source)) {
+            iconsHtml = '<i class="fa-brands fa-square-google-plus fa-lg" style="color: #db4437;"></i>';
+        } else if (/^facebook$/i.test(source)) {
+            iconsHtml = '<i class="fa-brands fa-square-facebook fa-lg" style="color: #4267b2;"></i>';
+        } else if (/^twitter$/i.test(source)) {
+            iconsHtml = '<i class="fa-brands fa-square-twitter fa-lg" style="color: #1da1f2;"></i>';
+        } else if (/^linkedin$/i.test(source)) {
+            iconsHtml = '<i class="fa-brands fa-linkedin fa-lg" style="color: #0072b1;"></i>';
+        } else if (/^direct$/i.test(source)) {
+            iconsHtml = '<i class="fa-brands fa-wpforms fa-flip-horizontal fa-lg" style="color: #144aa9;"></i>';
+        } else {
+            iconsHtml = '<i class="fa-brands fa-wpforms fa-flip-horizontal fa-lg" style="color: #144aa9;"></i>';
+        }
+        // You can add more conditions for other social media sources
 
-                            return iconsHtml+"  "+data.utm_medium;
-                        }
-                    }
+        return iconsHtml + " " + data.utm_medium;
+    }
+}
+
                     ,
 
 // {
@@ -233,20 +232,10 @@ searchable: false // Disable searching on this column
                             var status =data.status; // Assuming 'Status' is in the second column (index 1)
 
                             // Define labels and classes based on the status
-                            var label = '';
-                            var labelClass = '';
+                            var label = status;
+                            var  labelClass = 'bg-success'; // Define a CSS class for the status
 
-                            if (status == 'New Lead') {
-                                label = 'New Lead';
-                                labelClass = 'bg-success'; // Define a CSS class for the status
-                            } else if (status == 'Call Back') {
-                                label = 'Call Back';
-                                labelClass = 'bg-danger';
-                            }
-                            else if (status == 'Discard') {
-                                label = 'Discard';
-                                labelClass = 'bg-danger';
-                            }
+
 
                             // Create the HTML for the status label
                             var statusHtml = '<span class="badge ' + labelClass + '">' + label + '</span>';
@@ -289,6 +278,7 @@ $('#editRemarkForm').on('submit', function (event) {
 
     // Show the loading message
     $('#loading-message').show();
+    $('#loading-message').text('Submitting...').prop('disabled', true);
 
     var newRemark = $('#newRemark').val();
     var id = $('#LeadID').val();
@@ -317,16 +307,24 @@ $('#editRemarkForm').on('submit', function (event) {
 
             // Remove the selected-row class from any selected rows
             $('#data-table tbody tr.selected-row').removeClass('selected-row');
+
+              // Reload the page after a successful operation
+              window.location.reload();
+
+
         },
         error: function (xhr, status, error) {
             // Handle error, display an error message or log the error
             console.error(error);
             toastr.error(error);
+            $('#submit-button').text('Submit').prop('disabled', false);
         },
         complete: function () {
             // Hide the loading message when the request is complete
             $('#loading-message').hide();
+            $('#submit-button').text('Submit').prop('disabled', false);
         }
+
     });
 });
 
@@ -355,42 +353,60 @@ $('#data-table').on('click', '.delete-button', function (event) {
     event.stopPropagation();
 
     var id = $(this).data('id');
-
-    // Store the reference to the clicked row
     var tr = $(this).closest('tr');
 
-    // You can confirm the delete action with a confirmation dialog if needed
-    if (confirm('Are you sure you want to delete this record?')) {
-        // Make an AJAX request to your API to delete the record
-        $.ajax({
-            url: "{{ route('api.DeleteCRMRecord') }}", // Use the named route
-            type: "GET",
-            dataType: "json",
-            data: {
-                record_id: id,
-                projectID: '{{ $projectID }}'
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function (response) {
-                if (response.status == 'success') {
-                    // If the deletion was successful, remove the row from the table
-                    toastr.success(response.message);
-
-                    // Explicitly remove the row from the DOM
-                    tr.remove();
-                } else {
-                    toastr.error(response.message);
+    // Use SweetAlert2 for the confirmation dialog
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Make an AJAX request to your API to delete the record
+            $.ajax({
+                url: "{{ route('api.DeleteCRMRecord') }}", // Use the named route
+                type: "GET",
+                dataType: "json",
+                data: {
+                    record_id: id,
+                    projectID: '{{ $projectID }}'
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.status == 'success') {
+                        // If the deletion was successful, remove the row from the table
+                        Swal.fire(
+                            'Deleted!',
+                            response.message,
+                            'success'
+                        );
+                        tr.remove(); // Explicitly remove the row from the DOM
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            response.message,
+                            'error'
+                        );
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle error, show an error message, or log the error
+                    console.error(error);
+                    Swal.fire(
+                        'Error!',
+                        'An error occurred while deleting the record.',
+                        'error'
+                    );
                 }
-            },
-            error: function (xhr, status, error) {
-                // Handle error, show an error message, or log the error
-                console.error(error);
-                toastr.error(error);
-            }
-        });
-    }
+            });
+        }
+    });
 });
 
 
