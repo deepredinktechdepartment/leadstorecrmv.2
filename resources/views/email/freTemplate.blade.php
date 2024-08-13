@@ -26,9 +26,26 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="email">Subject</label>
+                    <div class="form-group mb-3 col-lg-6">
+                        <label class="text-black" for="email">Subject</label>
                         <input type="text" class="form-control" name="subject" id="subject" value="">
+                    </div>
+                    <div>
+                    <div class="form-group mb-3">
+                        <label class="text-black" for="Message Body">Message Body</label>
+                        <textarea name="message_body" rows="8" cols="60"></textarea>
+                            <script type="text/javascript">//<![CDATA[
+                                window.CKEDITOR_BASEPATH='https://leadstore.in/assets/ckeditor/';
+                                //]]></script>
+                                <script type="text/javascript" src="https://leadstore.in/assets/ckeditor/ckeditor.js?t=B5GJ5GG"></script>
+                                <script type="text/javascript">//<![CDATA[
+                                CKEDITOR.replace('message_body', {"filebrowserBrowseUrl":"\/setting\/fre_template\/https:\/\/leadstore.in\/assets\/ckfinder\/ckfinder.html","filebrowserImageBrowseUrl":"\/setting\/fre_template\/https:\/\/leadstore.in\/assets\/ckfinder\/ckfinder.html?type=Images","filebrowserFlashBrowseUrl":"\/setting\/fre_template\/https:\/\/leadstore.in\/assets\/ckfinder\/ckfinder.html?type=Flash","filebrowserUploadUrl":"\/setting\/fre_template\/https:\/\/leadstore.in\/assets\/ckfinder\/core\/connector\/php\/connector.php?command=QuickUpload&type=Files","filebrowserImageUploadUrl":"\/setting\/fre_template\/https:\/\/leadstore.in\/assets\/ckfinder\/core\/connector\/php\/connector.php?command=QuickUpload&type=Images","filebrowserFlashUploadUrl":"\/setting\/fre_template\/https:\/\/leadstore.in\/assets\/ckfinder\/core\/connector\/php\/connector.php?command=QuickUpload&type=Flash"});
+                                //]]>
+                            </script>
+                        </div>
+                    </div>
+                    <div>
+                        <button id="send" type="submit" class="btn btn-danger">Update</button>
                     </div>
                 </form>
             </div>
