@@ -61,7 +61,7 @@
                                                 <p class="mb-3">Click on Admin -> App Bazar</p>
                                                 <a class="mb-3" href="http://prntscr.com/fwosxj">http://prntscr.com/fwosxj</a>
                                                 <p class="mb-3">Click on your existing call flow and add a passthrough at the end of the call flow.</p>
-                                                <a class="mb-3" href="http://prntscr.com/fwot82">http://prntscr.com/fwot82</a>
+                                                <a class="mb-3" href="http://prntscr.com/fwot82">http://prntscr.com/fwot82</a> <br>
                                                 <a class="mb-3" href="http://prntscr.com/fwotfq">http://prntscr.com/fwotfq</a>
                                                 <p>Save your call flow and that’s it. All your calls will automatically mapped to leads</p>
                                             </div>
