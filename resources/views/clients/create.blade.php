@@ -108,11 +108,7 @@
                         </div>
 
 
-    <div class="mb-0">
-        <label for="crm_merchant_id" class="form-label">CRM Merchant ID</label>
-        <input type="text" id="crm_merchant_id" name="crm_merchant_id" class="form-control"
-               value="{{ old('crm_merchant_id', $client->merchant_id ?? '') }}">
-    </div>
+
     <div class="mb-0">
         <label for="crm_api_key" class="form-label">CRM API Key</label>
         <input type="text" id="crm_api_key" name="crm_api_key" class="form-control"

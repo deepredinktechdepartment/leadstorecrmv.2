@@ -283,7 +283,7 @@ public function destroy($encryptedId)
             $client->client_tan = $request->tan;
 
                // Save CRM Merchant ID and API Key in their respective columns
-    $client->merchant_id = $request->input('crm_merchant_id', '');
+
     $client->api_key = $request->input('crm_api_key', '');
 
             $client->save();

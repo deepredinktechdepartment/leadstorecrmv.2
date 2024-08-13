@@ -23,7 +23,6 @@ class ApiCredentialController extends Controller
     $ApiCredential=Project::where('id',$projectID)->get()->first();
     // Use Eloquent to check if the API credentials exist
     $credentialsExist = Project::where('api_key', $ApiCredential->api_key)
-    ->where('merchant_id', $ApiCredential->merchant_id)
     ->exists();
     if ($credentialsExist) {
     // API credentials exist, you can proceed with your logic
@@ -44,19 +43,17 @@ public function getApiCredentials($projectID)
     $ApiCredentialCount = Project::where('id', $projectID)->count();
 
     if ($ApiCredentialCount) {
-        $ApiCredential = Project::where('id', $projectID)->first(['api_key', 'merchant_id']);
+        $ApiCredential = Project::where('id', $projectID)->first(['api_key']);
 
         // Use Eloquent to check if the API credentials exist
         $credentialsExist = Project::where('api_key', $ApiCredential->api_key)
-            ->where('merchant_id', $ApiCredential->merchant_id)
             ->exists();
 
         if ($credentialsExist) {
             // API credentials exist, you can proceed with your logic
             $credentials = [
                 'status' => 'success',
-                'api_key' => $ApiCredential->api_key,
-                'merchant_id' => $ApiCredential->merchant_id,
+                'api_key' => $ApiCredential->api_key
             ];
 
             return response()->json($credentials);
@@ -121,7 +118,6 @@ public function store(Request $request)
             ],
             [
                 'api_key' => $request->api_key??'',
-                'merchant_id' => $request->merchant_id??'',
                 'org_id' =>$Project->org_id??0,
                 'licence_id' => $Project->licence_id??0,
                 'intranet_project_id' => $projectID??0,

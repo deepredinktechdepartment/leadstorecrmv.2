@@ -12,10 +12,7 @@
         <form method="POST" action="{{ route('store.api_credentials') }}">
             @csrf
 
-            <div class="form-group">
-                <label for="merchant_id">Merchant ID:</label>
-                <input type="text" name="merchant_id" id="merchant_id" class="form-control" value="{{ $ApiCredential->merchant_id??'' }}" required>
-            </div>
+
             <div class="form-group">
                 <label for="api_key">API Key:</label>
                 <input type="text" name="api_key" id="api_key" class="form-control" value="{{ $ApiCredential->api_key??'' }}" required>
