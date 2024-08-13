@@ -26,3 +26,6 @@ Route::get('/UpdateCRMRecord/{params?}', [ExternalDataController::class, 'Update
 
 // For API routes (usually in routes/api.php)
 Route::get('getleads', [ExternalDataController::class, 'getLeads']);
+Route::get('getsingleleadData', [ExternalDataController::class, 'getSingleLeadData']);
+
+Route::post('leads/handle-external-post', [ExternalDataController::class, 'handleExternalPost'])->middleware('project.api.key');
