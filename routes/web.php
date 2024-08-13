@@ -136,4 +136,7 @@ Route::get('/singleproject/{clientID?}/hide-cust-info', [ClientController::class
 Route::get('/singleproject/{clientID?}/revenue-tracking', [ClientController::class, 'revenueTracking'])->name('revenueTracking');
 
 
+Route::get('/createlead', [LeadController::class, 'showForm'])->name('createLead');
+Route::post('/lead/submit', [LeadController::class, 'submit'])->name('lead.submit');
+
 });
