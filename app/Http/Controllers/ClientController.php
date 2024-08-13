@@ -563,7 +563,7 @@ public function destroy($encryptedId)
             }
     }
 
-    public function leadNotificationsSms($clientID = null)
+    public function smsLeadNotifications($clientID = null)
     {
         try{
             // Decrypt the client ID
@@ -576,7 +576,26 @@ public function destroy($encryptedId)
             // Set the page title
             $pageTitle = 'A2AHome Land First Response SMS';
             // Return the view with the client data and page title
-            return view('sms.leadNotificationsSms', compact('pageTitle','client'));
+            return view('sms.smsLeadNotifications', compact('pageTitle','client'));
+            } catch (\Exception $e) {
+            // Redirect to the clients index page with an error message
+            return redirect()->route(route('projectLeads', ['projectID' => Crypt::encrypt($clientID)]))->with('error', 'An error occurred while trying to display the edit form.');
+            }
+    }
+    public function smsFreTemplate($clientID = null)
+    {
+        try{
+            // Decrypt the client ID
+            $id = Crypt::decrypt($clientID);
+
+            // Find the client by ID
+            $client = Client::findOrFail($id);
+
+
+            // Set the page title
+            $pageTitle = 'A2AHome Land SMS FRE Template';
+            // Return the view with the client data and page title
+            return view('sms.smsFreTemplate', compact('pageTitle','client'));
             } catch (\Exception $e) {
             // Redirect to the clients index page with an error message
             return redirect()->route(route('projectLeads', ['projectID' => Crypt::encrypt($clientID)]))->with('error', 'An error occurred while trying to display the edit form.');

@@ -119,8 +119,9 @@ Route::get('/singleproject/{clientID?}/exotel', [ClientController::class, 'exote
 Route::get('/singleproject/{clientID?}/email-server', [ClientController::class, 'emailServer'])->name('emailServer');
 Route::get('/singleproject/{clientID?}/first-response-emailer', [ClientController::class, 'firstResponseEmailer'])->name('firstResponseEmailer');
 Route::get('/singleproject/{clientID?}/email-lead-notifications', [ClientController::class, 'leadNotifications'])->name('emailLeadNotifications');
-Route::get('/singleproject/{clientID?}/sms-lead-notifications', [ClientController::class, 'leadNotifications'])->name('smsLeadNotifications');
+Route::get('/singleproject/{clientID?}/sms-lead-notifications', [ClientController::class, 'smsLeadNotifications'])->name('smsLeadNotifications');
 Route::get('/singleproject/{clientID?}/fre-template', [ClientController::class, 'freTemplate'])->name('freTemplate');
+Route::get('/singleproject/{clientID?}/sms-fre-template', [ClientController::class, 'smsFreTemplate'])->name('smsFreTemplate');
 Route::get('/singleproject/{clientID?}/email-lead-notification-template', [ClientController::class, 'leadNotificationTemplate'])->name('emailleadNotificationTemplate');
 Route::get('/singleproject/{clientID?}/sms-lead-notification-template', [ClientController::class, 'leadNotificationTemplate'])->name('smsleadNotificationTemplate');
 Route::get('/singleproject/{clientID?}/lead-notification-template', [ClientController::class, 'leadSummaryNotifications'])->name('leadSummaryNotifications');
