@@ -22,4 +22,7 @@ Route::get('/fetch-roles/{empID?}', [HRController::class, 'fetchRoles']);
 Route::get('/fetch-roles-emp/{empID?}', [HRController::class, 'fetchRolesEmp']);
 Route::get('/DeleteCRMRecord/{params?}', [ExternalDataController::class, 'DeleteCRMRecord'])->name('api.DeleteCRMRecord');
 Route::get('/UpdateCRMRecord/{params?}', [ExternalDataController::class, 'UpdateCRMRecord'])->name('api.UpdateCRMRecord');
-Route::get('/get-leads', [ExternalDataController::class, 'getLeads']);
+
+
+// For API routes (usually in routes/api.php)
+Route::get('getleads', [ExternalDataController::class, 'getLeads']);

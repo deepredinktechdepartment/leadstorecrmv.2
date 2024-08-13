@@ -35,7 +35,7 @@ class ExternalDataController extends Controller
             }
 
     }
-   
+
 
 
     public function fetchfilteroptions($projectID)
@@ -325,7 +325,9 @@ class ExternalDataController extends Controller
 
 
             $Is_verified=$this->api_credentials_verification($projectID);
-            
+
+
+
 
             if($Is_verified){
 
@@ -333,6 +335,7 @@ class ExternalDataController extends Controller
                 $ApiCredentialController=new ApiCredentialController();
                 $ApiCredentials=$ApiCredentialController->getApiCredentials($projectID);
                 $response = json_decode($ApiCredentials->getContent());
+
                 $status = $response->status;
                 $api_key = $response->api_key;
 
@@ -343,9 +346,6 @@ class ExternalDataController extends Controller
 
             $error="";
             $token = $api_key;
-
-
-
 
             //$token = '';
             //$url = 'https://leadstore.in/api/get-leads';
@@ -369,15 +369,15 @@ class ExternalDataController extends Controller
 
 
             $responseBody = $response->body(); // Get the response body
-        
+
 
             $today_count=$monthly_count=0;
             dd($response->json());
 
             if ($response->successful()) {
             $data = $response->json();
-        
-        
+
+
             dd($data);
             // Process the JSON data here
             $leadCount_source = $data['leadCount_source']??[]; // Your data here
@@ -390,7 +390,7 @@ class ExternalDataController extends Controller
                 'utm_sources'=>$data['utm_sources']??[],
                 'utm_mediums'=>$data['utm_mediums']??[],
                 'utm_campaigns'=>$data['utm_campaigns']??[],
-                
+
                 ];
 
             return view('marketing.crm.leads',compact('utmData','pageTitle','Jdata','error','today_count','monthly_count','leadCount_source','token','projectID','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
@@ -431,16 +431,18 @@ class ExternalDataController extends Controller
 
         }
     }
-    
+
  public function getLeads(Request $request)
     {
-      
+
+        dd($request);
+        return response()->json(['message' => 'Invalid authorization token'], 401);
         // Get the 'Authorization' header from the incoming request
         $authorizationHeader = $request->header('Authorization');
-         return $authorizationHeader = $request->Authorization;
+
 
         // Extract token from the Authorization header
-    
+
         $token = $this->extractToken($request);
 
         // Validate the token
@@ -456,7 +458,7 @@ class ExternalDataController extends Controller
         $utmMedium = $request->query('utm_medium'); // Get the 'utm_medium' query parameter
         $utmSource = $request->query('utm_source'); // Get the 'utm_source' query parameter
         $status = $request->query('status'); // Get the 'status' query parameter
-        
+
         return $startDate;
 
         // Fetch leads based on the input parameters
