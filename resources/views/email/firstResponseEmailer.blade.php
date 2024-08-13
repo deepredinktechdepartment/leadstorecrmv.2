@@ -30,7 +30,7 @@
                 <form id="notificationForm" style="display: none;">
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="mb-3">
+                            <div class="form-group mb-3">
                                 <strong>Example:</strong><br><small>yourname:yourname@company.com, <br> anothername:anothername@company.com</small>
                                 <input type="text" name="first_response_emailer" value="" id="first_response_emailer" class="form-control" placeholder="First Response Emailer">
                             </div>

@@ -480,7 +480,22 @@ public function destroy($encryptedId)
 
     public function freTemplate($clientID = null)
     {
-        return $this->underConstruction($clientID);
+        try{
+            // Decrypt the client ID
+            $id = Crypt::decrypt($clientID);
+
+            // Find the client by ID
+            $client = Client::findOrFail($id);
+
+
+            // Set the page title
+            $pageTitle = 'A2AHome Land FRE Template';
+            // Return the view with the client data and page title
+            return view('email.freTemplate', compact('pageTitle','client'));
+            } catch (\Exception $e) {
+            // Redirect to the clients index page with an error message
+            return redirect()->route(route('projectLeads', ['projectID' => Crypt::encrypt($clientID)]))->with('error', 'An error occurred while trying to display the edit form.');
+            }
     }
 
     public function leadNotificationTemplate($clientID = null)

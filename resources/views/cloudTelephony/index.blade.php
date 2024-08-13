@@ -13,30 +13,30 @@
                 <form>
                     <div class="row">
                         <div class="col-lg-6">
-                            <div class="mb-3">
+                            <div class="form-group mb-3">
                                 <label class="text-dark" for="course">Exotel SID</label><br>
                                 <small>Your Exotel SID - Get it from here: <br> http://my.exotel.in/settings/site#api-settings</small>
                                 <input type="text" name="exotel_sid" value="" id="exotel_sid" class="form-control" placeholder="Exotel SID">
                             </div>
-                            <div class="mb-3">
+                            <div class="form-group mb-3">
                                 <label class="text-dark " for="course">Exotel Token</label><br>
                                 <small>Your Exotel SID - Get it from here: <br> http://my.exotel.in/settings/site#api-settings</small>
                                 <input type="text" name="exotel_token" value="" id="exotel_token" class="form-control" placeholder="Exotel Token">
                             </div>
-                            <div class="mb-3">
+                            <div class="form-group mb-3">
                                 <label class="control-label" for="course">CallerId</label><br>
                                 <small>Your-Exotel-virtual-number</small>
                                 <input type="text" name="callerid" value="" id="callerid" class="form-control" placeholder="CallerId">
                             </div>
-                            <div class="mb-3">
+                            <div class="form-group mb-3">
                                 <label class="control-label" for="course">SRD ID (Livesquare)</label><br>
                                 <input type="text" name="srdid" value="" id="srdid" class="form-control" placeholder="SRD">
                             </div>
-                            <div class="mb-3">
+                            <div class="form-group mb-3">
                                 <label class="control-label" for="Webhook URL">Webhook for Exotel</label><br>
                                 <a href="#">https://leadstore.in/phonelead/capture/70</a>
                             </div>
-                            <div class="mb-3">
+                            <div class="form-group mb-3">
                                 <label class="control-label" for="Webhook URL">Webhook for Livesquare</label><br>
                                 <a href="#">https://leadstore.in/phonelead/livesquare_capture/70</a>
                             </div>
