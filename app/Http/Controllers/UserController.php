@@ -215,7 +215,7 @@ public function storeOrUpdate(Request $request)
 
                     Mail::to($email)->send(new ResetPassword($offer));
 
-                    return back()->with('success', 'We have e-mailed your password reset link. If you do not see it in your inbox, please check your spam or junk folder.');
+                    return back()->with('success', 'We have e-mailed your password reset link.');
                 } catch (\Exception $e) {
                     // Log the exception
 
@@ -250,7 +250,7 @@ public function storeOrUpdate(Request $request)
 
               // Check if the user already has a password
               if ($user->password) {
-                  return redirect('/')->with('error', 'Password is already set.');
+                  return redirect('/')->with('success', 'Password is already set.');
               } else {
                   // Determine the page title based on the user status
                   $pageTitle = $user->active ? 'Update password' : 'Setup a new password';
