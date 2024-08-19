@@ -114,11 +114,11 @@
             <div class="col-sm-4">
                 <div class="card h-100 py-3">
                     <label for="Status">Statistics for Medium</label>
-                    <div class="row">
+                    <div class="row pt-2">
                         @if (isset($leadCount_source) && !empty($leadCount_source))
                             @foreach ($leadCount_source as $lead)
                                 <div class="col-12">
-                                    <div class="mr-4 mb-4">
+                                    <div class="mr-4">
                                         @php
                                             // Normalize the utm_source to lowercase for comparison
                                             $utmSource = strtolower($lead['utm_source']);

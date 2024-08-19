@@ -6,6 +6,7 @@ use App\Http\Controllers\SourceController;
 use App\Http\Controllers\SourceGroupController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ExternalDataController;
 use App\Http\Controllers\LeadController;
@@ -120,7 +121,11 @@ Route::get('/singleproject/{clientID?}/email-server', [ClientController::class, 
 Route::get('/singleproject/{clientID?}/first-response-emailer', [ClientController::class, 'firstResponseEmailer'])->name('firstResponseEmailer');
 Route::get('/singleproject/{clientID?}/email-lead-notifications', [ClientController::class, 'leadNotifications'])->name('emailLeadNotifications');
 Route::get('/singleproject/{clientID?}/sms-lead-notifications', [ClientController::class, 'smsLeadNotifications'])->name('smsLeadNotifications');
+
+//FRE Email Template
 Route::get('/singleproject/{clientID?}/fre-template', [ClientController::class, 'freTemplate'])->name('freTemplate');
+Route::post('/settings/save', [SettingController::class, 'storeOrUpdateSetting'])->name('store.Or.Update.Setting');
+
 Route::get('/singleproject/{clientID?}/sms-fre-template', [ClientController::class, 'smsFreTemplate'])->name('smsFreTemplate');
 Route::get('/singleproject/{clientID?}/sms-lead-notification-template', [ClientController::class, 'smsLeadNotificationTemplate'])->name('smsLeadNotificationTemplate');
 Route::get('/singleproject/{clientID?}/lead-notification-template', [ClientController::class, 'leadSummaryNotifications'])->name('leadSummaryNotifications');

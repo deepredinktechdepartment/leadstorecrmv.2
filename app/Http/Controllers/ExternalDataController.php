@@ -345,12 +345,9 @@ class ExternalDataController extends Controller
 
                 if ($status === "success") {
 
-
-
             $error="";
             $token = $api_key;
-            $url = env('APP_URL').'/api/getleads';
-
+            $url = env('APP_URL').'api/getleads';
 
             $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
