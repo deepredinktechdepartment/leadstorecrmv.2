@@ -345,9 +345,12 @@ class ExternalDataController extends Controller
 
                 if ($status === "success") {
 
+
+
             $error="";
             $token = $api_key;
-            $url = env('APP_URL').'api/getleads';
+            $url = env('APP_URL').'/api/getleads';
+
 
             $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
@@ -368,13 +371,13 @@ class ExternalDataController extends Controller
 
 
             $today_count=$monthly_count=0;
-            
+
 
             if ($response->successful()) {
             $data = $response->json();
 
 
-        
+
             // Process the JSON data here
             $leadCount_source = $data['leadCount_source']??[]; // Your data here
 
@@ -428,8 +431,8 @@ class ExternalDataController extends Controller
         }
     }
 
- 
- 
+
+
  public function getLeads(Request $request)
 {
     // Get the 'Authorization' header from the incoming request
@@ -533,9 +536,9 @@ class ExternalDataController extends Controller
 
         // Fetch the single lead data
        $singleLeadData = $this->fetchSingleLead($clientID, $leadId);
-       
-        
-        
+
+
+
         $numRows = $singleLeadData['numRows'];
         $leadData = $singleLeadData['leadData'];
         $conversations = $singleLeadData['conversations'];
@@ -558,19 +561,19 @@ class ExternalDataController extends Controller
             return response()->json($response);
         }
     }
-    
+
 protected function fetchSingleLead($clientID, $leadId)
     {
         try {
             // Fetch lead data
             $lead = Lead::where('id', $leadId)->get();
             $leadCount = $lead->count(); // Count of leads
-            
+
             // Fetch related conversations
             $conversations = Conversation::where('client_id', $clientID)
                                           ->where('leadid', $leadId) // Assuming 'lead_id' is the foreign key in Conversation model
                                           ->get();
-                                          
+
 
 
             return [
@@ -599,13 +602,13 @@ protected function fetchSingleLead($clientID, $leadId)
             ];
         }
     }
-    
+
 
     private function extractToken($authorizationHeader)
     {
-   
+
         $authorizationHeader = $authorizationHeader;
-   
+
         if (strpos($authorizationHeader, 'Bearer ') === 0) {
             return substr($authorizationHeader, 7);
         }
@@ -618,7 +621,7 @@ protected function fetchSingleLead($clientID, $leadId)
     {
         // Query the clients table for the given API key
         $client = Project::where('api_key', $token)->first();
-        
+
         // Check if a client with this API key was found
         if ($client) {
             return $client->id; // Return the client's ID
@@ -766,7 +769,7 @@ protected function fetchSingleLead($clientID, $leadId)
             ->whereMonth('lead_last_update_date', now()->month)
             ->count();
     }
-    
+
   public function handleExternalPost(Request $request)
 {
     // Get a specific header value by header name
@@ -1010,7 +1013,7 @@ public function updateLead(Request $request)
     $leadId = $request->query('Lead_ID');
     $remark = $request->query('remark');
     $leadStatus = $request->query('lead_status');
-    
+
 
 
     // Extract token from Authorization header
@@ -1038,11 +1041,11 @@ public function updateLead(Request $request)
             $lead->status = $leadStatus;
             // Update other fields individually
             $lead->save();
-    
 
 
-        
-    
+
+
+
     $conversation = new Conversation();
     $conversation->leadid = $leadId;
     $conversation->lead_status = $leadStatus;

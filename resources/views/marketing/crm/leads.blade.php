@@ -1,138 +1,14 @@
 @extends('layouts.app')
 @section('content')
-
-<section class="bg-web-light pt-3 pb-3">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8">
-                <div class="card h-100 py-3">
-                <!-- Added margin-end-3 class for spacing -->
-                <form action="https://alpha.leadstore.in/crmv.2/projectLeads?projectID=eyJpdiI6IlRwMXZ4ZS81U3UybmRJcU5SY1BwNUE9PSIsInZhbHVlIjoiL2swRjVySXhJSzk1cG9mV01sSGVuUT09IiwibWFjIjoiYWJlNjlkYWJiMDQ4MWIzM2Y4N2NiNjgxNjRjYzUxOTc0MmYzNjI2NWExZmY3ZTg5MWMyMTcwNDBiYzljYzRmOCIsInRhZyI6IiJ9"
-                method="post">
-                    <input type="hidden" name="_token" value="8r4XfPPN2It6f8qFV3KUxmMh9cACVVFOc775Skzb" autocomplete="off">
-                    <div class="row">
-                        <!-- From Date -->
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="start_date">From Date</label>
-                                <div class="input-group date" id="datetimepicker1">
-                                    <input type="date" class="form-control" id="start_date" name="start_date" value="2024-08-01">
-                                </div>
-                            </div>
-                            <!-- To Date -->
-                            <div class="form-group">
-                                <label for="end_date">To Date</label>
-                                <div class="input-group date" id="datetimepicker2">
-                                    <input type="date" class="form-control" id="end_date" name="end_date" value="2024-08-14">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Source -->
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <!-- Select Dropdown for UTM Sources -->
-                                <label for="utm_source">UTM Source:</label>
-                                <select id="utm_source" name="utm_source" class="form-select">
-                                    <option value="">UTM Source</option>
-                                    <option value="facebook">facebook</option>
-                                </select>
-                            </div>
-                            <!-- Campaign -->
-                            <div class="form-group">
-                                <!-- Select Dropdown for UTM Campaigns -->
-                                <label for="utm_campaign">Campaign:</label>
-                                <select id="utm_campaign" name="utm_campaign" class="form-select">
-                                    <option value="">Campaign</option>
-                                    <option value="holiday_promo">holiday_promo</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-
-                        <!-- Medium -->
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <!-- Select Dropdown for UTM Mediums -->
-                                <label for="utm_medium">Medium:</label>
-                                <select id="utm_medium" name="utm_medium" class="form-select">
-                                    <option value="">Medium</option>
-                                    <option value="GDN">GDN</option>
-                                </select>
-                            </div>
-                            <!-- Status -->
-                        <div>
-                            <button type="submit" class="btn btn-primary btn-sm mt-1 mt-4">Search</button>
-                            <a href="https://alpha.leadstore.in/crmv.2/export-leads?start_date=2024-08-01&amp;end_date=2024-08-14&amp;utm_source=&amp;utm_medium=&amp;utm_campaign=" class="btn btn-success btn-sm mt-1 mt-4 text-white text-decoration-none">Export</a>
-                        </div>
-                        </div>
-
-                         
-
-
-                    </div>
-
-
-
-
-                </form>
-                </div>
-            </div>
-
-
-            <div class="col-sm-4">
-                <div class="card h-100 py-3">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <i class="fa-brands fa-square-google-plus fa-2xl me-2" style="color: #dc4e41;"></i> 2 leads
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <i class="fa-solid fa-globe fa-2xl me-2" style="color: #94dd5e;"></i> 2 leads
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <i class="fa-brands fa-square-facebook fa-2xl me-2" style="color: #4267b2;"></i> 2 leads
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <i class="fa-regular fa-envelope fa-2xl me-2" style="color: #d90829;"></i> 2 leads
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="mb-3">
-                            <i class="fa-brands fa-linkedin fa-2xl me-2" style="color: #007ab9;"></i> 2 leads
-                        </div>
-                    </div>
-
-
-
-                </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-
-
-    <div class="row">
-        <div class="col-md-12">
-
-
-{{-- Leads counts --}}
-
+<div class="row">
+<div class="col-md-12">
+ {{-- Leads counts --}}
 @if($projectID && !$error)
 @include("marketing.crm.leads_countlable")
 @endif
 
 
-<div class="container-fluid pt-4">
+<div class="pt-4">
 
 {{-- Filters over leads data --}}
 @if($projectID && !$error)
@@ -143,7 +19,7 @@
 
 @if($projectID)
 
-<div class="row">
+<div class="row-fluid mt-4">
     <div class="col-md-12 card">
 
 
