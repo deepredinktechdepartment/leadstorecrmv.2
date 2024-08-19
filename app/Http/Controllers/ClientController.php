@@ -497,7 +497,7 @@ public function destroy($encryptedId)
         }
 
         // Set the page title, including the client name
-        $pageTitle = 'FRE Template for ' . $client->client_name;
+        $pageTitle = 'FRE Emailer Template for ' . $client->client_name;
 
         // Return the view with the client data and page title
         return view('email.freTemplate', compact('pageTitle', 'client'));
