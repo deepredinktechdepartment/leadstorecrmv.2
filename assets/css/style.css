@@ -2350,6 +2350,10 @@ div.dataTables_wrapper div.dataTables_length select {
     font-weight: normal;
 }
 
+.lead_adds_sec .lead_adds_side_bar ul li a:active{
+    border-bottom: 1px solid #000;
+}
+
 .lead_adds_sec .lead_adds_side_bar .heading {
     color: #444443;
     font-weight: bold;
