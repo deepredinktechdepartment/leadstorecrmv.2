@@ -11,7 +11,7 @@
         <li><a href="{{ route('exotel', ['clientID' => Crypt::encrypt($client->id)]) }}">Exotel</a></li>
 
         <li class="heading">Email</li>
-        <li><a href="{{ route('emailServer', ['clientID' => Crypt::encrypt($client->id)]) }}">Emailer Server-SMTP</a></li>
+        <li class=""><a class="active" href="{{ route('emailServer', ['clientID' => Crypt::encrypt($client->id)]) }}">Emailer Server-SMTP</a></li>
         <li><a href="{{ route('firstResponseEmailer', ['clientID' => Crypt::encrypt($client->id)]) }}">First Response Emailer</a></li>
         <li><a href="{{ route('emailLeadNotifications', ['clientID' => Crypt::encrypt($client->id)]) }}">Lead Notifications</a></li>
         <li><a href="{{ route('freTemplate', ['clientID' => Crypt::encrypt($client->id)]) }}">FRE Template</a></li>
@@ -38,5 +38,8 @@
 
         <li class="heading">Revenue Tracking</li>
         <li><a href="{{ route('revenueTracking', ['clientID' => Crypt::encrypt($client->id)]) }}">Revenue Tracking</a></li>
+
+        <li class="heading">ExternalCRM</li>
+        <li><a href="{{ route('external.crm', ['clientID' => Crypt::encrypt($client->id)]) }}">ExternalCRM</a></li>
     </ul>
 </div>

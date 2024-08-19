@@ -110,7 +110,7 @@ Route::get('theme_options/delete/{id}',[ThemeoptionsController::class,'delete_th
 
 
 
-
+Route::get('/singleproject/{clientID?}/ExternalCRM', [ClientController::class, 'ExternalCRM'])->name('external.crm');
 
 
 Route::get('/singleproject/{clientID?}/facebook', [ClientController::class, 'facebook'])->name('facebook');
