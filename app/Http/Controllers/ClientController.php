@@ -552,7 +552,7 @@ public function destroy($encryptedId)
             }
 
             // Set the page title, including the client name
-            $pageTitle = 'Email SMTP Credentials for ' . $client->client_name;
+            $pageTitle = 'Emailer SMTP Credentials for ' . $client->client_name;
 
             // Return the view with the client data and page title
             return view('email.emailServer', compact('pageTitle','client'));
