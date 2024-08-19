@@ -418,25 +418,7 @@ public function destroy($encryptedId)
             }
     }
 
-    public function emailServer($clientID = null)
-    {
-        try{
-            // Decrypt the client ID
-            $id = Crypt::decrypt($clientID);
 
-            // Find the client by ID
-            $client = Client::findOrFail($id);
-
-
-            // Set the page title
-            $pageTitle = 'A2AHome Land Email Server';
-            // Return the view with the client data and page title
-            return view('email.emailServer', compact('pageTitle','client'));
-            } catch (\Exception $e) {
-            // Redirect to the clients index page with an error message
-            return redirect()->route(route('projectLeads', ['projectID' => Crypt::encrypt($clientID)]))->with('error', 'An error occurred while trying to display the edit form.');
-            }
-    }
 
     public function firstResponseEmailer($clientID = null)
     {
@@ -514,22 +496,77 @@ public function destroy($encryptedId)
 
     public function leadNotificationTemplate($clientID = null)
     {
-        try{
-            // Decrypt the client ID
-            $id = Crypt::decrypt($clientID);
-
-            // Find the client by ID
-            $client = Client::findOrFail($id);
 
 
-            // Set the page title
-            $pageTitle = 'A2AHome Land Lead Notification Template';
+
+        try {
+            // Check if clientID is encrypted and decrypt if necessary
+            $id = $clientID;
+            if (isEncrypted($clientID)) {
+                $id = Crypt::decrypt($clientID);
+            }
+
+            // Find the client by ID, handle case if not found
+            $client = Client::find($id);
+
+            if (!$client) {
+                // Client does not exist, redirect with error message
+                return redirect()->route('projectLeads', ['projectID' => Crypt::encrypt($clientID)])
+                                 ->with('error', 'Client not found.');
+            }
+
+            // Set the page title, including the client name
+            $pageTitle = 'Lead Notification Template for ' . $client->client_name;
+
             // Return the view with the client data and page title
             return view('email.leadNotificationTemplate', compact('pageTitle','client'));
-            } catch (\Exception $e) {
+        } catch (\Exception $e) {
+            // Log the error for debugging purposes
+            \Log::error('Error in freTemplate: ' . $e->getMessage(), ['clientID' => $clientID]);
+
             // Redirect to the clients index page with an error message
-            return redirect()->route(route('projectLeads', ['projectID' => Crypt::encrypt($clientID)]))->with('error', 'An error occurred while trying to display the edit form.');
+            return redirect()->route('projectLeads', ['projectID' => Crypt::encrypt($clientID)])
+                             ->with('error', 'An error occurred while trying to display the FRE template.');
+        }
+
+    }
+
+
+
+    public function emailServer($clientID = null)
+    {
+        try {
+            // Check if clientID is encrypted and decrypt if necessary
+            $id = $clientID;
+            if (isEncrypted($clientID)) {
+                $id = Crypt::decrypt($clientID);
             }
+
+            // Find the client by ID, handle case if not found
+            $client = Client::find($id);
+
+            if (!$client) {
+                // Client does not exist, redirect with error message
+                return redirect()->route('projectLeads', ['projectID' => Crypt::encrypt($clientID)])
+                                 ->with('error', 'Client not found.');
+            }
+
+            // Set the page title, including the client name
+            $pageTitle = 'Email SMTP Credentials for ' . $client->client_name;
+
+            // Return the view with the client data and page title
+            return view('email.emailServer', compact('pageTitle','client'));
+        } catch (\Exception $e) {
+            // Log the error for debugging purposes
+            \Log::error('Error in freTemplate: ' . $e->getMessage(), ['clientID' => $clientID]);
+
+            // Redirect to the clients index page with an error message
+            return redirect()->route('projectLeads', ['projectID' => Crypt::encrypt($clientID)])
+                             ->with('error', 'An error occurred while trying to display the FRE template.');
+        }
+
+
+
     }
 
     public function leadSummaryNotifications($clientID = null)

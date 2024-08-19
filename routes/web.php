@@ -117,13 +117,15 @@ Route::get('/singleproject/{clientID?}/facebook', [ClientController::class, 'fac
 Route::get('/singleproject/{clientID?}/facebook-pages', [ClientController::class, 'facebookPages'])->name('facebookPages');
 Route::get('/singleproject/{clientID?}/competitor-scores', [ClientController::class, 'competitorScores'])->name('competitorScores');
 Route::get('/singleproject/{clientID?}/exotel', [ClientController::class, 'exotel'])->name('exotel');
-Route::get('/singleproject/{clientID?}/email-server', [ClientController::class, 'emailServer'])->name('emailServer');
+
 Route::get('/singleproject/{clientID?}/first-response-emailer', [ClientController::class, 'firstResponseEmailer'])->name('firstResponseEmailer');
 Route::get('/singleproject/{clientID?}/email-lead-notifications', [ClientController::class, 'leadNotifications'])->name('emailLeadNotifications');
 Route::get('/singleproject/{clientID?}/sms-lead-notifications', [ClientController::class, 'smsLeadNotifications'])->name('smsLeadNotifications');
 
 //FRE Email Template
 Route::get('/singleproject/{clientID?}/fre-template', [ClientController::class, 'freTemplate'])->name('freTemplate');
+Route::get('/singleproject/{clientID?}/email-server', [ClientController::class, 'emailServer'])->name('emailServer');
+
 Route::post('/settings/save', [SettingController::class, 'storeOrUpdateSetting'])->name('store.Or.Update.Setting');
 
 Route::get('/singleproject/{clientID?}/sms-fre-template', [ClientController::class, 'smsFreTemplate'])->name('smsFreTemplate');

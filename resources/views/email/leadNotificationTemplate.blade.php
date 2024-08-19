@@ -1,6 +1,30 @@
 @extends('layouts.app')
 @section('content')
-<h1 class="mb-4">Settings for {{ $client->client_name }}</h1>
+
+@php
+
+use App\Models\Setting;
+  // Retrieve the setting
+  $type='lead_notificaion_emailer';
+  $clientId=$client->id;
+  $setting = Setting::where('client_id', $clientId)
+                      ->where('type', $type)
+                      ->first();
+
+    // Initialize formData as an empty array
+    $formData = [];
+
+    // Check if setting exists and form_data is valid JSON
+    if ($setting) {
+        json_decode($setting->form_data);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            // Decode JSON data if valid
+            $formData = json_decode($setting->form_data, true);
+        }
+    }
+
+@endphp
+
 <div class="lead_adds_sec">
     <div class="row">
         <div class="col-lg-3">
@@ -8,32 +32,21 @@
         </div>
         <div class="col-lg-9">
             <div class="lead_adds_main_wrapper py-5 px-4">
-                <h2 class="mb-3">A2AHome Land Lead Notification Template</h2>
-                <form action="#">
-                    <div class="alert alert-info mb-3" role="alert">
-                        <div class="row">
-                            <div class="col-md-3">
-                                [firstname]<br>[phone]<br>[email]<br>[message]
-                            </div>
-                            <div class="col-md-3">
-                                [utm_source]<br>[utm_medium]<br>[utm_campaign]<br>[utm_term]<br>[utm_content]
-                            </div>
-                            <div class="col-md-3">
-                                [udf1]<br>[udf2]<br>[udf3]<br>[udf4]<br>[udf5]
-                            </div>
-                            <div class="col-md-3">
-                                [attachment_file]<br>[landing_page_title]
-                            </div>
-                        </div>
-                    </div>
+
+                <form action="{{ route('store.Or.Update.Setting', [
+                'client_id' =>$clientId,
+                'type' => $type,
+                ]) }}" method="POST">
+
+                    @csrf
                     <div class="form-group mb-3 col-lg-6">
-                        <label class="text-black" for="email">Subject</label>
-                        <input type="text" class="form-control" name="subject" id="subject" value="">
+                        <label class="text-black" for="email">Subject </label>
+                        <input type="text" class="form-control" name="subject" id="subject" value="{{ old('subject', $formData['subject'] ?? '') }}">
                     </div>
                     <div>
                     <div class="form-group mb-3">
                         <label class="text-black" for="Message Body">Message Body</label>
-                        <textarea name="message_body" rows="8" cols="60"></textarea>
+                        <textarea name="message_body" rows="8" cols="60">{{ old('message_body', $formData['message_body'] ?? '') }}</textarea>
                             <script type="text/javascript">//<![CDATA[
                                 window.CKEDITOR_BASEPATH='https://leadstore.in/assets/ckeditor/';
                                 //]]></script>
