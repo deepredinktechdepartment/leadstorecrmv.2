@@ -775,11 +775,14 @@ protected function fetchSingleLead($clientID, $leadId)
     // Define the validation rules
     $validator = \Validator::make($request->all(), [
         'firstName' => 'required|string|max:40',
-        'lastName' => 'nullable|string|max:20',
+        'project_id' => 'required|integer', // Mandatory and integer validation
         'email' => 'required|email|max:100',
         'phoneNumber' => 'required|string|max:20',
-        'countryCode' => 'nullable|string|max:5',
         'utm_source' => 'required|string|max:50',
+
+        'lastName' => 'nullable|string|max:20',
+        'countryCode' => 'nullable|string|max:5',
+
         'utm_medium' => 'nullable|string|max:50',
         'utm_campaign' => 'nullable|string|max:50',
         'utm_term' => 'nullable|string|max:50',
@@ -787,7 +790,7 @@ protected function fetchSingleLead($clientID, $leadId)
         'sourceURL' => 'nullable|string|max:255',
         'message' => 'nullable|string|max:255',
         'city' => 'nullable|string|max:255',
-        'project_id' => 'required|integer', // Mandatory and integer validation
+
     ]);
 
     // Check if validation fails

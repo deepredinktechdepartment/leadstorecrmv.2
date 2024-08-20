@@ -1,4 +1,8 @@
 <!-- resources/views/components/client-table.blade.php -->
+@php
+
+    use App\Models\Setting;
+@endphp
 <div class="table-responsive">
     <table id="{{ $tableId }}" class="table table-striped table-bordered mt-3 w-100">
         <thead>
@@ -9,6 +13,7 @@
                 @if(Auth::user()->role && Auth::user()->role==1)
                 <th>Status</th>
                 @endif
+                <th>External CRM</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -30,6 +35,42 @@
                         </div>
                     </td>
                     @endif
+
+
+                    <td>
+                        @php
+                            $type = 'external_crm_config';
+                            $clientId = $client->id;
+                            $setting = Setting::where('client_id', $clientId)
+                                ->where('type', $type)
+                                ->first();
+
+                            // Initialize crmAccount as an empty array
+                            $crmAccount = [];
+
+                            // Check if setting exists and form_data is valid JSON
+                            if ($setting) {
+                                json_decode($setting->form_data);
+                                if (json_last_error() === JSON_ERROR_NONE) {
+                                    // Decode JSON data if valid
+                                    $crmAccount = json_decode($setting->form_data, true);
+                                }
+                            }
+
+                        @endphp
+
+                        @if(isset($crmAccount['is_active']) && $crmAccount['is_active'] == 1)
+
+                            <span class="badge bg-danger">Enabled</span>
+                            <sub> ({{ $crmAccount['crm_name'] }})</sub>
+                        @else
+                            &nbsp; <!-- This will leave an empty space if is_active is not 1 -->
+                        @endif
+
+
+                    </td>
+
+
                     <td>
                         @if(Auth::user()->role && Auth::user()->role==1)
                         <!-- Edit Icon -->

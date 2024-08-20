@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Exports\LeadsExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use App\Models\Setting;
 
 class LeadController extends Controller
@@ -24,72 +24,114 @@ class LeadController extends Controller
         return Excel::download(new LeadsExport($request->all()), 'leads.xlsx');
     }
 
-     // Method to show the form
-     public function showForm()
-     {
-         return view('lead_form'); // This should match the Blade template file name
-     }
+    // Method to show the form
+    public function showForm()
+    {
+        return view('lead_form'); // This should match the Blade template file name
+    }
 
-      // Method to handle form submission
     public function submit(Request $request)
     {
         // Validate the request
+        $request->validate([
+            'firstName' => 'required|string',
+            'email' => 'required|email',
+            'phoneNumber' => 'required|string',
+            'countryCode' => 'required|string',
+            'utm_source' => 'nullable|string',
+            'utm_medium' => 'nullable|string',
+            'utm_campaign' => 'nullable|string',
+            'utm_term' => 'nullable|string',
+            'utm_content' => 'nullable|string',
+            'message' => 'nullable|string',
+        ]);
 
+        $clientId = 70; // Example client ID
 
-
-        $clientId = 29; // Example client ID
-$leadData = [
-'name' => 'John Doe',
-'email' => 'john.doe@example.com',
-'mobile' => '123-456-7890',
-'url' => 'http://example.com',
-'remark' => 'Interested in product',
-'lead_project_nm' => 'New Project',
-'source_type' => 'Online',
-'city' => 'New York',
-'location' => 'NY',
-'budget' => '5000'
-];
-
-$response = $this->sendLeadDataToCRM($clientId, $leadData);
-
-dd($response);
-        // Define the parameters as an associative array
-        $params = [
-            'project_id' => '29',
-            'firstName' => $request->firstName,
+        $leadData = [
+            'firstName' => $request->firstName ?? '',
             'lastName' => '',
-            'email' => $request->email,
-            'phoneNumber' => $request->phoneNumber,
-            'countryCode' => '1',
-            'utm_source' => 'facebook',
-            'utm_medium' => 'GDN',
-            'utm_campaign' => 'holiday_promo',
-            'utm_term' => 'gifts',
-            'utm_content' => 'free_shipping',
-            'sourceURL' => 'https://www.example.com',
-            'message' => 'Please call me back.',
-            'city' => 'Los Angeles',
+            'email' => $request->email ?? '',
+            'phoneNumber' => $request->phoneNumber ?? '',
+            'countryCode' => $request->countryCode ?? '',
+            'utm_source' => $request->utm_source ?? '',
+            'utm_medium' => $request->utm_medium ?? '',
+            'utm_campaign' => $request->utm_campaign ?? '',
+            'utm_term' => $request->utm_term ?? '',
+            'utm_content' => $request->utm_content ?? '',
+            'sourceURL' => $request->sourceURL ?? '',
+            'message' => $request->message ?? '',
+            'city' => $request->city ?? '',
+            'project_id' => $clientId ?? 0,
             'UDF' => [
-                [
-                    'fieldName' => 'Budget',
-                    'fieldValue' => '2Lack',
-                ],
-                [
-                    'fieldName' => 'OTP Verified',
-                    'fieldValue' => 'Yes',
-                ],
+                ['fieldName' => 'Budget', 'fieldValue' => '2Lack'],
+                ['fieldName' => 'OTP Verified', 'fieldValue' => 'Yes'],
             ],
         ];
 
+        // First, send lead data to LeadStoreCRM
+        $leadStoreCrmResponse = $this->LeadStoreCRM($clientId, $leadData);
+
+        // Decode the JSON response from LeadStoreCRM
+        $leadStoreCrmResponseData = json_decode($leadStoreCrmResponse, true);
+
+        // Log response from LeadStoreCRM
+        Log::channel('crm')->info('LeadStoreCRM response', [
+            'clientId' => $clientId,
+            'response' => $leadStoreCrmResponse,
+        ]);
+
+        // Initialize the external CRM response variable
+        $externalCrmRes = null;
+
+        // Check if LeadStoreCRM response was successful
+        if ($leadStoreCrmResponseData['status'] === 'success' && $leadStoreCrmResponseData['success'] === true) {
+            // Send lead data to the external CRM if active
+            $externalCrmRes = $this->pushleadexternalCRM($clientId, $leadData);
+
+            // Decode the JSON response from the external CRM
+            $externalCrmResData = json_decode($externalCrmRes, true);
+
+            // Log response to custom CRM log file with project name and client ID
+            Log::channel('crm')->info('Lead data sent to external CRM', [
+                'clientId' => $clientId,
+                'leadData' => $leadData,
+                'response' => $externalCrmRes,
+            ]);
+
+            // Return combined response
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Lead data sent successfully to both LeadStoreCRM and the external CRM.',
+                'leadStoreCrmResponse' => $leadStoreCrmResponseData,
+                'externalCrmRes' =>  $externalCrmRes ?? 'External CRM not configured or inactive.',
+            ]);
+        } else {
+            // Return error response if LeadStoreCRM failed
+            return response()->json([
+                'status' => 'error',
+                'message' => $leadStoreCrmResponseData['message'],
+                'leadStoreCrmResponse' => $leadStoreCrmResponseData,
+                'externalCrmRes' => 'External CRM not triggered due to LeadStoreCRM failure.',
+            ]);
+        }
+    }
+
+    // Method to send lead data to LeadStoreCRM
+    private function LeadStoreCRM($clientId, $leadData)
+    {
+        // Example LeadStoreCRM URL and API key
+        $externalApiUrl = env('APP_URL').'api/leads/handle-external-post';
+        //$externalApiUrl = 'https://alpha.leadstore.in/crmv.2/api/leads/handle-external-post';
+        $apiKey = '17bdc30f-298c-4726-9da3-40caa33a9dae';
+
         // Convert parameters to JSON
-        $jsonParams = json_encode($params);
+        $jsonParams = json_encode($leadData);
 
         // Initialize cURL
         $curl = curl_init();
-
         curl_setopt_array($curl, [
-            CURLOPT_URL => 'https://alpha.leadstore.in/crmv.2/api/leads/handle-external-post',
+            CURLOPT_URL => $externalApiUrl,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -100,47 +142,30 @@ dd($response);
             CURLOPT_POSTFIELDS => $jsonParams,
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json',
-                'X-API-KEY: f4d08060-a84c-4447-821f-d8749b4267be',
+                'X-API-KEY: ' . $apiKey,
             ],
         ]);
 
         // Execute cURL request and get response
         $response = curl_exec($curl);
 
+        // Check for cURL errors
+        if (curl_errno($curl)) {
+            // Log cURL errors
+            Log::channel('crm')->error('cURL error', [
+                'clientId' => $clientId,
+                'error' => curl_error($curl),
+            ]);
+        }
+
         // Close cURL resource
         curl_close($curl);
 
-        // Output response
-
-
-
-        // Decode the JSON response
-$responseData = json_decode($response, true);
-
-
-    // Check if the response was successful
-    if ($responseData['status'] === 'success' && $responseData['success'] === true) {
-    // Redirect to thank you page
-    return response()->json(['status' => 'success', 'message' => $responseData['message']]);
-
-
-
-        $response = $this->sendLeadDataToCRM($clientId, $leadData);
-
-
-    exit(); // Ensure no further code is executed
-    } else {
-    // Redirect to error page
-    return response()->json(['status' => 'error', 'message' => $responseData['message']]);
-    exit(); // Ensure no further code is executed
+        return $response;
     }
 
-
-
-
-    }
-
-    function sendLeadDataToCRM($clientId, $leadData)
+    // Method to send lead data to the external CRM
+    private function pushleadexternalCRM($clientId, $leadData)
     {
         // Retrieve CRM settings for the client
         $type = 'external_crm_config';
@@ -148,15 +173,28 @@ $responseData = json_decode($response, true);
             ->where('type', $type)
             ->first();
 
+
         if (!$setting) {
-            return response()->json(['error' => 'CRM settings not found.'], 404);
+            $errorResponse = json_encode(['error' => 'CRM settings not found.']);
+            Log::channel('crm')->error('CRM settings not found', [
+                'clientId' => $clientId,
+                'error' => 'CRM settings not found',
+            ]);
+            return $errorResponse;
         }
 
         $config = json_decode($setting->form_data, true);
 
+
         // Check if configuration is active
         if (!isset($config['is_active']) || $config['is_active'] != 1) {
-            return response()->json(['error' => 'CRM configuration is inactive.'], 400);
+
+            $errorResponse = json_encode(['error' => 'CRM configuration is inactive.']);
+            Log::channel('crm')->error('CRM configuration is inactive', [
+                'clientId' => $clientId,
+                'config' => $config,
+            ]);
+            return $errorResponse;
         }
 
         // Prepare the URL template
@@ -164,84 +202,132 @@ $responseData = json_decode($response, true);
 
         // Define placeholders and their replacements
         $placeholders = [
-            '{{mobile}}' => $leadData['mobile'] ?? '',
+            '{{name}}' => $leadData['firstName'] ?? '',
+            '{{property}}' => $leadData['property'] ?? '',
+            '{{mobile}}' => $leadData['phoneNumber'] ?? '',
+            '{{isOtpVerified}}' => $leadData['isOtpVerified'] ?? '',
             '{{email}}' => $leadData['email'] ?? '',
-            '{{name}}' => $leadData['name'] ?? '',
-            '{{url}}' => $leadData['url'] ?? '',
-            '{{notes}}' => $leadData['remark'] ?? '',
+            '{{sourceurl}}' => $leadData['sourceURL'] ?? '',
+            '{{notes}}' => $leadData['message'] ?? '',
             '{{lead_project_nm}}' => $leadData['lead_project_nm'] ?? '',
-            '{{source_type}}' => $leadData['source_type'] ?? '',
+            '{{source_type}}' => $leadData['utm_source'] ?? '',
             '{{city}}' => $leadData['city'] ?? '',
             '{{location}}' => $leadData['location'] ?? '',
-            '{{utm_source}}' => $leadData['source_type'] ?? '',  // Assuming this maps to 'source_type'
-            '{{amob}}' => $leadData['mobile'] ?? ''  // Assuming this maps to 'mobile'
+            '{{utm_source}}' => $leadData['utm_source'] ?? '',
+            '{{utm_medium}}' => $leadData['utm_medium'] ?? '',
+            '{{utm_campaign}}' => $leadData['utm_campaign'] ?? '',
+            '{{utm_term}}' => $leadData['utm_term'] ?? '',
+            '{{utm_content}}' => $leadData['utm_content'] ?? '',
+            '{{amob}}' => $leadData['phoneNumber'] ?? ''
         ];
 
-        // Replace placeholders in the URL template with lead data
-        $leadData = str_replace(array_keys($placeholders), array_values($placeholders), $urlTemplate);
+        // Add username and password placeholders if the authentication method is 'Username & Password'
+        if ($config['auth_method'] === 'Username & Password' && !empty($config['password'])) {
+            $placeholders['{{username}}'] = $config['username'] ?? '';
+            $placeholders['{{password}}'] = $config['password'] ?? '';
+        }
+        // Add username and password placeholders if the authentication method is 'Username & Password'
+        if ($config['auth_method'] === 'API Key' && !empty($config['api_key'])) {
+            $placeholders['{{api_key}}'] = $config['api_key'] ?? '';
 
-
-
-        // Prepare cURL request
-        $ch = curl_init();
-
-        // Set cURL options
-        curl_setopt($ch, CURLOPT_URL, $config['api_url']);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($leadData));
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-        ]);
-
-        // Add authorization header based on the authentication method
-        switch ($config['auth_method']) {
-            case 'Bearer Token':
-                if (isset($config['api_token'])) {
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge(
-                        curl_getinfo($ch, CURLINFO_HTTPHEADER),
-                        ['Authorization: Bearer ' . $config['api_token']]
-                    ));
-                }
-                break;
-
-            case 'API Key':
-                if (isset($config['api_key'])) {
-                    curl_setopt($ch, CURLOPT_HTTPHEADER, array_merge(
-                        curl_getinfo($ch, CURLINFO_HTTPHEADER),
-                        ['Authorization: ApiKey ' . $config['api_key']]
-                    ));
-                }
-                break;
-
-            case 'Username & Password':
-
-                if (isset($config['username']) && isset($config['password'])) {
-                    curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-                    curl_setopt($ch, CURLOPT_USERPWD, $config['username'] . ':' . $config['password']);
-                }
-                break;
-
-            default:
-                return response()->json(['error' => 'Unknown authentication method.'], 400);
         }
 
-        // Execute cURL request
-        $response = curl_exec($ch);
-        $error = curl_error($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+
+        // Replace placeholders in the URL template
+        if (!is_array($urlTemplate)) {
+            Log::channel('crm')->error('URL template is not an array, expected an array of strings.', [
+                'clientId' => $clientId,
+                'urlTemplate' => $urlTemplate,
+            ]);
+            throw new \UnexpectedValueException('The URL template must be an array of strings.');
+        }
+
+        // Iterate over the array and replace placeholders
+        $replacedTemplate = [];
+        foreach ($urlTemplate as $key => $value) {
+            if (is_string($value)) {
+                $replacedTemplate[$key] = strtr($value, $placeholders);
+            } else {
+                $replacedTemplate[$key] = $value;
+            }
+        }
+
+        // If api_key exists, add it to the replacedTemplate
+
+
+        // Determine request method
+        $requestMethod = strtoupper($config['request_method'] ?? 'GET');
+
+        // Initialize cURL
+        $curl = curl_init();
+
+        if ($requestMethod === 'POST') {
+
+            $headers = [
+                'Content-Type: application/json',
+            ];
+
+
+            // Add username and password placeholders if the authentication method is 'Username & Password'
+            if ($config['auth_method'] === 'API Header' && !empty($config['x_api_key'])) {
+            // Check if 'x-api-key' is present in the config and add it to headers
+            if (isset($config['x_api_key']) && !empty($config['x_api_key'])) {
+            $headers[] = 'x-api-key: ' . $config['x_api_key'];
+            }
+
+            }
+
+        // Check if 'Cookie' is present in the config and add it to headers
+        if (isset($config['cookie']) && !empty($config['cookie'])) {
+        $headers[] = 'Cookie: ' . $config['cookie'];
+        }
+
+            // If POST request, set up POST options
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $config['api_url'] ?? '',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($replacedTemplate),
+                CURLOPT_HTTPHEADER => $headers, // Use the dynamic headers array
+            ]);
+        } else {
+            // If GET request, append query string to URL
+            $query = http_build_query($replacedTemplate);
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $config['api_url'] . '?' . $query,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+            ]);
+        }
+
+        // Execute cURL request and get response
+        $response = curl_exec($curl);
+
+        // Check for cURL errors
+        if (curl_errno($curl)) {
+            // Log cURL errors
+            Log::channel('crm')->error('cURL error', [
+                'clientId' => $clientId,
+                'error' => curl_error($curl),
+            ]);
+        }
 
         // Close cURL resource
-        curl_close($ch);
+        curl_close($curl);
 
-        // Handle response
-        if ($httpCode >= 200 && $httpCode < 300) {
-            return response()->json(['success' => 'Lead data sent successfully.', 'response' => $response], $httpCode);
-        } else {
-            return response()->json(['error' => 'Failed to send lead data.', 'response' => $response, 'error' => $error], $httpCode);
-        }
+        return $response;
     }
 
-
-
 }
+?>

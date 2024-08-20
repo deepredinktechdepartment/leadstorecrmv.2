@@ -101,16 +101,16 @@
                             <input type="url" id="instagram" name="instagram" class="form-control"
                                    value="{{ old('instagram', $client->social_media_pages['instagram'] ?? '') }}">
                         </div>
-                        <div class="mb-0">
+                        {{-- <div class="mb-0">
                             <label for="api_url" class="form-label">External API URL</label>
                             <input type="url" id="api_url" name="api_url" class="form-control"
                                    value="{{ old('api_url', $client->social_media_pages['api_url'] ?? '') }}">
-                        </div>
+                        </div> --}}
 
 
 
     <div class="mb-0">
-        <label for="crm_api_key" class="form-label">CRM API Key</label>
+        <label for="crm_api_key" class="form-label">API Key for LeadStore Connect</label>
         <input type="text" id="crm_api_key" name="crm_api_key" class="form-control"
                value="{{ old('crm_api_key', $client->api_key ?? '') }}">
     </div>

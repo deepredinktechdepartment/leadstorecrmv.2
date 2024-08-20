@@ -56,6 +56,13 @@ return [
             'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
+        'crm' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/crm.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
 
         'single' => [
             'driver' => 'single',
