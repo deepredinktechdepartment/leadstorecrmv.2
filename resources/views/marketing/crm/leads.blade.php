@@ -150,16 +150,36 @@ searchable: false // Disable searching on this column
                 var dateParts = dateTimeParts[0].split('-');
                 var timePart = dateTimeParts[1];
                 if (dateParts.length === 3) {
-
+                    
+                    // Base URL for the link
                     var url = '{{ route("Single.Lead.Data") }}';
-                    var link = '<a target="_new" href="' + url + '/?leadID='+data.id+'&projectID={{ $projectID }}"><u>' + dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0] +'</u></a>';
-                    return link;
+                    var dateLink = url + '/?leadID=' + data.id + '&projectID={{ $projectID }}';
+                    
+                    // Construct the date link with formatted date
+                    var formattedDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
+                    var dateFullLink = '<a target="_new" href="' + dateLink + '"><u>' + formattedDate + '</u></a>';
+                    
+                    // Initialize the source URL link
+                    var sourceUrlLink = '';
+                    
+                    // Append ua_query_url if its value is true
+                    if (data.ua_query_url) {
+                        var sourceUrl = data.ua_query_url; // Replace with the appropriate route
+                        sourceUrlLink = '<br><a target="_new" href="' + (data.ua_query_url) +  '"><small>Source URL <i class="fa fa-link" aria-hidden="true"></i></small></a>';
+                    }
+
+                    // Combine both links
+                    var fullLinks = dateFullLink + sourceUrlLink;
+
+                    return fullLinks;
                 }
             }
         }
         return data;
     }
 }
+
+
 
 ,
 
@@ -175,9 +195,16 @@ searchable: false // Disable searching on this column
             if (data.email) {
                 content += (content ? '<br>' : '') + '<small>' + data.email + '</small>';
             }
-            if (data.phone) {
-                content += (content ? '<br>' : '') + '<small>' + data.phone + '</small>';
-            }
+ 
+
+if (data.phone) {
+    if (data.phone_country_code) {
+        content += (content ? '<br>' : '') + '<small>+' + data.phone_country_code + data.phone + '</small>';
+    } else {
+        content += (content ? '<br>' : '') + '<small>' + data.phone + '</small>';
+    }
+}
+
             content += '</p>';
             return content;
         } else {

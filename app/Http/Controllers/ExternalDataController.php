@@ -380,6 +380,7 @@ class ExternalDataController extends Controller
 
 
             $Jdata = $data['leads']??[]; // Your data here
+           
             $today_count = $data['today_count']??0; // Your data here
             $monthly_count = $data['monthly_count']??0; // Your data here
             $utmData['getUniqueUtmValues']=[
@@ -648,6 +649,8 @@ protected function fetchSingleLead($clientID, $leadId)
             ->when($status, function ($query, $status) {
                 return $query->where('status', $status);
             })
+             ->orderBy('lead_last_update_date', 'desc') // Order by lead_last_update_date in descending order
+      
             ->get();
     }
 
@@ -774,19 +777,17 @@ protected function fetchSingleLead($clientID, $leadId)
 
     // Define the validation rules
     $validator = \Validator::make($request->all(), [
-        'firstName' => 'required|string|max:40',
-        'project_id' => 'required|integer', // Mandatory and integer validation
+        'firstName' => 'required|string|max:50',
+        'api_key' => 'required', // Mandatory and integer validation
         'email' => 'required|email|max:100',
         'phoneNumber' => 'required|string|max:20',
-        'utm_source' => 'required|string|max:50',
-
+        'utm_source' => 'nullable|string|max:80',
         'lastName' => 'nullable|string|max:20',
-        'countryCode' => 'nullable|string|max:5',
-
-        'utm_medium' => 'nullable|string|max:50',
-        'utm_campaign' => 'nullable|string|max:50',
-        'utm_term' => 'nullable|string|max:50',
-        'utm_content' => 'nullable|string|max:50',
+        'countryCode' => 'required|string|max:5',
+        'utm_medium' => 'nullable|string|max:80',
+        'utm_campaign' => 'nullable|string|max:80',
+        'utm_term' => 'nullable|string|max:80',
+        'utm_content' => 'nullable|string|max:100',
         'sourceURL' => 'nullable|string|max:255',
         'message' => 'nullable|string|max:255',
         'city' => 'nullable|string|max:255',
@@ -841,8 +842,8 @@ public function storeLead($request)
 
         $udfArray = isset($leadData['UDF']) ? $leadData['UDF'] : [];
         $utmDetails = [
-            'utm_source' => $leadData['utm_source'] ?? null,
-            'utm_medium' => $leadData['utm_medium'] ?? null,
+            'utm_source' => $leadData['utm_source'] ?? 'direct',
+            'utm_medium' => $leadData['utm_medium'] ?? 'web',
             'utm_campaign' => $leadData['utm_campaign'] ?? null,
             'utm_term' => $leadData['utm_term'] ?? null,
             'utm_content' => $leadData['utm_content'] ?? null,
@@ -905,8 +906,8 @@ public function storeLead($request)
 
 protected function updateExistingLead($existingLead, $leadData, $udfArray)
 {
-    $existingLead->utm_source = $leadData['utm_source'] ?? null;
-    $existingLead->utm_medium = $leadData['utm_medium'] ?? null;
+    $existingLead->utm_source = $leadData['utm_source'] ?? 'direct';
+    $existingLead->utm_medium = $leadData['utm_medium'] ?? 'web';
     $existingLead->utm_campaign = $leadData['utm_campaign'] ?? null;
     $existingLead->utm_term = $leadData['utm_term'] ?? null;
     $existingLead->utm_content = $leadData['utm_content'] ?? null;
@@ -918,8 +919,8 @@ protected function updateExistingLead($existingLead, $leadData, $udfArray)
 protected function createNewLead($newLead, $leadData, $udfArray, $clientId)
 {
     $newLead->client_id = $clientId;
-    $newLead->utm_source = $leadData['utm_source'] ?? null;
-    $newLead->utm_medium = $leadData['utm_medium'] ?? null;
+    $newLead->utm_source = $leadData['utm_source'] ?? 'direct';
+    $newLead->utm_medium = $leadData['utm_medium'] ?? 'web';
     $newLead->utm_campaign = $leadData['utm_campaign'] ?? null;
     $newLead->utm_term = $leadData['utm_term'] ?? null;
     $newLead->utm_content = $leadData['utm_content'] ?? null;
