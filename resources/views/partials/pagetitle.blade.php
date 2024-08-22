@@ -2,8 +2,8 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
 
-  <h1>
-      <span class="text-green-light">{{  $pageTitle??''}} </span>
+  <h1 class="text-green-light">
+     {{  $pageTitle??''}} 
   </h1>
 
   <div class="filter_icons">
