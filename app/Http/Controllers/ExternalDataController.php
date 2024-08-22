@@ -380,7 +380,7 @@ class ExternalDataController extends Controller
 
 
             $Jdata = $data['leads']??[]; // Your data here
-           
+
             $today_count = $data['today_count']??0; // Your data here
             $monthly_count = $data['monthly_count']??0; // Your data here
             $utmData['getUniqueUtmValues']=[
@@ -650,7 +650,7 @@ protected function fetchSingleLead($clientID, $leadId)
                 return $query->where('status', $status);
             })
              ->orderBy('lead_last_update_date', 'desc') // Order by lead_last_update_date in descending order
-      
+
             ->get();
     }
 
@@ -840,7 +840,7 @@ public function storeLead($request)
         $clientId = $client->id;
         $isFRE = false;
 
-        $udfArray = isset($leadData['UDF']) ? $leadData['UDF'] : [];
+        $udfArray = isset($leadData['UDF']) ? $leadData['UDF'] : null;
         $utmDetails = [
             'utm_source' => $leadData['utm_source'] ?? 'direct',
             'utm_medium' => $leadData['utm_medium'] ?? 'web',
@@ -931,7 +931,7 @@ protected function createNewLead($newLead, $leadData, $udfArray, $clientId)
     $newLead->email = $leadData['email'] ?? null;
     $newLead->message = $leadData['message'] ?? null;
     $newLead->city = $leadData['city'] ?? null;
-    $newLead->phone = $leadData['phoneNumber'] ?? null;
+    $newLead->phone = isset($leadData['phoneNumber']) ? str_replace(' ', '', $leadData['phoneNumber']) : null;
     $newLead->phone_country_code = $leadData['countryCode'] ?? null;
     $newLead->ua_query_url = $leadData['sourceURL'] ?? null;
     $newLead->form_data = json_encode($leadData) ?? null;
