@@ -34,7 +34,7 @@
                 <th>Date</th>
                 <th>Lead Customer</th>
                 <th>Source&Medium</th>
-                <!--<th>Revenue</th>-->
+                <th>UDF</th>
                 <th>Status</th>
                 <th>Actions</th>
                 <!-- Add other column headers as needed -->
@@ -243,12 +243,43 @@ if (data.phone) {
 
                     ,
 
-// {
-// data: null,
-// render: function(data, type, full, meta) {
-//     return "0";
-// }
-// },
+
+                    {
+    data: null,
+    render: function(data, type, full, meta) {
+        // Check if udf_details is a non-empty string
+        if (data.udf_details && typeof data.udf_details === 'string') {
+            try {
+                // Parse the JSON string
+                let jsonData = JSON.parse(data.udf_details);
+
+                // Initialize output HTML
+                let output = '<ul>';
+                let count = 0;
+
+                // Limit to 3 entries
+                for (let i = 0; i < jsonData.length && count < 3; i++) {
+                    let item = jsonData[i];
+                    output += `<li><strong>${item.fieldName}:</strong> ${item.fieldValue}</li>`;
+                    count++;
+                }
+
+                output += '</ul>';
+                return output;
+
+            } catch (e) {
+                // Handle JSON parse error
+                console.error('Error parsing JSON:', e);
+                return '<div></div>';
+            }
+        } else {
+            // Handle case where udf_details is not a valid JSON string
+            return '<div></div>';
+        }
+    }
+}
+
+                             ,
 
                             {
                                 data: null, // Target the 'Status' column (index 1)
