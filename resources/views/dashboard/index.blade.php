@@ -38,7 +38,7 @@ Client::all()->each(function ($client) use (&$currentMonthLeadsCount, $currentMo
     $meetingExpectationsCount = 0;
 
     // Retrieve all clients and categorize them based on their performance
-    $clients = Client::all();
+    $clients = Client::where('active', true)->get();
 
     // Use Laravel's collection methods to categorize clients
     $clients->each(function ($client) use (&$performingWellCount, &$underperformingCount, &$meetingExpectationsCount) {

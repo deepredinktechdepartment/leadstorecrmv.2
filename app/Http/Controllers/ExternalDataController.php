@@ -788,7 +788,7 @@ protected function fetchSingleLead($clientID, $leadId)
         'utm_campaign' => 'nullable|string|max:80',
         'utm_term' => 'nullable|string|max:80',
         'utm_content' => 'nullable|string|max:100',
-        'sourceURL' => 'nullable|string|max:255',
+        'sourceURL' => 'nullable|string',
         'message' => 'nullable|string|max:255',
         'city' => 'nullable|string|max:255',
 
@@ -830,7 +830,7 @@ public function storeLead($request)
         $leadData = $request->all();
 
         // Fetch the client based on the provided apiKey
-        $apiKey = $request->header('X-API-KEY');
+        $apiKey =  $leadData['api_key']??'';
         $client = Project::where('api_key', $apiKey)->first();
 
         if (!$client) {
