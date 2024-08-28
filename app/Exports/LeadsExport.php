@@ -88,7 +88,8 @@ return Lead::query()
             $lead->utm_medium,
             $lead->utm_term,
             $lead->utm_campaign,
-            $lead->lead_last_update_date->format('d-m-Y H:i:s'),
+            $lead->utm_content,
+            $lead->lead_last_update_date,
         ];
     }
 }
