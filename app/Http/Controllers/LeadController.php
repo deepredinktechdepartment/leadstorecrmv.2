@@ -1,28 +1,58 @@
 <?php
 namespace App\Http\Controllers;
-
 use App\Exports\LeadsExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Log;
 use App\Models\Setting;
-
+use App\Models\Client as Project; // Alias `Client` as `Project`
+use Illuminate\Support\Facades\Crypt;
 class LeadController extends Controller
 {
-    public function export(Request $request)
-    {
-        // Validate the request if necessary
-        $request->validate([
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date',
-            'utm_source' => 'nullable|string',
-            'utm_medium' => 'nullable|string',
-            'utm_campaign' => 'nullable|string',
-        ]);
 
-        // Pass the request parameters to the export class
-        return Excel::download(new LeadsExport($request->all()), 'leads.xlsx');
+    public function export(Request $request)
+{
+    // Validate the request if necessary
+    $validated = $request->validate([
+        'start_date' => 'nullable|date',
+        'end_date' => 'nullable|date',
+        'utm_source' => 'nullable|string',
+        'utm_medium' => 'nullable|string',
+        'utm_campaign' => 'nullable|string',
+        'projectID' => 'nullable|string',
+    ]);
+
+    // Handle project decryption with error handling
+    try {
+        $projectID = Crypt::decrypt($request->projectID);
+        $project = Project::find($projectID);
+
+        if (!$project) {
+            return back()->withErrors(['projectID' => 'Project not found.']);
+        }
+    } catch (\Exception $e) {
+        return back()->withErrors(['projectID' => 'Invalid Project ID.']);
     }
+
+    // Construct the filename with the project name and date range
+    $clientName = $project->client_name ?? 'project';
+    $startDate = $validated['start_date'] ?? '';
+    $endDate = $validated['end_date'] ?? '';
+
+    // Format the date for the filename if they exist
+    $startDateFormatted = $startDate ? \Carbon\Carbon::parse($startDate)->format('Y-m-d') : '';
+    $endDateFormatted = $endDate ? \Carbon\Carbon::parse($endDate)->format('Y-m-d') : '';
+
+    // Create the filename
+    $filename = $clientName . '_leads';
+    $filename .= $startDateFormatted ? '_from_' . $startDateFormatted : '';
+    $filename .= $endDateFormatted ? '_to_' . $endDateFormatted : '';
+    $filename .= '.xlsx';
+
+    // Pass the request parameters to the export class
+    return Excel::download(new LeadsExport($request->all()), $filename);
+}
+
 
     // Method to show the form
     public function showForm()
