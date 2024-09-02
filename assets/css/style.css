@@ -17,6 +17,13 @@
 
 /* Header CSS BEGiNS */
 
+header{
+    padding: 15px 0px;
+}
+.header-logo{
+    width: 180px;
+}
+
 .navbar-toggler {
     color: #000;
 }
@@ -2402,23 +2409,31 @@ div.dataTables_wrapper div.dataTables_length select {
 .lead_adds_sec .lead_adds_side_bar {
     background: #ebf0f4;
     min-height: 100%;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
 }
 
 .lead_adds_sec .lead_adds_side_bar ul li a {
     color: #e9e9e9;
     font-size: 14px;
     font-weight: normal;
+    padding: 5px 20px;
+    width: 100%;
 }
 
-.lead_adds_sec .lead_adds_side_bar ul li a.active {
-    border-bottom: 1px solid #000;
+.lead_adds_sec .lead_adds_side_bar ul li a.active,
+.lead_adds_sec .lead_adds_side_bar ul li a:hover
+ {
+    background: #50e3c2 !important;
+    color: #fff !important;
 }
 
 .lead_adds_sec .lead_adds_side_bar .heading {
-    color: #444443;
-    font-weight: bold;
-    font-size: 18px;
-    padding-top: 8px;
+    color: #000;
+    font-weight: 500;
+    font-size: 17px;
+    margin-top: 10px;
+    padding: 8px 20px 2px 20px;
 }
 
 .lead_adds_sec {
