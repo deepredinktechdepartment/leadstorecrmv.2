@@ -85,7 +85,12 @@ Route::delete('clients/{client}', [ClientController::class, 'destroy'])->name('c
 Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 
 Route::any('projectLeads', [ExternalDataController::class,'fetchDataFromExternalAPI'])->name('projectLeads');
+Route::get('manualCreateLead', [ExternalDataController::class,'manualCreateLead'])->name('manual.create.lead');
+Route::get('manualLeadStore', [ExternalDataController::class,'manualLeadStore'])->name('leads.store');
 Route::any('get/crm/leads', [ExternalDataController::class,'fetchCRMLeads'])->name('get.crm.leads');
+
+
+
 Route::get('/SingleLeadData/{params?}', [ExternalDataController::class, 'SingleLeadData'])->name('Single.Lead.Data');
 Route::get('/project/settings', [ClientController::class, 'projectSetting'])->name('project.settings');
 Route::match(['get', 'post'], '/clients/save/{id?}', [ClientController::class, 'save'])->name('clients.save');

@@ -308,7 +308,7 @@ class ExternalDataController extends Controller
     {
         try {
 
-
+            $addlink=route('manual.create.lead');
 
             if(!empty($request->projectID)){
                 $projectID=Crypt::decrypt($request->projectID);
@@ -390,7 +390,7 @@ class ExternalDataController extends Controller
 
                 ];
 
-            return view('marketing.crm.leads',compact('utmData','pageTitle','Jdata','error','today_count','monthly_count','leadCount_source','token','projectID','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
+            return view('marketing.crm.leads',compact('utmData','pageTitle','Jdata','error','today_count','monthly_count','leadCount_source','token','projectID','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus','addlink'));
             } else {
 
 
@@ -399,7 +399,7 @@ class ExternalDataController extends Controller
             $leadCount_source="";
             $pageTitle="";
             $utmData=[];
-            return view('marketing.crm.leads',compact('pageTitle','Jdata','error','projectID','today_count','monthly_count','leadCount_source','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus'));
+            return view('marketing.crm.leads',compact('pageTitle','Jdata','error','projectID','today_count','monthly_count','leadCount_source','startDate','endDate','utmCampaign','utmMedium','utmSource','utmStatus','addlink'));
             //return response()->json(['error' => 'Error fetching data from external API'.$responseBody], $status);
             }
 
@@ -1073,7 +1073,23 @@ public function updateLead(Request $request)
     }
 }
 
+public function manualCreateLead() {
+    try {
+        $pageTitle = "Create Lead";
+        return view('marketing.crm.create', compact('pageTitle'));
+    } catch (\Exception $e) {
+        // Log the exception message if needed
+        \Log::error('Error creating lead: ' . $e->getMessage());
 
+        // Redirect back with error message
+        return redirect()->back()->with([
+            'status' => 'error',
+            'message' => 'An error occurred while creating the lead: ' . $e->getMessage(),
+        ]);
+
+
+}
+}
 
 
 }

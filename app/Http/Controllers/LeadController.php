@@ -359,5 +359,29 @@ class LeadController extends Controller
         return $response;
     }
 
+    public function store(Request $request)
+{
+    dd($request);
+    // Validate the incoming request
+    $validatedData = $request->validate([
+        'first_name'   => 'required|string|max:255',
+        'last_name'    => 'nullable|string|max:255',
+        'email'        => 'required|email|unique:leads,email',
+        'phone_number' => 'required|string',
+        'country_code' => 'required|string',
+        'utm_source'   => 'nullable|string',
+        'utm_medium'   => 'nullable|string',
+        'utm_campaign' => 'nullable|string',
+        'utm_term'     => 'nullable|string',
+        'utm_content'  => 'nullable|string',
+        'source_url'   => 'nullable|string',
+    ]);
+
+    // Create the lead in the database
+    Lead::create($validatedData);
+
+    return redirect()->route('leads.index')->with('success', 'Lead created successfully.');
+}
+
 }
 ?>
