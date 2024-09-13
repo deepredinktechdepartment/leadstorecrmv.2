@@ -93,7 +93,7 @@
                             <option value="qualified">Qualified</option>
                             <option value="disqualified">Disqualified</option>
                             <option value="callback">Callback</option>
-                            <option value="callback">Callback</option>
+
                         </select>
                     </div>
                     <input type="hidden" class="form-control" id="LeadID" name="LeadID">
