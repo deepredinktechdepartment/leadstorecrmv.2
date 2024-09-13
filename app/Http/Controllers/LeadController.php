@@ -362,6 +362,7 @@ class LeadController extends Controller
 
     public function createLead(Request $request)
     {
+
         // Validate the incoming request
         $validatedData = $request->validate([
             'first_name'   => 'required|string|max:255',
@@ -376,6 +377,17 @@ class LeadController extends Controller
             'utm_content'  => 'nullable|string',
             'source_url'   => 'required|string',
             'date'         => 'required|date',
+                 // Add validation rules for UDF fields
+                 'udf_label1'   => 'nullable|string',
+                 'udf_value1'   => 'nullable|string',
+                 'udf_label2'   => 'nullable|string',
+                 'udf_value2'   => 'nullable|string',
+                 'udf_label3'   => 'nullable|string',
+                 'udf_value3'   => 'nullable|string',
+                 'udf_label4'   => 'nullable|string',
+                 'udf_value4'   => 'nullable|string',
+                 'udf_label5'   => 'nullable|string',
+                 'udf_value5'   => 'nullable|string',
         ]);
 
         try {
@@ -417,8 +429,8 @@ class LeadController extends Controller
               // Collect UDF fields if provided
         $udfFields = [];
         for ($i = 1; $i <= 5; $i++) {
-            $label = $validatedData['udf_label' . $i] ?? null;
-            $value = $validatedData['udf_value' . $i] ?? null;
+            $label = $validatedData['udf_label'.$i] ?? null;
+            $value = $validatedData['udf_value'.$i] ?? null;
 
             if (!empty($label) && !empty($value)) {
                 $udfFields[] = [
@@ -428,12 +440,13 @@ class LeadController extends Controller
             }
         }
 
+
         // If there are any UDF fields, add them to the lead data
         if (!empty($udfFields)) {
             $leadData['UDF'] = $udfFields; // Store as JSON if needed
         }
 
-        dd($leadData);
+
             // Call LeadStoreCRM function
             $response = $this->ManualLeadStoreCRM($leadData, $leadstoreapikey, $leadstorecrmurl);
 
