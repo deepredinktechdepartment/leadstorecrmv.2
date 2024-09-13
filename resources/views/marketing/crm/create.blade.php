@@ -2,7 +2,11 @@
 
 @section('content')
 <div class="row justify-content-left">
+
+
     <div class="col-md-8">
+
+        <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($projectID ?? 0)]) }}" class="no-button"><u>Back to Leads</u></a>
         <!-- Bootstrap Card -->
         <div class="card">
             <div class="card-body">
@@ -41,9 +45,6 @@
                             </div>
                         </div>
 
-
-
-
                         <!-- UTM Parameters Input Fields -->
                         <div class="col-md-6">
                             <div class="form-group mb-3">
@@ -77,6 +78,28 @@
                                 <input type="text" name="utm_content" id="utm_content" class="form-control" value="{{ old('utm_content', $lead->utm_content ?? '') }}">
                             </div>
                         </div>
+
+                        <!-- UDF Fields -->
+                        <fieldset>
+                            <legend>UDF Fields</legend>
+                            @for($i = 1; $i <= 5; $i++)
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="udf_label{{ $i }}">UDF{{ $i }} Label</label>
+                                            <input type="text" name="udf_label{{ $i }}" id="udf_label{{ $i }}" class="form-control" value="{{ old('udf_label'.$i, $lead->{'udf_label'.$i} ?? '') }}" placeholder="Enter label for UDF{{ $i }}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="udf_value{{ $i }}">UDF{{ $i }} Value</label>
+                                            <input type="text" name="udf_value{{ $i }}" id="udf_value{{ $i }}" class="form-control" value="{{ old('udf_value'.$i, $lead->{'udf_value'.$i} ?? '') }}" placeholder="Enter value for UDF{{ $i }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            @endfor
+                        </fieldset>
+
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="date">Date</label>
@@ -89,10 +112,12 @@
                         {{ isset($lead) ? 'Update Lead' : 'Create Lead' }}
                     </button>
 
+
+
                     <!-- Hidden input for source URL -->
                     <input type="hidden" name="source_url" id="source_url_hidden" value="{{ env('APP_URL').'manualCreateLead?projectID=<projectId>' }}" required />
                     <input type="text" name="country_code" id="country_code" value="91" required>
-                    <input type="hidden" name="projectID" id="projectID" value="{{ $projectID??0 }}" required>
+                    <input type="hidden" name="projectID" id="projectID" value="{{ $projectID ?? 0 }}" required>
                 </form>
             </div>
         </div>
@@ -103,9 +128,6 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
-    // Set the source_url field to the current page URL
-    //$('#source_url_hidden').val(window.location.href);
-
     $("form").validate({
         rules: {
             first_name: {

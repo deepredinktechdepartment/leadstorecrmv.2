@@ -412,26 +412,28 @@ class LeadController extends Controller
                 'api_key'     => $leadstoreapikey,
             ];
 
-            // Collect UDF fields if provided
-            $udfFields = [];
-            if (!empty($validatedData['budget'])) {
+
+
+              // Collect UDF fields if provided
+        $udfFields = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $label = $validatedData['udf_label' . $i] ?? null;
+            $value = $validatedData['udf_value' . $i] ?? null;
+
+            if (!empty($label) && !empty($value)) {
                 $udfFields[] = [
-                    'fieldName'  => 'Budget',
-                    'fieldValue' => $validatedData['budget']
+                    'fieldName'  => $label,
+                    'fieldValue' => $value
                 ];
             }
-            if (!empty($validatedData['OTPverified'])) {
-                $udfFields[] = [
-                    'fieldName'  => 'OTPverified',
-                    'fieldValue' => $validatedData['OTPverified']
-                ];
-            }
+        }
 
-            // If there are any UDF fields, add them to the lead data
-            if (!empty($udfFields)) {
-                $leadData['UDF'] = $udfFields;
-            }
+        // If there are any UDF fields, add them to the lead data
+        if (!empty($udfFields)) {
+            $leadData['UDF'] = $udfFields; // Store as JSON if needed
+        }
 
+        dd($leadData);
             // Call LeadStoreCRM function
             $response = $this->ManualLeadStoreCRM($leadData, $leadstoreapikey, $leadstorecrmurl);
 
