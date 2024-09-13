@@ -2,10 +2,7 @@
 
 @section('content')
 <div class="row justify-content-left">
-
-
     <div class="col-md-8">
-
         <a href="{{ route('projectLeads', ['projectID' => Crypt::encrypt($projectID ?? 0)]) }}" class="no-button"><u>Back to Leads</u></a>
         <!-- Bootstrap Card -->
         <div class="card">
@@ -41,7 +38,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="phone_number">Phone Number</label>
-                                <input type="text" name="phone_number" id="phone_number" class="form-control" value="{{ old('phone_number', $lead->phone_number ?? '') }}" required>
+                                <input type="tel" name="phone_number" id="phone_number" class="form-control" value="{{ old('phone_number', $lead->phone_number ?? '') }}" required>
                             </div>
                         </div>
 
@@ -103,7 +100,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="date">Date</label>
-                                <input type="date" name="date" id="date" class="form-control" value="{{ old('date', $lead->date ?? '') }}" required>
+                                <input type="date" name="date" id="date" class="form-control" value="{{ old('date', $lead->date ?? date('Y-m-d')) }}" required>
                             </div>
                         </div>
                     </div>
@@ -112,11 +109,9 @@
                         {{ isset($lead) ? 'Update Lead' : 'Create Lead' }}
                     </button>
 
-
-
                     <!-- Hidden input for source URL -->
                     <input type="hidden" name="source_url" id="source_url_hidden" value="{{ env('APP_URL').'manualCreateLead?projectID=<projectId>' }}" required />
-                    <input type="text" name="country_code" id="country_code" value="91" required>
+                    <input type="hidden" name="country_code" id="country_code" value="" />
                     <input type="hidden" name="projectID" id="projectID" value="{{ $projectID ?? 0 }}" required>
                 </form>
             </div>
@@ -126,8 +121,32 @@
 @endsection
 
 @push('scripts')
+
 <script>
 $(document).ready(function() {
+    // Initialize the intl-tel-input plugin
+    var input = document.querySelector("#phone_number");
+    var iti = window.intlTelInput(input, {
+        initialCountry: "in",
+        autoHideDialCode: true,
+        separateDialCode: true,
+        autoPlaceholder: "polite",
+        formatOnDisplay: true,
+        dropdownContainer: document.body,
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+    });
+
+    // Custom phone validation method to include Jio numbers starting with '6' and ensure 10 digits
+    $.validator.addMethod("validPhone", function(value, element) {
+        var fullNumber = iti.getNumber(); // Get full phone number
+        var isValid = iti.isValidNumber(); // Check using intl-tel-input validation
+
+        // Check if the number starts with '6', is 10 digits long, and belongs to India
+        var isJioNumber = fullNumber.startsWith('+91') && fullNumber[3] == '6' && fullNumber.length == 13; // +91 6XXXXXXXXX (13 chars with country code)
+
+        return isValid || isJioNumber; // Pass validation if it's valid or a Jio number with 10 digits
+    }, "Please enter a valid phone number starting with 6 and 10 digits long.");
+
     $("form").validate({
         rules: {
             first_name: {
@@ -140,9 +159,7 @@ $(document).ready(function() {
             },
             phone_number: {
                 required: true,
-                digits: true,
-                minlength: 10,
-                maxlength: 15
+                validPhone: true // Custom validation for phone number
             },
             utm_source: {
                 required: true
@@ -166,26 +183,17 @@ $(document).ready(function() {
             },
             phone_number: {
                 required: "Phone number is required",
-                digits: "Phone number should contain only digits",
-                minlength: "Phone number must be at least 10 digits",
-                maxlength: "Phone number cannot exceed 15 digits"
-            },
-            utm_source: {
-                required: "UTM Source is required"
-            },
-            utm_medium: {
-                required: "UTM Medium is required"
+                validPhone: "Please enter a valid phone number"
             },
             date: {
                 required: "Date is required",
                 date: "Please enter a valid date"
             }
-        },
-        errorPlacement: function(error, element) {
-            error.addClass('text-danger');
-            error.appendTo(element.parent());
         }
     });
+
+    // Set initial country code in hidden input
+    $('#country_code').val(iti.getSelectedCountryData().dialCode);
 });
 </script>
 @endpush

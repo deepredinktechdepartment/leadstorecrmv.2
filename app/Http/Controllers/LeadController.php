@@ -450,7 +450,7 @@ class LeadController extends Controller
             // Call LeadStoreCRM function
             $response = $this->ManualLeadStoreCRM($leadData, $leadstoreapikey, $leadstorecrmurl);
 
-            return redirect()->route('projectLeads', ["projectID" => Crypt::encrypt($projectID)])->with('success', 'Lead created successfully and sent to LeadStore.');
+            return redirect()->route('projectLeads', ["projectID" => Crypt::encrypt($projectID)])->with('success', $response);
 
         } catch (\Illuminate\Database\QueryException $e) {
             // Handle the case when a lead already exists (email uniqueness violation)

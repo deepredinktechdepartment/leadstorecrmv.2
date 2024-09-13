@@ -127,9 +127,13 @@
 
         <li class="heading">Forms</li>
         <li>
-            <a href="{{ route('leadCapture', ['clientID' => Crypt::encrypt($client->id)]) }}"
+            {{-- <a href="{{ route('leadCapture', ['clientID' => Crypt::encrypt($client->id)]) }}"
                class="{{ Route::is('leadCapture') ? 'active' : '' }}">
                 Lead Capture
+            </a> --}}
+            <a href="{{ route('manual.create.lead', ['projectID'=>Crypt::encrypt($client->id)]) }}"
+               class="{{ Route::is('manual.create.lead') ? 'active' : '' }}">
+                Lead Create
             </a>
         </li>
         <li>
