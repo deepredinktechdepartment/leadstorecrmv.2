@@ -90,9 +90,9 @@
                     </button>
 
                     <!-- Hidden input for source URL -->
-                    <input type="text" name="source_url" id="source_url_hidden" value="{{ env('APP_URL').'manualCreateLead?projectID=<projectId>' }}" required />
+                    <input type="hidden" name="source_url" id="source_url_hidden" value="{{ env('APP_URL').'manualCreateLead?projectID=<projectId>' }}" required />
                     <input type="text" name="country_code" id="country_code" value="91" required>
-                    <input type="text" name="projectID" id="projectID" value="{{ $projectID??0 }}" required>
+                    <input type="hidden" name="projectID" id="projectID" value="{{ $projectID??0 }}" required>
                 </form>
             </div>
         </div>
