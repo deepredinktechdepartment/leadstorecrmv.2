@@ -281,23 +281,27 @@ if (data.phone) {
 
                              ,
 
-                            {
-                                data: null, // Target the 'Status' column (index 1)
-                         render: function(data, type, row) {
-                            var status =data.status; // Assuming 'Status' is in the second column (index 1)
+                             {
+    data: null, // Target the column data
+    render: function(data, type, row) {
+        var status = data.status; // Get the status value
 
-                            // Define labels and classes based on the status
-                            var label = status;
-                            var  labelClass = 'bg-success'; // Define a CSS class for the status
+        // Replace spaces with underscores if the status contains "with_"
+        if (status.includes('_')) {
+            status = status.replace(/ /g, '_');
+        }
 
+        // Define labels and classes based on the status
+        var label = status;
+        var labelClass = 'bg-success'; // Define a CSS class for the status
 
+        // Create the HTML for the status label
+        var statusHtml = '<span class="badge ' + labelClass + '">' + label + '</span>';
 
-                            // Create the HTML for the status label
-                            var statusHtml = '<span class="badge ' + labelClass + '">' + label + '</span>';
+        return statusHtml;
+    }
+}
 
-                            return statusHtml;
-                        }
-                    }
                           ,
 
                           {
