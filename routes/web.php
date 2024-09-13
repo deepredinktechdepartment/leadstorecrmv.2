@@ -86,7 +86,7 @@ Route::get('/reports', [ReportController::class, 'index'])->name('reports.index'
 
 Route::any('projectLeads', [ExternalDataController::class,'fetchDataFromExternalAPI'])->name('projectLeads');
 Route::get('manualCreateLead', [ExternalDataController::class,'manualCreateLead'])->name('manual.create.lead');
-Route::get('manualLeadStore', [ExternalDataController::class,'manualLeadStore'])->name('leads.store');
+Route::post('createLead', [LeadController::class,'createLead'])->name('leads.store');
 Route::any('get/crm/leads', [ExternalDataController::class,'fetchCRMLeads'])->name('get.crm.leads');
 
 

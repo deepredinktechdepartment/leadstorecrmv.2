@@ -308,7 +308,7 @@ class ExternalDataController extends Controller
     {
         try {
 
-            $addlink=route('manual.create.lead');
+
 
             if(!empty($request->projectID)){
                 $projectID=Crypt::decrypt($request->projectID);
@@ -317,6 +317,8 @@ class ExternalDataController extends Controller
                 $projectID=0;
             }
 
+
+            $addlink=route('manual.create.lead',['projectID'=>Crypt::encrypt($projectID)]);
 
             $Project=Project::find($projectID);
             $pageTitle=$Project->client_name." Leads";
@@ -1073,10 +1075,19 @@ public function updateLead(Request $request)
     }
 }
 
-public function manualCreateLead() {
+public function manualCreateLead(Request $request) {
     try {
-        $pageTitle = "Create Lead";
-        return view('marketing.crm.create', compact('pageTitle'));
+        if(!empty($request->projectID)){
+            $projectID=Crypt::decrypt($request->projectID);
+        }
+        else{
+            $projectID=0;
+        }
+
+        $Project=Project::find($projectID);
+        $pageTitle="Create Lead for ".$Project->client_name;
+
+        return view('marketing.crm.create', compact('pageTitle','projectID'));
     } catch (\Exception $e) {
         // Log the exception message if needed
         \Log::error('Error creating lead: ' . $e->getMessage());

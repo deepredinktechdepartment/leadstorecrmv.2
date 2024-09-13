@@ -359,29 +359,151 @@ class LeadController extends Controller
         return $response;
     }
 
-    public function store(Request $request)
+
+    public function createLead(Request $request)
+    {
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'first_name'   => 'required|string|max:255',
+            'last_name'    => 'nullable|string|max:255',
+            'email'        => 'required|email',
+            'phone_number' => 'required|string',
+            'country_code' => 'required|string',
+            'utm_source'   => 'required|string',
+            'utm_medium'   => 'required|string',
+            'utm_campaign' => 'nullable|string',
+            'utm_term'     => 'nullable|string',
+            'utm_content'  => 'nullable|string',
+            'source_url'   => 'required|string',
+            'date'         => 'required|date',
+        ]);
+
+        try {
+            $projectID = $request->projectID;
+            $project = Project::find($projectID);
+
+            // Check if the project exists and has a valid API key
+            if (!$project || !$project->api_key) {
+                return redirect()->back()->with([
+                    'status'  => 'error',
+                    'message' => 'Invalid project or API key not set.',
+                ]);
+            }
+
+            $api_key = $project->api_key;
+
+            // LeadStore API settings
+            $leadstoreapikey = $api_key;
+            $leadstorecrmurl = env('APP_URL') . "api/leads/handle-external-post";
+
+            // Prepare data for the LeadStore API
+            $leadData = [
+                'firstName'   => trim(($validatedData['first_name'] ?? '') . ' ' . ($validatedData['last_name'] ?? '')),
+                'lastName'    => $validatedData['last_name'] ?? '',
+                'email'       => $validatedData['email'] ?? '',
+                'phoneNumber' => $validatedData['phone_number'] ?? '',
+                'countryCode' => $validatedData['country_code'] ?? '',
+                'utm_source'  => $validatedData['utm_source'] ?? '',
+                'utm_medium'  => $validatedData['utm_medium'] ?? '',
+                'utm_campaign'=> $validatedData['utm_campaign'] ?? '',
+                'utm_term'    => $validatedData['utm_term'] ?? '',
+                'utm_content' => $validatedData['utm_content'] ?? '',
+                'sourceURL'   => $validatedData['source_url'] ?? '',
+                'api_key'     => $leadstoreapikey,
+            ];
+
+            // Collect UDF fields if provided
+            $udfFields = [];
+            if (!empty($validatedData['budget'])) {
+                $udfFields[] = [
+                    'fieldName'  => 'Budget',
+                    'fieldValue' => $validatedData['budget']
+                ];
+            }
+            if (!empty($validatedData['OTPverified'])) {
+                $udfFields[] = [
+                    'fieldName'  => 'OTPverified',
+                    'fieldValue' => $validatedData['OTPverified']
+                ];
+            }
+
+            // If there are any UDF fields, add them to the lead data
+            if (!empty($udfFields)) {
+                $leadData['UDF'] = $udfFields;
+            }
+
+            // Call LeadStoreCRM function
+            $response = $this->ManualLeadStoreCRM($leadData, $leadstoreapikey, $leadstorecrmurl);
+
+            return redirect()->route('projectLeads', ["projectID" => Crypt::encrypt($projectID)])->with('success', 'Lead created successfully and sent to LeadStore.');
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Handle the case when a lead already exists (email uniqueness violation)
+            if ($e->getCode() == 23000) { // 23000 is the SQLSTATE code for unique constraint violation
+                return redirect()->back()->with([
+                    'status'  => 'error',
+                    'message' => 'Lead already exists with this email address.',
+                ]);
+            }
+
+            // Log the error for debugging
+            \Log::error('Database error while creating lead: ' . $e->getMessage());
+
+            // General error handling
+            return redirect()->back()->with([
+                'status'  => 'error',
+                'message' => 'An error occurred while creating the lead. Please try again later.',
+            ]);
+        } catch (\Exception $e) {
+            // Handle any other exceptions
+            \Log::error('Error while creating lead: ' . $e->getMessage());
+
+            return redirect()->back()->with([
+                'status'  => 'error',
+                'message' => 'An unexpected error occurred. Please try again later.',
+            ]);
+        }
+    }
+
+
+// Define the LeadStoreCRM function as a private method
+private function ManualLeadStoreCRM($leadData, $leadstoreapikey, $leadstorecrmurl)
 {
-    dd($request);
-    // Validate the incoming request
-    $validatedData = $request->validate([
-        'first_name'   => 'required|string|max:255',
-        'last_name'    => 'nullable|string|max:255',
-        'email'        => 'required|email|unique:leads,email',
-        'phone_number' => 'required|string',
-        'country_code' => 'required|string',
-        'utm_source'   => 'nullable|string',
-        'utm_medium'   => 'nullable|string',
-        'utm_campaign' => 'nullable|string',
-        'utm_term'     => 'nullable|string',
-        'utm_content'  => 'nullable|string',
-        'source_url'   => 'nullable|string',
+    // Convert parameters to JSON
+    $jsonParams = json_encode($leadData);
+
+    // Initialize cURL
+    $curl = curl_init();
+    curl_setopt_array($curl, [
+        CURLOPT_URL => $leadstorecrmurl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => $jsonParams,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: application/json',
+            'X-API-KEY: ' . $leadstoreapikey,
+        ],
     ]);
 
-    // Create the lead in the database
-    Lead::create($validatedData);
+    // Execute cURL request and get response
+    $response = curl_exec($curl);
 
-    return redirect()->route('leads.index')->with('success', 'Lead created successfully.');
+    // Check for cURL errors
+    if (curl_errno($curl)) {
+        $error_msg = curl_error($curl);
+        \Log::error('LeadStoreCRM cURL Error: ' . $error_msg);
+    }
+
+    // Close cURL resource
+    curl_close($curl);
+
+    return $response;
 }
 
+
 }
-?>

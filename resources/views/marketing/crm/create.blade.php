@@ -41,18 +41,8 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="country_code">Country Code</label>
-                                <input type="text" name="country_code" id="country_code" class="form-control" value="{{ old('country_code', $lead->country_code ?? '') }}" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group mb-3">
-                                <label for="source_url">Source URL</label>
-                                <input type="text" name="source_url" id="source_url" class="form-control" value="{{ old('source_url', $lead->source_url ?? '') }}">
-                            </div>
-                        </div>
+
+
 
                         <!-- UTM Parameters Input Fields -->
                         <div class="col-md-6">
@@ -98,6 +88,11 @@
                     <button type="submit" class="btn btn-primary">
                         {{ isset($lead) ? 'Update Lead' : 'Create Lead' }}
                     </button>
+
+                    <!-- Hidden input for source URL -->
+                    <input type="text" name="source_url" id="source_url_hidden" value="{{ env('APP_URL').'manualCreateLead?projectID=<projectId>' }}" required />
+                    <input type="text" name="country_code" id="country_code" value="91" required>
+                    <input type="text" name="projectID" id="projectID" value="{{ $projectID??0 }}" required>
                 </form>
             </div>
         </div>
@@ -108,6 +103,9 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+    // Set the source_url field to the current page URL
+    //$('#source_url_hidden').val(window.location.href);
+
     $("form").validate({
         rules: {
             first_name: {
