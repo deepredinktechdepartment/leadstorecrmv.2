@@ -34,6 +34,7 @@
                 <th>Date</th>
                 <th>Lead Customer</th>
                 <th>Source&Medium</th>
+                <th>Referrer</th>
                 <th>UDF</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -242,6 +243,28 @@ if (data.phone) {
 }
 
                     ,
+                    {
+            data: 'referrer',  // Assuming your data source has a 'referrer' field
+            render: function(data, type, full, meta) {
+                // Check if data is a non-empty string
+                if (data && typeof data === 'string') {
+                    // Regular expression to detect URLs
+                    const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+                    // Check if the data contains a URL
+                    if (urlPattern.test(data)) {
+                        // Create a link for the URL
+                        return `<a href="${data}" target="_blank">Link</a>`;
+                    } else {
+                        // If not a URL, simply return the text
+                        return `<p>${data}</p>`;
+                    }
+                } else {
+                    // Handle case where data is empty or not a string
+                    return '<p></p>';
+                }
+            }
+        },
 
 
                     {

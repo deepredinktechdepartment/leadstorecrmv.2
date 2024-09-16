@@ -791,6 +791,7 @@ protected function fetchSingleLead($clientID, $leadId)
         'utm_term' => 'nullable|string|max:80',
         'utm_content' => 'nullable|string|max:100',
         'sourceURL' => 'nullable|string',
+        'referrer' => 'nullable',
         'message' => 'nullable|string|max:255',
         'city' => 'nullable|string|max:255',
 
@@ -914,6 +915,8 @@ protected function updateExistingLead($existingLead, $leadData, $udfArray)
     $existingLead->utm_term = $leadData['utm_term'] ?? null;
     $existingLead->utm_content = $leadData['utm_content'] ?? null;
     $existingLead->udf_details = json_encode($udfArray) ?? null;
+    $existingLead->ua_query_url = $leadData['sourceURL'] ?? null;
+    $existingLead->referrer = $leadData['referrer'] ?? null;
     $existingLead->lead_last_update_date = Carbon::now();
     $existingLead->save();
 }
@@ -936,6 +939,7 @@ protected function createNewLead($newLead, $leadData, $udfArray, $clientId)
     $newLead->phone = isset($leadData['phoneNumber']) ? str_replace(' ', '', $leadData['phoneNumber']) : null;
     $newLead->phone_country_code = $leadData['countryCode'] ?? null;
     $newLead->ua_query_url = $leadData['sourceURL'] ?? null;
+    $newLead->referrer = $leadData['referrer'] ?? null;
     $newLead->form_data = json_encode($leadData) ?? null;
 
     $newLead->registeredon = Carbon::now();
