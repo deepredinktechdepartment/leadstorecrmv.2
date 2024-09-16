@@ -710,6 +710,7 @@ protected function fetchSingleLead($clientID, $leadId)
             ->when($status, function ($query, $status) {
                 return $query->where('status', $status);
             })
+            ->whereNotIn('status', ['test_lead', 'suspicious', 'email_domain_invalid'])
             ->select('utm_source', \DB::raw('count(*) as lead_count'))
             ->groupBy('utm_source')
             ->get()
@@ -743,6 +744,8 @@ protected function fetchSingleLead($clientID, $leadId)
             ->when($status, function ($query, $status) {
                 return $query->where('status', $status);
             })
+             // Exclude specific statuses
+            ->whereNotIn('status', ['test_lead', 'suspicious', 'email_domain_invalid'])
             ->whereDate('lead_last_update_date', now()->toDateString())
             ->count();
     }
@@ -768,11 +771,14 @@ protected function fetchSingleLead($clientID, $leadId)
             ->when($status, function ($query, $status) {
                 return $query->where('status', $status);
             })
+             // Exclude specific statuses
+          ->whereNotIn('status', ['test_lead', 'suspicious', 'email_domain_invalid'])
             ->whereMonth('lead_last_update_date', now()->month)
             ->count();
     }
 
-  public function handleExternalPost(Request $request)
+
+    public function handleExternalPost(Request $request)
 {
     // Get a specific header value by header name
     $apiKey = $request->header('X-API-KEY');
@@ -794,7 +800,6 @@ protected function fetchSingleLead($clientID, $leadId)
         'referrer' => 'nullable',
         'message' => 'nullable|string|max:255',
         'city' => 'nullable|string|max:255',
-
     ]);
 
     // Check if validation fails
@@ -833,7 +838,7 @@ public function storeLead($request)
         $leadData = $request->all();
 
         // Fetch the client based on the provided apiKey
-        $apiKey =  $leadData['api_key']??'';
+        $apiKey =  $leadData['api_key'] ?? '';
         $client = Project::where('api_key', $apiKey)->first();
 
         if (!$client) {
@@ -862,27 +867,30 @@ public function storeLead($request)
         $conversation = new Conversation();
         $leadMessage = '';
 
+        // Check if the lead is a "Test" lead
+        $isTestLead = $this->isTestLead($leadData);
+
         if ($existingLead) {
             // Update existing lead
-            $this->updateExistingLead($existingLead, $leadData, $udfArray);
+            $this->updateExistingLead($existingLead, $leadData, $udfArray, $isTestLead);
             $leadID = $existingLead->id;
             $leadMessage = 'Lead already exists';
 
             $conversation->client_id = $clientId;
             $conversation->leadid = $leadID;
-            $conversation->lead_status = 'existing_lead';
+            $conversation->lead_status = $isTestLead ? 'test_lead' : 'existing_lead';
             $conversation->remark = 'Existing Lead Updated';
             $conversation->description = 'Existing Lead Updated#' . $leadID;
         } else {
             // Create new lead
             $newLead = new Lead();
-            $this->createNewLead($newLead, $leadData, $udfArray, $clientId);
+            $this->createNewLead($newLead, $leadData, $udfArray, $clientId, $isTestLead);
             $leadID = $newLead->id;
             $leadMessage = 'New Lead created successfully';
 
             $conversation->client_id = $clientId;
             $conversation->leadid = $leadID;
-            $conversation->lead_status = 'lead_created';
+            $conversation->lead_status = $isTestLead ? 'test_lead' : 'lead_created';
             $conversation->remark = 'New Lead Created';
             $conversation->description = 'New Lead Created#' . $leadID;
 
@@ -907,7 +915,17 @@ public function storeLead($request)
     }
 }
 
-protected function updateExistingLead($existingLead, $leadData, $udfArray)
+protected function isTestLead($leadData)
+{
+    $email = $leadData['email'] ?? '';
+    $firstName = $leadData['firstName'] ?? '';
+    $lastName = $leadData['lastName'] ?? '';
+
+    // Check if "test" is in the email or names
+    return str_contains(strtolower($email), 'test') || str_contains(strtolower($firstName), 'test') || str_contains(strtolower($lastName), 'test');
+}
+
+protected function updateExistingLead($existingLead, $leadData, $udfArray, $isTestLead)
 {
     $existingLead->utm_source = $leadData['utm_source'] ?? 'direct';
     $existingLead->utm_medium = $leadData['utm_medium'] ?? 'web';
@@ -918,10 +936,11 @@ protected function updateExistingLead($existingLead, $leadData, $udfArray)
     $existingLead->ua_query_url = $leadData['sourceURL'] ?? null;
     $existingLead->referrer = $leadData['referrer'] ?? null;
     $existingLead->lead_last_update_date = Carbon::now();
+    $existingLead->status = $isTestLead ? 'test_lead' : $existingLead->status;
     $existingLead->save();
 }
 
-protected function createNewLead($newLead, $leadData, $udfArray, $clientId)
+protected function createNewLead($newLead, $leadData, $udfArray, $clientId, $isTestLead)
 {
     $newLead->client_id = $clientId;
     $newLead->utm_source = $leadData['utm_source'] ?? 'direct';
@@ -944,7 +963,7 @@ protected function createNewLead($newLead, $leadData, $udfArray, $clientId)
 
     $newLead->registeredon = Carbon::now();
     $newLead->lead_last_update_date = Carbon::now();
-    $newLead->status = 'lead_created';
+    $newLead->status = $isTestLead ? 'test_lead' : 'lead_created';
 
     $newLead->save();
 }

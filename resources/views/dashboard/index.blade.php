@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Dashboard')
 @section('content')
-
 @php
 use App\Models\Client;
 use App\Models\Lead;

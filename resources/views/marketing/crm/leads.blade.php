@@ -309,14 +309,39 @@ if (data.phone) {
     render: function(data, type, row) {
         var status = data.status; // Get the status value
 
-        // Replace spaces with underscores if the status contains "with_"
+        // Replace spaces with underscores if the status contains "_"
         if (status.includes('_')) {
             status = status.replace(/ /g, '_');
         }
 
         // Define labels and classes based on the status
         var label = status;
-        var labelClass = 'bg-success'; // Define a CSS class for the status
+        var labelClass = '';
+
+        // Assign specific CSS classes based on the status
+        switch (status.toLowerCase()) {
+            case 'lead_created':
+                labelClass = 'bg-success'; // Green badge for active
+                break;
+            case 'inactive':
+                labelClass = 'bg-secondary'; // Gray badge for inactive
+                break;
+            case 'pending':
+                labelClass = 'bg-warning'; // Yellow badge for pending
+                break;
+            case 'suspicious':
+                labelClass = 'bg-danger'; // Red badge for suspicious
+                break;
+            case 'test_lead':
+                labelClass = 'bg-info'; // Light blue badge for test_lead
+                break;
+            case 'email_domain_invalid':
+                labelClass = 'bg-dark'; // Dark badge for email_domain_invalid
+                break;
+            default:
+                labelClass = 'bg-primary'; // Default blue badge for other statuses
+                break;
+        }
 
         // Create the HTML for the status label
         var statusHtml = '<span class="badge ' + labelClass + '">' + label + '</span>';
@@ -324,6 +349,7 @@ if (data.phone) {
         return statusHtml;
     }
 }
+
 
                           ,
 

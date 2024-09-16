@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Exception;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Artisan;
 
 class LoginController extends Controller
 {
@@ -75,6 +76,11 @@ class LoginController extends Controller
     private function processAuthentication(Request $request)
     {
         try {
+
+
+
+
+
             // Destroy Session Variables
             Session::forget('OrganizationID');
 
@@ -103,6 +109,8 @@ class LoginController extends Controller
             $user->current_login_at = now()->toDateTimeString();
             $user->current_login_ip = request()->ip();
             $user->save();
+
+            Artisan::call('users:deactivate-inactive');
 
             return redirect('dashboard')->with('toast_success', 'Account is verified.');
         } catch (Exception $exception) {
