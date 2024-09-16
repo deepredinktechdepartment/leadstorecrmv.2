@@ -73,7 +73,7 @@
                 <div class="content-wrapper">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="main_wrapper">
+                            <div class="main_wrapper mt-4">
                                 @include('partials.pagetitle')
                                 {{-- @include('errors.alerts')
                                 @include('errors.errors') --}}

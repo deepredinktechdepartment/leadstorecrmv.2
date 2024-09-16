@@ -43,7 +43,7 @@ header .nav-item .nav-link {
     color: #000;
     font-weight: 500;
     position: relative;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 header .nav-item:hover .nav-link::before,
@@ -68,7 +68,7 @@ header .dropdown-menu {
 }
 
 header .dropdown-item {
-    font-size: 14px;
+    font-size: 13px;
     border-radius: 0px;
     border-bottom: 0px;
 }
