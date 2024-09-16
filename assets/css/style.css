@@ -21,7 +21,7 @@ header{
     padding: 15px 0px;
 }
 .header-logo{
-    width: 180px;
+    width: 120px;
 }
 
 .navbar-toggler {
@@ -34,7 +34,7 @@ header{
 }
 
 header .nav-item {
-    padding: 0px 14px;
+    padding: 0px 18px;
 }
 
 header .nav-item .nav-link {
@@ -43,6 +43,7 @@ header .nav-item .nav-link {
     color: #000;
     font-weight: 500;
     position: relative;
+    font-size: 16px;
 }
 
 header .nav-item:hover .nav-link::before,
@@ -61,6 +62,9 @@ header .dropdown-menu {
     border: 0;
     box-shadow: 0 0 5px 0px #ddd;
     border-radius: 0;
+    width: 150px;
+    padding: 5px 5px;
+    border-radius: 5px;
 }
 
 header .dropdown-item {
@@ -74,13 +78,15 @@ header .dropdown-menu:last-child a {
 }
 
 header .dropdown-menu a:hover {
-    border-bottom: 1px solid #e1e1e1 !important;
-    background: transparent !important;
-    border-radius: 0px !important;
-    -webkit-border-radius: 0px !important;
-    -moz-border-radius: 0px !important;
-    -ms-border-radius: 0px !important;
-    -o-border-radius: 0px !important;
+    /*border-bottom: 1px solid #313131 !important;*/
+    background: #50e3c2 !important;
+    color: #000 !important;
+    border-radius: 5px !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    -ms-border-radius: 5px !important;
+    -o-border-radius: 5px !important;
+    margin-right: 5px;
 }
 
 header .profile-dropdown {
@@ -1577,9 +1583,9 @@ img {
     object-fit: contain !important;
 }
 
-.dropdown-item {
+/* .dropdown-item {
     font-size: 12px !important;
-}
+} */
 
 
 /*Proposals*/
