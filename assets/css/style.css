@@ -2458,3 +2458,37 @@ form a {
     color: #333 !important;
     text-decoration: underline !important;
 }
+
+/* Client Projects */
+
+.client_table a {
+    position: relative;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom 0.3s ease;
+}
+
+.client_table a:hover {
+    border-bottom: 1px solid #989898; 
+}
+
+.client_table a::after {
+    content: "\f0c1";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: right 0.3s ease, opacity 0.3s ease;
+    -webkit-transition: right 0.3s ease, opacity 0.3s ease;
+    -moz-transition: right 0.3s ease, opacity 0.3s ease;
+    -ms-transition: right 0.3s ease, opacity 0.3s ease;
+    -o-transition: right 0.3s ease, opacity 0.3s ease;
+}
+
+.client_table a:hover::after {
+    right: -20px; 
+    opacity: 1;
+}

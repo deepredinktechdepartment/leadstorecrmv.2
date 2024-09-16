@@ -3,7 +3,7 @@
 
     use App\Models\Setting;
 @endphp
-<div class="table-responsive">
+<div class="client_table table-responsive">
     <table id="{{ $tableId }}" class="table table-striped table-bordered mt-3 w-100">
         <thead>
             <tr>
