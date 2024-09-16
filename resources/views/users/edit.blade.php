@@ -81,7 +81,7 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary mt-3">Update</button>
     </form>
 </div>
 @endsection
