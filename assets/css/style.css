@@ -2473,7 +2473,7 @@ form a {
 }
 
 .client_table a::after {
-    content: "\f0c1";
+    content: "\f08e";
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     position: absolute;
